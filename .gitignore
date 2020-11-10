@@ -1,0 +1,10 @@
+/node_modules/
+/.next/
+/package-lock.json
+/public/favicon.ico
+/public/vercel.svg
+/public/images/
+/dist/
+/uploadedFiles/
+/credentials/
+.env
