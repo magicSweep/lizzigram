@@ -5,6 +5,10 @@
 /public/vercel.svg
 /public/images/
 /dist/
+/src/sharp/images/
+/src/sharp/result/
+/src/photo/__test/controller/result/
+/src/photo/__test/controller/upload/
 /uploadedFiles/
 /credentials/
 .env

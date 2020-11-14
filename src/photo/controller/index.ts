@@ -1,0 +1,1 @@
+export { PhotoCloudinaryController } from "./photoCloudinary";

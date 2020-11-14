@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload form test</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.0/axios.min.js"></script>
+    <style>
+      form {
+        display: block;
+        width: 400px;
+        margin: auto;
+        padding: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <input name="id" type="text" placeholder="Enter id of file" />
+      <br /><br />
+      <input name="file" type="file" />
+      <br /><br />
+      <input name="submit" type="submit" value="Go" />
+    </form>
+
+    <p class="response"></p>
+  </body>
+
+  <script>
+    const form = document.querySelector("form");
+    const idInput = form.querySelector("input[name='id']");
+    const fileInput = form.querySelector("input[name='file']");
+
+    const responseElement = document.querySelector("p.response");
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      console.log("SUBMIT", idInput.value, fileInput.value, fileInput.files[0]);
+
+      const formData = new FormData();
+      formData.append("id", idInput.value);
+      formData.append("file", fileInput.files[0]);
+
+      const res = await axios.post(
+        "http://localhost:3009/add-photo",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log("RESPONSE", res);
+
+      const text = document.createTextNode(`
+
+      ID: ${res.data.data.id}
+
+      FILE: ${res.data.data.file}
+
+      `);
+
+      responseElement.appendChild(text);
+    });
+  </script>
+</html>

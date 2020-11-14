@@ -1,10 +1,13 @@
-class Hello {
-  say = () => {
-    console.log("Hello");
-  };
-}
+import { init } from "./app";
 
-const hello = new Hello();
-hello.say();
+const port = parseInt(process.env.PORT, 10) || 3009;
 
-export default Hello;
+const start = async () => {
+  const app = await init();
+
+  app.listen(port, () => {
+    console.log(`> Ready on http://localhost:${port}`);
+  });
+};
+
+start();

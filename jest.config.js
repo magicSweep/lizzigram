@@ -1,14 +1,14 @@
 module.exports = {
   //testEnvironment: "node",
-  moduleNameMapper: {
+  /*  moduleNameMapper: {
     "\\.(css)$": "<rootDir>/node_modules/identity-obj-proxy",
     "^.+\\.module\\.(css|sass|scss)$":
       "<rootDir>/node_modules/identity-obj-proxy",
-  },
+  }, */
 
-  roots: ["<rootDir>/src", "<rootDir>/server"],
+  roots: ["<rootDir>/src"],
 
-  testMatch: ["<rootDir>/src/**/*.test.js", "<rootDir>/server/**/*.test.js"],
+  testMatch: ["<rootDir>/src/**/*.test.js"],
 
   transform: {
     "^.+\\.[t|j]sx?$": "babel-jest",
@@ -18,8 +18,8 @@ module.exports = {
       "<rootDir>/config/jest/fileTransform.js",
   },
 
-  transformIgnorePatterns: [
+  /*   transformIgnorePatterns: [
     "[/\\\\]node_modules[/\\\\].+\\.(js|jsx)$",
     "^.+\\.module\\.(css|sass|scss)$",
-  ],
+  ], */
 };
