@@ -10,7 +10,16 @@ export const isValidFile = (file: Express.Multer.File) => {
   if (!file) return false;
 
   //check mime type
-  if (!acceptableMimetypes.includes(file.mimetype)) return false;
+  if (!acceptableMimetypes.includes(file.mimetype)) {
+    console.error("BAD PHOTO FILE MIMETYPE", file.mimetype);
+    return false;
+  }
+
+  return true;
+};
+
+export const isValidUserUid = (userUid: string) => {
+  if (!userUid) return false;
 
   return true;
 };

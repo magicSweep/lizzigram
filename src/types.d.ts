@@ -1,6 +1,6 @@
-import { Request } from "express";
+//import { Request } from "express";
 
-export interface IPhoto {
+interface IPhoto {
   //_id: any;
   base64: string;
   files: string[];
@@ -24,18 +24,19 @@ export interface IPhoto {
   addedByUserUID: string;
 }
 
-export interface IMulterBody {
+interface IMulterBody {
   file: Express.Multer.File;
   id: string;
+  userUid: string;
 }
 
-export interface IMulterRequest extends Request {
+interface IMulterRequest extends Express.Request {
   body: IMulterBody;
 }
 
-export type TResponseStatus = "successs" | "error";
+type TResponseStatus = "successs" | "error";
 
-export interface IErrorResponse {
+interface IErrorResponse {
   status: "error";
   data: {
     error: string;
@@ -43,20 +44,20 @@ export interface IErrorResponse {
   };
 }
 
-export interface ISuccessResponse {
+interface ISuccessResponse {
   status: "success";
   data: {
     [name: string]: any;
   };
 }
 
-export type TWidth = number;
+type TWidth = number;
 
-export type TPath = string;
+type TPath = string;
 
-export type TCloudinaryId = string;
+type TCloudinaryId = string;
 
-export type TCloudinarySecureUrl = string;
+type TCloudinarySecureUrl = string;
 
 /* export interface IAddToFirebasePhoto {
   //_id: any;
@@ -74,7 +75,7 @@ export type TCloudinarySecureUrl = string;
   isActive: boolean;
 } */
 
-export interface IFirebasePhoto {
+interface IFirebasePhoto {
   //_id: any;
   base64: string;
   files: string[];

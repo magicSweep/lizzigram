@@ -14,24 +14,31 @@ import { path as rootPath } from "app-root-path";
 import multer from "multer";
 import { readFile } from "fs";
 import { promisify } from "util";
-import { fileFilter, fileName, multerLimits, addPhoto } from "./photo";
+import {
+  fileFilter,
+  fileName,
+  multerLimits,
+  addPhotoMiddleware,
+  editPhotoMiddleware,
+} from "./photo";
 import { IErrorResponse } from "./types";
+import { pathToUploadFilesDir } from "./config";
 
 const dev = process.env.NODE_ENV !== "production";
 
-const uploadPhotosDir = resolve(rootPath, "uploads");
+console.log("IS DEV", dev);
 
 export const init = async () => {
   dotenv.config({ path: resolve(rootPath, ".env") });
 
   const formHtml = await promisify(readFile)(
-    resolve(rootPath, "src/test/uploadForm.html")
+    resolve(rootPath, "src/example/uploadForm.html")
   );
 
   // MULTER
   var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, uploadPhotosDir);
+      cb(null, pathToUploadFilesDir);
     },
     filename: fileName,
   });
@@ -55,8 +62,29 @@ export const init = async () => {
 
   const app = express();
 
+  app.use((req, res, next) => {
+    res.append("Access-Control-Allow-Origin", "*");
+    //res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+    //res.append("Access-Control-Allow-Headers", "Content-Type");
+    next();
+  });
+
+  // TEST MIDDLEWARE
+  app.post("/is-photo", upload.single("file"), (req, res) => {
+    res.status(200).json({
+      status: "ok",
+      data: {
+        file: req.file ? req.file.filename : "No file",
+        id: req.body ? req.body.id : "NO id",
+        uid: req.body ? req.body.uid : "NO uid",
+      },
+    });
+  });
+
   // MAIN MIDDLEWARE
-  app.post("/add-photo", upload.single("file"), addPhoto);
+  app.post("/add-photo", upload.single("file"), addPhotoMiddleware);
+
+  app.post("/edit-photo", upload.single("file"), editPhotoMiddleware);
 
   // FOR TEST
   app.get("/", (req, res) => {
@@ -65,9 +93,31 @@ export const init = async () => {
 
   // GLOBAL_ERROR_HANDLER
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.log(`[GLOBAL_ERROR_HANDLER] ${err.message}`);
+    let message = "";
 
-    const message = dev ? err.message || JSON.stringify(err) : "Server error";
+    if (dev) {
+      if (err.message) {
+        message = `
+          MESSAGE - ${err.message} 
+          NAME - ${err.name}
+          FILENAME - ${(err as any).filename}
+          LINENUMBER - ${(err as any).lineNumber}
+          STACK - ${err.stack}
+        `;
+      } else {
+        message = JSON.stringify(err);
+      }
+
+      message = `
+        REQUEST_PATH - ${req.path}
+        REQUEST_BODY - ${req.body ? JSON.stringify(req.body) : "NO BODY"}
+        ${message}
+      `;
+    } else {
+      message = "Server error";
+    }
+
+    console.log(`[GLOBAL_ERROR_HANDLER] ${message}`);
 
     const json: IErrorResponse = {
       status: "error",

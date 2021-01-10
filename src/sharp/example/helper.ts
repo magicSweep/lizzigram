@@ -2,21 +2,23 @@ import { resolve } from "path";
 import { path as rootPath } from "app-root-path";
 import { promisify } from "util";
 import { readFile, writeFile, stat, unlink, existsSync } from "fs";
+import { iPhotoSizes as photoSizes } from "./SharpExampleController";
 
-export const pathToBase64Template = resolve(
-  rootPath,
-  "src/sharp/example/base64.template.html"
-);
+export const pathToExampleDir = resolve(rootPath, "src/sharp/example");
 
-export const pathToResizeTemplate = resolve(
-  rootPath,
-  "src/sharp/example/resize.template.html"
-);
+export const pathToBase64Template = `${pathToExampleDir}/base64.template.html`;
+
+export const pathToResizeTemplate = `${pathToExampleDir}/resize.template.html`;
 
 export const makeHtmlWithResizedPhotos = async (
   photosInfo: Map<number, string>,
   sizes: Map<number, number>,
-  originalPhotoInfo: { size: number; resolution: number[] }
+  originalPhotoInfo: {
+    size: number;
+    isInverted: boolean;
+    resolution: number[];
+  },
+  aspectRatio: number
 ) => {
   const template: string = await promisify(readFile)(pathToResizeTemplate, {
     encoding: "utf8",
@@ -31,6 +33,9 @@ export const makeHtmlWithResizedPhotos = async (
 
   let resultHtml = template;
 
+  const isHeightMoreThenWidth =
+    originalPhotoInfo.resolution[1] >= originalPhotoInfo.resolution[0];
+
   resultHtml = resultHtml.replace(
     `{{SIZE_ORIGIN}}`,
     `${round(bytesToMegabytes(originalPhotoInfo.size), 5)}MB`
@@ -41,8 +46,35 @@ export const makeHtmlWithResizedPhotos = async (
     `${originalPhotoInfo.resolution[0]}x${originalPhotoInfo.resolution[1]}`
   );
 
+  resultHtml = resultHtml.replace(
+    `{{ORIENTATION}}`,
+    `${originalPhotoInfo.isInverted ? "Inverted" : "Not inverted"}`
+  );
+
+  resultHtml = resultHtml.replace(`{{ASPECT_RATIO}}`, `${aspectRatio}`);
+
   for (let size of photosInfo.keys()) {
     //replace image path
+    resultHtml = resultHtml.replace(
+      `{{WIDTH${size}}}`,
+      `${
+        originalPhotoInfo.isInverted ||
+        originalPhotoInfo.resolution[1] >= originalPhotoInfo.resolution[0]
+          ? "auto"
+          : size + "px"
+      }`
+    );
+
+    resultHtml = resultHtml.replace(
+      `{{HEIGHT${size}}}`,
+      `${
+        originalPhotoInfo.isInverted ||
+        originalPhotoInfo.resolution[1] >= originalPhotoInfo.resolution[0]
+          ? getHeightByWidth(size) + "px"
+          : "auto"
+      }`
+    );
+
     resultHtml = resultHtml.replace(
       `{{SRC${size}}}`,
       `file://${photosInfo.get(size)}`
@@ -55,11 +87,9 @@ export const makeHtmlWithResizedPhotos = async (
     );
   }
 
-  await promisify(writeFile)(
-    resolve(rootPath, "src/sharp/example/resize.html"),
-    resultHtml,
-    { encoding: "utf-8" }
-  );
+  await promisify(writeFile)(`${pathToExampleDir}/resize.html`, resultHtml, {
+    encoding: "utf-8",
+  });
 };
 
 export const makeHtmlWithBase64 = async (base64: string, size: number) => {
@@ -79,15 +109,19 @@ export const makeHtmlWithBase64 = async (base64: string, size: number) => {
     `${round(bytesToMegabytes(size), 5)}MB`
   );
 
-  await promisify(writeFile)(
-    resolve(rootPath, "src/sharp/example/base64.html"),
-    resultHtml,
-    { encoding: "utf-8" }
-  );
+  await promisify(writeFile)(`${pathToExampleDir}/base64.html`, resultHtml, {
+    encoding: "utf-8",
+  });
+};
+
+export const getHeightByWidth = (width: number) => {
+  for (let size of photoSizes) {
+    if (size.width === width) return size.height;
+  }
 };
 
 export const getBase64Size = async (base64: string) => {
-  const pahtToTempFile = resolve(rootPath, "src/sharp/example/temp.txt");
+  const pahtToTempFile = `${pathToExampleDir}/temp.txt`;
 
   await promisify(writeFile)(pahtToTempFile, base64, {
     encoding: "utf8",

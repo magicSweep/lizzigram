@@ -1,1 +1,4 @@
-export { PhotoCloudinaryController } from "./photoCloudinary";
+export {
+  addPhotoMiddleware,
+  editPhotoMiddleware,
+} from "./PhotoCloudinaryController";

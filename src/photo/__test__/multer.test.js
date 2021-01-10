@@ -1,6 +1,6 @@
 import request from "supertest";
-import { multerLimits, fileFilter, fileName } from "./../multer";
-import { init } from "./../../app";
+import { multerLimits, fileFilter, fileName } from "../multer";
+import { init } from "../../app";
 import { readdir } from "fs";
 import { promisify } from "util";
 
@@ -11,7 +11,7 @@ jest.mock("./../multer", () => {
     __esModule: true,
     ...originalModule,
     multerLimits: {
-      fields: 1,
+      fields: 2,
       fieldSize: 10520,
       files: 1,
       fileSize: 1971520, //20971520 - 20MB
@@ -40,10 +40,10 @@ describe("Multer possible errors", () => {
     app = await init();
   });
 
-  test("No fields - we get response - We've got no photo file", async () => {
+  test("No fields - we get response - Failed multer validation", async () => {
     const response = await request(app).post("/add-photo");
 
-    expect(response.text.includes("We've got no photo file")).toEqual(true);
+    expect(response.text.includes("Failed multer validation")).toEqual(true);
   });
 
   // If we get file without id field - we do not upload file
@@ -71,6 +71,7 @@ describe("Multer possible errors", () => {
       const response = await request(app)
         .post("/add-photo")
         .field("id", "1234567890123")
+        .field("userUid", "user1234567890123")
         .attach("file", pathToLargePhoto);
 
       const files = await promisify(readdir)(pathToUploadsDir);
@@ -82,6 +83,7 @@ describe("Multer possible errors", () => {
     test("Too many files", async () => {
       const response = await request(app)
         .post("/add-photo")
+        .field("id", "1234567890123")
         .field("id", "1234567890123")
         .attach("file", pathToPhoto)
         .attach("file1", pathToPhoto);
@@ -96,6 +98,7 @@ describe("Multer possible errors", () => {
       const response = await request(app)
         .post("/add-photo")
         .field("id", "1234567890123")
+        .field("userUid", "user1234567890123")
         .field("bla", "virus")
         .attach("file", pathToPhoto);
 

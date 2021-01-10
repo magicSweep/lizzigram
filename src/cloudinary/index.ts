@@ -12,74 +12,22 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-export const deleteImage = (publicId: string) => {
+export const deleteFile = (publicId: string) => {
   return cloudinary.uploader.destroy(publicId);
 };
 
-//srcSet  Map<widthOfPhoto, pathToPhoto>
-export const uploadImagesByDifferentWidths = async (
-  photosDiffWidths: Map<number, string>
+export const uploadFile = (
+  pathToUploadFile: string,
+  tags: string = "lizzygram"
 ) => {
-  const cloudinaryPhotosInfoDiffWidths = new Map<number, UploadApiResponse>();
-  const imagesPromises = [];
-
-  //@ts-ignore
-  for (let width of photosDiffWidths.keys()) {
-    let image = cloudinary.uploader.upload(photosDiffWidths.get(width), {
-      tags: "lizzygram",
-    });
-
-    imagesPromises.push(image);
-  }
-
-  const imagesInfo = await Promise.all(imagesPromises);
-
-  let i = 0;
-  //@ts-ignore
-  for (let width of photosDiffWidths.keys()) {
-    cloudinaryPhotosInfoDiffWidths.set(width, imagesInfo[i]);
-    i++;
-  }
-
-  return cloudinaryPhotosInfoDiffWidths;
+  return cloudinary.uploader.upload(pathToUploadFile, {
+    tags,
+  });
 };
 
-/* TEST DELETE 
-deleteImage("f1ik44v0dzks8reeircz")
-  .then((res) => {
-    console.log("SUCCESS DELETED - f1ik44v0dzks8reeircz", res);
-  })
-  .catch((err) => {
-    console.log("DELETE ERROR ", err.message);
+export const getAllFiles = () => {
+  return cloudinary.api.resources({
+    type: "upload",
+    max_results: 10,
   });
-
-/* TEST UPLOAD IMAGES
-
-/* const photosDiffWidths = new Map([
-  [
-    400,
-    join(
-      rootPath,
-      "public",
-      "images",
-      "386518885a4da11cdc9e3eb8d4109e2f-1200.jpg"
-    ),
-  ],
-  [
-    800,
-    join(
-      rootPath,
-      "public",
-      "images",
-      "556f582ddac2296f8fb83a69cef496dfb7d7807657b2e0bc7dc58b0d817d2061-1600.jpg"
-    ),
-  ],
-]);
-
-uploadImagesByDifferentWidths(photosDiffWidths)
-  .then((res) => {
-    console.log("PHOTO 400 WIDTH - ", res.get(400).public_id);
-    console.log("PHOTO 800 WIDTH - ", res.get(800).public_id);
-  })
-  .catch((err) => console.log("CLOUDINARY UPLOAD ERROR", err.message));
- */
+};

@@ -1,3 +1,5 @@
+export { deleteFile, writeFile, readFile } from "./fs";
+
 export const getFileNameWithoutExtension = (filename: string) => {
   const parts = filename.split(".");
 
