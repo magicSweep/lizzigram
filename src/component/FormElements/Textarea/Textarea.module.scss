@@ -1,0 +1,51 @@
+@import "./../../../styles/style.variables.scss";
+
+.root {
+  width: 100%;
+
+  .label {
+    //font-size: 14px;
+    //font-weight: 600;
+    //color: rgb(50, 49, 48);
+    //box-sizing: border-box;
+    box-shadow: none;
+    margin: 0px;
+    display: block;
+    padding: 5px 0px;
+    overflow-wrap: break-word;
+  }
+
+  .textarea {
+    //font-weight: 400;
+    box-shadow: none;
+
+    margin: 0px;
+    padding: 6px 8px;
+
+    cursor: text;
+
+    //box-sizing: border-box;
+
+    border-radius: 2px;
+    border: 1px solid $font-primary;
+
+    background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+    //color: rgb(50, 49, 48);
+
+    width: 100%;
+    min-width: 0px;
+    min-height: inherit;
+
+    text-overflow: ellipsis;
+    outline: currentcolor none 0px;
+
+    line-height: 17px;
+
+    flex-grow: 1;
+    overflow: auto;
+
+    &:focus {
+      border: 1px solid $primary;
+    }
+  }
+}

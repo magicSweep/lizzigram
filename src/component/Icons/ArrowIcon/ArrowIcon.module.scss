@@ -1,0 +1,20 @@
+.up {
+  path {
+    transform: rotate(270deg);
+    transform-origin: 50% 50%;
+  }
+}
+
+.down {
+  path {
+    transform: rotate(90deg);
+    transform-origin: 50% 50%;
+  }
+}
+
+.left {
+  path {
+    transform: rotate(180deg);
+    transform-origin: 50% 50%;
+  }
+}

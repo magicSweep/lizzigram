@@ -1,0 +1,27 @@
+@import "./../../styles/style.variables.scss";
+
+.active {
+  border-bottom: 1px solid $primary !important;
+  color: $primary !important;
+}
+
+.root {
+  .titles {
+    display: flex;
+    padding: 15px;
+
+    .button {
+      background-color: transparent;
+      border: none;
+      padding: 10px 20px;
+      color: $font-primary;
+      cursor: pointer;
+    }
+    //justify-content: center;
+    //align-items: center;
+  }
+
+  .sections {
+    padding: 15px;
+  }
+}

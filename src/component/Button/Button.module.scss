@@ -1,0 +1,68 @@
+@import "./../../styles/style.variables.scss";
+
+.root {
+  border: none;
+  padding: 0;
+  background-color: rgb(255, 255, 255);
+
+  .wrapper {
+    outline: transparent none medium;
+    display: inline-block;
+    position: relative;
+    //font-weight: 400;
+    box-sizing: border-box;
+    border: 1px solid $font-primary;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+
+    min-width: 80px;
+    height: 32px;
+    //color: $font-secondary;
+
+    user-select: none;
+    padding: 0px 16px;
+    border-radius: 2px;
+
+    .container {
+      display: flex;
+      height: 100%;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+
+      .text {
+        flex-grow: 1;
+        margin: 0px 4px;
+        line-height: 100%;
+        display: block;
+        color: $font-secondary;
+        //font-weight: 600;
+      }
+    }
+  }
+}
+
+.disabled {
+  //color: $disabled !important;
+  //background-color: rgb(167, 167, 167);
+  cursor: default !important;
+  border: 1px solid $disabled !important;
+  background-color: rgb(255, 255, 255);
+
+  &:hover {
+    background-color: rgb(255, 255, 255);
+  }
+}
+
+/* .bg {
+  background-color: rgb(255, 255, 255);
+
+  &:hover {
+    background-color: rgb(250, 250, 250);
+  }
+} */
+/* 
+.mouseDownBg {
+  background-color: rgb(233, 233, 233);
+} */

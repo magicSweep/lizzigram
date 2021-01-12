@@ -1,0 +1,29 @@
+@import "./../../styles/style.variables.scss";
+
+.root {
+  outline: transparent none medium;
+  position: relative;
+  border: medium none;
+  text-align: center;
+  cursor: pointer;
+  padding: 0px 4px;
+  border-radius: 2px;
+  width: 32px;
+  height: 32px;
+  background-color: transparent;
+  //margin-left: auto;
+  //margin-top: 4px;
+  //margin-right: 2px;
+  user-select: none;
+  color: $font-secondary;
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .svg {
+      fill: $font-secondary;
+    }
+  }
+}

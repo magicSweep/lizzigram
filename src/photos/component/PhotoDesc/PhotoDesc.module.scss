@@ -1,0 +1,73 @@
+@import "./../../../styles/style.variables.scss";
+
+.root {
+  max-width: 600px;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.title {
+  padding-bottom: 12px;
+}
+
+.paragraph {
+  padding-left: 10px;
+}
+
+.tagsWrapper {
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 10px;
+}
+
+.tagsContainer {
+  list-style: none;
+  padding: 30px 15px;
+  //padding-left: 20px;
+  //padding-right: 20px;
+  border: 1px solid $font-primary;
+  border-radius: 2px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.tagsTitle {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  background-color: white;
+  color: $font-primary;
+  //text-align: center;
+}
+.tags {
+  /* min-width: 50px;
+  padding: 8px;
+  color: violet; */
+  margin-right: 8px;
+}
+
+/* .sceletons {
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.sceleton {
+  margin-right: 8px;
+} */
+.error {
+  padding-top: 15px;
+  text-align: center;
+  color: red;
+}

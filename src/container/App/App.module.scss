@@ -1,0 +1,21 @@
+@import "./../../styles/style.variables.scss";
+
+.root {
+  display: block;
+
+  .inputWrapper {
+    width: 600px;
+    margin: auto;
+    padding: 30px;
+  }
+
+  .title {
+    color: $secondary;
+  }
+
+  .bgImage {
+    width: 500px;
+    height: 312px;
+    background: url("./../../static/ladki.jpg");
+  }
+}

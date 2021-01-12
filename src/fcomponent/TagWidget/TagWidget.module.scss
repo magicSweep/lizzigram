@@ -1,0 +1,21 @@
+@import "./../../styles/style.variables.scss";
+
+.root {
+  font-size: 14px;
+  //border: 1px solid $font-secondary;
+  text-align: center;
+  //cursor: pointer;
+
+  padding: 4px 16px;
+  border-radius: 16px;
+  min-width: 80px;
+  height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  //color: $font-secondary;
+
+  .label {
+  }
+}

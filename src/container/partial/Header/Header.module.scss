@@ -1,0 +1,19 @@
+.appBar {
+  position: fixed;
+  top: 0;
+  background-color: white; //#55c57a
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  z-index: 200;
+
+  .toolbar {
+    display: flex;
+    max-width: 1600px;
+    width: 100%;
+    //margin: auto;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 60px 0;
+  }
+}

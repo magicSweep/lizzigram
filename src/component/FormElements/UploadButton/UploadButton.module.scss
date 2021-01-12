@@ -1,0 +1,74 @@
+@import "./../../../styles/style.variables.scss";
+
+.input {
+  display: none;
+}
+
+.button {
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: white;
+  border: none;
+
+  border-radius: 2px;
+
+  cursor: pointer;
+
+  outline: transparent none medium;
+  position: relative;
+  //padding: 0px 16px;
+  border-radius: 2px;
+  //min-width: 80px;
+  height: 32px;
+  //color: $font-secondary;
+  //user-select: none;
+
+  &:hover {
+    background-color: rgb(245, 245, 245);
+  }
+
+  &:focus {
+    border-radius: 2px;
+    //border: 1px solid $primary;
+  }
+
+  .svg {
+    fill: #0078d49e;
+  }
+
+  .svg--disabled {
+    fill: $disabled;
+  }
+
+  .svg--error {
+    fill: $error;
+  }
+
+  .label {
+    //flex-grow: 1;
+    font-size: 14px;
+    margin-left: 5px;
+  }
+
+  /*  .label--disabled {
+    color: $disabled;
+  }
+
+  .label--error {
+    color: $error;
+  } */
+}
+
+/* .button--error {
+  border: 1px solid $error;
+} */
+
+.button--disabled {
+  cursor: default;
+  &:hover {
+    background-color: transparent;
+  }
+}

@@ -1,0 +1,28 @@
+@import "./../../../styles/style.variables.scss";
+
+.root {
+  .fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 25px 15px;
+    //padding-bottom: 25px;
+    //padding-left: 10px;
+    justify-content: space-around;
+    //flex-grow: 0;
+    //flex-shrink: 0;
+    border: 1px solid $font-primary;
+    border-radius: 2px;
+  }
+}
+
+.container {
+  //display: flex;
+  padding-top: 18px;
+  margin-right: 8px;
+}
+
+.skeleton {
+  padding-top: 10px;
+  margin-right: 5px;
+}

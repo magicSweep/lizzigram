@@ -1,0 +1,30 @@
+.root {
+  position: relative;
+}
+
+.addPhotoButton {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+.form {
+  position: relative;
+  padding: 25px 20px;
+}
+
+.searchBtns {
+  position: fixed;
+  top: 50px;
+  width: 100%;
+  height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 300;
+
+  .searchBtn {
+    background-color: white;
+    border-radius: 50%;
+  }
+}

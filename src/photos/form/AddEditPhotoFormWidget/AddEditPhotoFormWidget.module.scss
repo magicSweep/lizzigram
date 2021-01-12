@@ -1,0 +1,27 @@
+.root {
+  min-width: 350px;
+  //width: 90%;
+  padding: 10px;
+  max-width: 600px;
+  margin: auto;
+
+  .title {
+    padding-bottom: 15px;
+    text-align: center;
+  }
+
+  .element {
+    width: 100%;
+    padding-bottom: 15px;
+  }
+
+  .linearProgress {
+    margin-bottom: -10px;
+  }
+
+  .submitButton {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 10px;
+  }
+}

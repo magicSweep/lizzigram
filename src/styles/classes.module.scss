@@ -1,0 +1,114 @@
+@import "./style.variables.scss";
+
+.fullWidth {
+  width: 100%;
+}
+
+.labelFont {
+  font-weight: 600;
+  font-size: 14px;
+  color: $font-primary;
+}
+
+.titleFont {
+  font-weight: 600;
+  //font-size: 14px;
+  color: $font-primary;
+}
+
+.textIndent {
+  text-indent: 15px;
+}
+
+.paragraphFont {
+  font-weight: 400;
+  //font-size: 14px;
+  color: $font-secondary;
+}
+
+.errorColor {
+  color: $error !important;
+}
+
+.errorBorderBottom {
+  border-bottom: 1px solid $error !important;
+}
+
+.errorBorder {
+  border: 1px solid $error !important;
+}
+
+.disabledColor {
+  color: $disabled !important;
+}
+
+.disabledBorderBottom {
+  border-bottom: 1px solid $disabled !important;
+}
+
+.disabledBorder {
+  border: 1px solid $disabled !important;
+}
+
+.disabledCursor {
+  cursor: default !important;
+}
+
+/* BUTTON */
+.buttonBg {
+  background-color: transparent;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.027);
+  }
+}
+
+.mouseDownBg {
+  background-color: rgba(0, 0, 0, 0.055);
+}
+
+/* MODAL */
+.stopScrolling {
+  height: 100%;
+  overflow: hidden;
+}
+
+.modal {
+  position: fixed;
+  z-index: 1000000;
+  inset: 0px;
+  //visibility: hidden;
+}
+
+/* COLOR */
+.primaryColor {
+  color: $primary;
+}
+
+.primaryColorBg {
+  background-color: $primary;
+}
+
+.primaryColorBorder {
+  border: 1px solid $primary;
+}
+
+.primaryFill {
+  fill: $primary;
+}
+
+.secondaryColor {
+  color: $secondary;
+}
+
+.secondaryColorBorder {
+  border: 1px solid $secondary;
+}
+
+.secondaryFill {
+  fill: $secondary;
+}
+
+.disabledFill {
+  fill: $disabled;
+}

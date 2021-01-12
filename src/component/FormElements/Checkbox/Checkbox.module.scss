@@ -1,0 +1,29 @@
+@import "./../../../styles/style.variables.scss";
+
+.label {
+  font-size: 14px;
+  border: 1px solid $font-secondary;
+  text-align: center;
+  cursor: pointer;
+
+  padding: 4px 16px;
+  border-radius: 16px;
+  min-width: 80px;
+  height: 32px;
+  color: $font-secondary;
+}
+
+.label--checked {
+  border: 1px solid $primary;
+  color: $primary;
+}
+
+.label--disabled {
+  border: 1px solid $disabled;
+  color: $disabled;
+  cursor: default;
+}
+
+.input {
+  display: none;
+}
