@@ -80,22 +80,18 @@ export const loadPhotos = async (dispatch: any, searchState: ISearchState) => {
 };
 
 export const fetchMore = (dispatch: any, nextPageDocRef: any) => {
-  //query = photosCollection.startAt(doc);
-
-  //subscribeQuery = photosCollection;
   if (!nextPageDocRef) throw new Error("No NEXT PAGE REF...");
 
   fetchPhotos(dispatch, gQuery.startAt(nextPageDocRef).limit(limit + 1), true);
-
-  //unsubscribe
-  /* if (photosUnsubscribe) {
-      isSubscribeInit = false;
-      photosUnsubscribe();
-    } */
-
-  //new subscribe with limitSum
-  //subscribe(setPhoto, deletePhoto);
 };
+
+/* export const save = () => {
+  const abortController = new AbortController();
+
+  const signal = abortController.signal;
+
+  return abortController;
+} */
 
 export const saveNewPhoto = async (
   dispatch: any,

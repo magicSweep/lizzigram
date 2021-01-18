@@ -10,7 +10,7 @@ export const useAddEditPhotoForm = () => {
     { tagsData: TTagsData | undefined; userUID: string }
   >((state) => ({
     tagsData: state.tags.tags,
-    userUID: state.auth.user.uid,
+    userUID: state.auth.user ? state.auth.user.uid : "",
   }));
 
   const showAlert = (message: string, type: TAlertType) =>

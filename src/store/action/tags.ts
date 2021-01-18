@@ -22,7 +22,7 @@ export const tagsRequestErrorAC = (): ITagsAction => {
   };
 };
 
-export const fetchTagsAC = () => {
+/* export const fetchTagsAC = () => {
   return async (dispatch: any) => {
     try {
       dispatch(tagsRequestAC());
@@ -45,7 +45,7 @@ export const fetchTagsAC = () => {
         ["YBa0wyeWwEB6takyExmF", { title: "задумчиво", name: "thoughtfully" }],
         ["YxX09wTx6kWOfZQ0ORFs", { title: "дома", name: "home" }],
         ["cdbI7sOCFVFv337chtBE", { title: "на природе", name: "nature" }],
-      ]); */
+      ]); /
 
       dispatch(tagsRequestSuccessAC(tags));
     } catch (err) {
@@ -53,3 +53,4 @@ export const fetchTagsAC = () => {
     }
   };
 };
+ */
