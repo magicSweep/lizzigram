@@ -3,12 +3,22 @@ import { usePhotoSlider } from "./hooks";
 import PhotoSliderWidget from "./PhotoSlider";
 
 export const PhotoSlider = () => {
-  const { photoState, loadMore, initActiveIndex } = usePhotoSlider();
+  const {
+    photos,
+    loading,
+    hasNextPage,
+    error,
+    loadMore,
+    initActiveIndex,
+  } = usePhotoSlider();
 
-  console.log("[PHOTO SLIDER] RENDER", initActiveIndex, photoState.loading);
+  console.log("[PHOTO SLIDER] RENDER", initActiveIndex, loading);
   return (
     <PhotoSliderWidget
-      photoState={photoState}
+      photos={photos}
+      loading={loading}
+      hasNextPage={hasNextPage}
+      error={error}
       loadMorePhotos={loadMore}
       initActiveIndex={initActiveIndex}
     />

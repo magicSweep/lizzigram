@@ -1,0 +1,25 @@
+.welcome {
+  max-width: 600px;
+
+  margin: auto;
+
+  padding-top: 20px;
+
+  .title {
+    text-align: center;
+  }
+
+  .paragraph {
+    padding-top: 15px;
+    text-indent: 10px;
+  }
+}
+
+.loading {
+  width: 400px;
+  margin: auto;
+  padding-top: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import TagsCheckboxWidget, { ITagsCheckboxProps } from "./TagsCheckbox";
-import { useTags } from "../../../store/hooks";
+import { useTags } from "../../../hooks/useTags";
 
 //import gql from "graphql-tag";
 //import { ApolloError } from "";
@@ -11,13 +11,13 @@ export interface ICheckboxItemData {
   name: string;
 }
 
-export const TagsCheckbox: FC<ITagsCheckboxProps> = props => {
-  const { tagsState } = useTags();
+export const TagsCheckbox: FC<ITagsCheckboxProps> = (props) => {
+  const { tags, error, loading } = useTags();
 
   //loading, data, queryError, tagsState
   console.log("[RENDER TAGS CHECKBOX] ");
 
-  return <TagsCheckboxWidget tagsState={tagsState} {...props} />;
+  return <TagsCheckboxWidget tagsState={{ tags, error, loading }} {...props} />;
 };
 
 export default TagsCheckbox;

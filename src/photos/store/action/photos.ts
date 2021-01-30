@@ -14,28 +14,24 @@ export const allPhotosStartMoreRequestAC = (): IPhotosAction => {
 };
 
 export const allPhotosRequestSuccessAC = (
-  photos: TPhotosData,
-  nextPageDocRef: any,
-  hasNextPage: boolean
+  data: TGetPhotosData
 ): IPhotosAction => {
   return {
     type: "ALL_PHOTOS_REQUEST_SUCCESS",
-    photos,
-    nextPageDocRef,
-    hasNextPage,
+    photos: data.photos,
+    nextPageDocRef: data.nextPageDocRef,
+    hasNextPage: data.hasNextPage,
   };
 };
 
 export const fetchMorePhotosRequestSuccessAC = (
-  photos: TPhotosData,
-  nextPageDocRef: any,
-  hasNextPage: boolean
+  data: TGetPhotosData
 ): IPhotosAction => {
   return {
     type: "FETCH_MORE_PHOTO_REQUEST_SUCCESS",
-    photos,
-    nextPageDocRef,
-    hasNextPage,
+    photos: data.photos,
+    nextPageDocRef: data.nextPageDocRef,
+    hasNextPage: data.hasNextPage,
   };
 };
 
@@ -51,15 +47,17 @@ export const addPhotoStartRequestAC = (): IPhotosAction => {
   };
 };
 
-export const addPhotoRequestSuccessAC = (): IPhotosAction => {
+export const addPhotoRequestSuccessAC = (isLast: boolean): IPhotosAction => {
   return {
     type: "ADD_PHOTO_REQUEST_SUCCESS",
+    isLast,
   };
 };
 
-export const addPhotoRequestErrorAC = (): IPhotosAction => {
+export const addPhotoRequestErrorAC = (isLast: boolean): IPhotosAction => {
   return {
     type: "ADD_PHOTO_REQUEST_ERROR",
+    isLast,
   };
 };
 
@@ -69,16 +67,21 @@ export const editPhotoStartRequestAC = (): IPhotosAction => {
   };
 };
 
-export const editPhotoRequestSuccessAC = (photoId?: string): IPhotosAction => {
+export const editPhotoRequestSuccessAC = (
+  isLast: boolean,
+  photoId?: string
+): IPhotosAction => {
   return {
     type: "EDIT_PHOTO_REQUEST_SUCCESS",
     photoId,
+    isLast,
   };
 };
 
-export const editPhotoRequestErrorAC = (): IPhotosAction => {
+export const editPhotoRequestErrorAC = (isLast: boolean): IPhotosAction => {
   return {
     type: "EDIT_PHOTO_REQUEST_ERROR",
+    isLast,
   };
 };
 

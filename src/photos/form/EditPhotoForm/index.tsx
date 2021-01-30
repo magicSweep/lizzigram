@@ -1,40 +1,20 @@
 import React from "react";
-import EditPhotoFormWidget, { IEditPhotoFormData } from "./EditPhotoForm";
+import EditPhotoFormWidget from "./EditPhotoForm";
 import { useEditPhotoForm } from "./hook";
-import { useEditPhoto } from "../../store/hook";
+import { useEditPhotoReqs } from "../../hook/requests/useEditPhotoReqs";
 
 export const EditPhotoForm = () => {
-  const {
-    prevPhoto,
-    tagsData,
-    userUID,
-    showAlert,
-    hideEditPhotoForm,
-  } = useEditPhotoForm();
+  const { prevPhoto, tagsData } = useEditPhotoForm();
 
-  const { editPhoto, loading } = useEditPhoto();
-
-  const onSuccess = () => {
-    hideEditPhotoForm();
-
-    showAlert("Фото успешно отредактировано.", "success");
-  };
-
-  const onError = () => {
-    showAlert("Какая-то ошибка. Попробуйте позже.", "error");
-  };
-
-  const editPhotoFinal = (photoId: string, formData: IEditPhotoFormData) =>
-    editPhoto(photoId, formData, userUID, onSuccess, onError);
+  const { start: startReq, loading } = useEditPhotoReqs();
 
   console.log("[RENDER EDIT FORM]");
 
   return (
     <EditPhotoFormWidget
-      showAlert={showAlert}
       prevPhoto={prevPhoto}
       uploadLoading={loading}
-      editPhoto={editPhotoFinal}
+      editPhoto={startReq}
       tagsData={tagsData}
     />
   );

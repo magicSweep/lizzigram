@@ -112,3 +112,19 @@
 .disabledFill {
   fill: $disabled;
 }
+
+.warningColor {
+  color: $warning;
+}
+
+.warningColorBorder {
+  border: 1px solid $warning;
+}
+
+.infoColor {
+  color: $info;
+}
+
+.infoColorBorder {
+  border: 1px solid $info;
+}

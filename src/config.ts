@@ -5,8 +5,12 @@ export const modalId = "modal";
 export const alertId = "alert";
 
 /* FIRESTORE */
+export const numberOfTags = 11;
+export const numberOfTagsByPhoto = 4;
 
 export const photosCollectionName = "photos";
+export const testPhotosCollectionName = "phototest";
+
 export const tagsCollectionName = "tags";
 export const usersCollectionName = "users";
 
@@ -33,7 +37,7 @@ export const addPhotoUrl = `${expressUrl}/add-photo`;
 export const editPhotoUrl = `${expressUrl}/edit-photo`;
 
 /* PHOTOS */
-export const limitPhotosPerQuery = 1;
+export const limitPhotosPerQuery = 3;
 
 export const addPhotoFormTitle = "Загрузить новое фото:";
 export const editPhotoFormTitle = "Изменить фото:";
@@ -42,3 +46,5 @@ export const searchPhotoFormTitle = "Поиск фото:";
 /* OTHER */
 
 export const lizzyYearsOld = getLizzyYearsOld();
+
+export const lizzyBirthday = new Date("2018-07-08");

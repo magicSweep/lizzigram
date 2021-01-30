@@ -17,7 +17,7 @@ import { useSearchForm } from "./hook";
 //import AgeSelect from "../../../component/FormElements/AgeSelect";
 import { searchPhotoFormTitle } from "../../../config";
 //import { setSearchStateAC } from "../../store/action/search";
-import { fromFormDataToState } from "./helper";
+import { fromFormDataToState, makeOptionsForAgeSelect } from "./helper";
 import classes from "./SearchPhotoForm.module.scss";
 import Button from "../../../component/Button";
 import Select from "../../../component/FormElements/Select";
@@ -29,38 +29,7 @@ interface SearchPhotoFormProps {
   setSearchState: (state: ISearchState) => void | undefined;
 }
 
-/* const useStyles = makeStyles({
-  root: {
-    minWidth: "350px",
-    maxWidth: "650px",
-  },
-  title: {
-    textAlign: "center",
-    //textTransform: "uppercase",
-    paddingBottom: "15px",
-  },
-  tags: {
-    width: "100%",
-    paddingBottom: "15px",
-  },
-  ages: {
-    width: "100%",
-    paddingBottom: "25px",
-  },
-  submit: {
-    paddingTop: "6px",
-  },
-  fieldset: {
-    paddingTop: "10px",
-  },
-  formGroup: {
-    display: "flex",
-    flexWrap: "wrap",
-    flexDirection: "row",
-    flexGrow: 0,
-    flexShrink: 0,
-  },
-}); */
+const optionsInfo = makeOptionsForAgeSelect();
 
 export const SearchPhotoForm = ({
   state,
@@ -98,11 +67,7 @@ export const SearchPhotoForm = ({
           onChange={onAgeSelectChange}
           name="age"
           disabled={false}
-          options={[
-            { value: "-1", label: "Любой" },
-            { value: "1", label: "1 год" },
-            { value: "2", label: "2 года" },
-          ]}
+          options={optionsInfo}
         />
       </div>
 
@@ -122,22 +87,5 @@ export const SearchPhotoForm = ({
     </form>
   );
 };
-
-/* const mapStateToProps = (state: IGlobalState) => {
-  return {
-    state: state.search,
-    tagsData: state.tags.tags,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    setSearchState: (state: ISearchState) => {
-      dispatch(setSearchStateAC(state));
-    },
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchPhotoForm); */
 
 export default SearchPhotoForm;

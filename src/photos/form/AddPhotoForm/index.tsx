@@ -1,30 +1,22 @@
 import React from "react";
-import { useAddPhoto } from "../../store/hook";
-import AddPhotoFormWidget, { IAddPhotoFormData } from "./AddPhotoForm";
-import { useAddPhotoForm } from "./hook";
+import { useSelector } from "react-redux";
+import { useAddPhotoReqs } from "../../hook/requests/useAddPhotoReqs";
+import AddPhotoFormWidget from "./AddPhotoForm";
+//import { useAddPhotoForm } from "./hook";
 
 export const AddPhotoForm = () => {
-  const { tagsData, userUID, showAlert } = useAddPhotoForm();
+  const tagsData = useSelector<IGlobalState, TTagsData | undefined>(
+    (state) => state.tags.tags
+  );
 
-  const { addPhoto, loading } = useAddPhoto();
-
-  const onSuccess = () => {
-    showAlert("Фото успешно загружено.", "success");
-  };
-
-  const onError = () => {
-    showAlert("Какая-то ошибка. Попробуйте позже.", "error");
-  };
-
-  const addPhotoFinal = (formData: IAddPhotoFormData) =>
-    addPhoto(formData, userUID, onSuccess, onError);
+  const { start: startReq, loading } = useAddPhotoReqs();
 
   console.log("[RENDER ADD FORM]");
 
   return (
     <AddPhotoFormWidget
       uploadLoading={loading}
-      addPhoto={addPhotoFinal}
+      addPhoto={startReq}
       tagsData={tagsData}
     />
   );

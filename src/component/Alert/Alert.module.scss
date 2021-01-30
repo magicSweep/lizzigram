@@ -9,15 +9,16 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 6px 20px;
+  padding: 10px 20px;
   pointer-events: auto;
-  background-color: white;
+
   border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.22) 0px 25.6px 57.6px 0px,
     rgba(0, 0, 0, 0.18) 0px 4.8px 14.4px 0px;
   /*   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
     0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
  */
+
   .content {
     //border-radius: 2px;
     box-sizing: border-box;
@@ -60,6 +61,22 @@
   .closeButton {
     //padding-right: 20px;
   }
+}
+
+.error-bg {
+  background-color: #ffdfdf;
+}
+
+.success-bg {
+  background-color: #e0fdd7;
+}
+
+.warning-bg {
+  background-color: #ffedd8;
+}
+
+.info-bg {
+  background-color: #f0f9ff;
 }
 
 /* .backDrop {

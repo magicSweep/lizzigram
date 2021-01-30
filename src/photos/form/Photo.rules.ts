@@ -33,6 +33,7 @@ export const dateRules = {
       const minDate = new Date("2018-07-07");
       const maxDate = new Date();
       const date = new Date(value);
+      //@ts-ignore
       if (!isDate(date, "dd/MM/yyyy")) return "Некорректная дата.";
 
       if (date < minDate) return "Раньше 2018-07-08?";

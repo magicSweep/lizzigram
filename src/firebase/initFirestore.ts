@@ -4,10 +4,10 @@ import { photosCollectionName, tagsCollectionName } from "../config";
 
 //CONFIG FIREBASE
 
-export let db;
+export let db: firebase.firestore.Firestore;
 
-export let photosCollection;
-export let tagsCollection;
+export let photosCollection: firebase.firestore.CollectionReference;
+export let tagsCollection: firebase.firestore.CollectionReference;
 
 export const getFirestoreDb = () => {
   /* if (typeof window !== "undefined") {
@@ -27,11 +27,15 @@ const setFirestoreDb = () => {
   }
 };
 
-export const getPhotosCollection = () => {
+export const getPhotosCollection = (iphotoCollectionName?: string) => {
   setFirestoreDb();
 
+  const name = iphotoCollectionName
+    ? iphotoCollectionName
+    : photosCollectionName;
+
   if (!photosCollection) {
-    photosCollection = db.collection(photosCollectionName);
+    photosCollection = db.collection(name);
     tagsCollection = db.collection(tagsCollectionName);
   }
 

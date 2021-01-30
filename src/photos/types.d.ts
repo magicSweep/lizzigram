@@ -1,6 +1,15 @@
 //import { IPhoto } from "./../types";
 //import { Action } from "redux";
 
+// PHOTO_SUBSCRIBER
+/* 
+interface ISubscribeInfo {
+  unsubscribe: () => void;
+  isInit: boolean;
+} */
+
+// END PHOTO_SUBSCRIBER
+
 // STORE
 
 // SEARCH
@@ -76,6 +85,7 @@ interface IPhotosAction extends Action<TPhotosActionTypes> {
   photoId?: string;
   hasNextPage?: boolean;
   nextPageDocRef?: any;
+  isLast?: boolean;
 }
 
 type TAllPhotosFetchFunc = (searchTerms: any) => (dispatch: any) => void;
@@ -124,14 +134,14 @@ interface IEditPhotoData {
 
 interface IEditPhotoFormData {
   desc?: string;
-  date?: Date;
+  date?: string;
   photoFile?: FileList;
   tags?: { [name: string]: boolean };
 }
 
 interface IAddPhotoFormData {
   desc: string;
-  date: Date;
+  date: string;
   photoFile: FileList;
   tags: { [name: string]: boolean };
 }

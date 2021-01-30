@@ -21,9 +21,9 @@ export const useCarouselOpacity = (
   const [state, setState] = useState(() => {
     controllerRef.current = new CarouselOpacityController(itemsLength);
 
-    if (activeIndex) {
-      initState.activeIndex = activeIndex;
-    }
+    initState.activeIndex = activeIndex;
+
+    //console.log("!!! INIT CAROUSEL STATE 1", initState.activeIndex);
 
     return initState;
   });
@@ -34,7 +34,14 @@ export const useCarouselOpacity = (
   controllerRef.current.activeItemRef = useRef(null);
 
   controllerRef.current.setState = setState;
+
   controllerRef.current.activeIndex = state.activeIndex;
+
+  /* console.log(
+    "!!! INIT CAROUSEL STATE 2",
+    state.activeIndex,
+    controllerRef.current.activeIndex
+  ); */
   //controllerRef.current.isTranslated = state.isTranslated;
   //controllerRef.current.opacity = state.opacity;
 

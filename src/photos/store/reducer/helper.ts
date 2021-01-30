@@ -8,6 +8,8 @@ export const onFetchMorePhotosRequestSuccess = (
   //@ts-ignore
   const photos: TPhotosData = new Map([...state.photos, ...action.photos]);
 
+  //console.log("onFetchMorePhotosRequestSuccess", action, state, photos);
+
   return {
     ...state,
     photos,

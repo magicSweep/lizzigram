@@ -48,22 +48,18 @@ const Template = (args: any) => <PhotoDesc {...args} />;
 
 export const Default = Template.bind({});
 (Default as any).args = {
-  tagsState: {
-    tags: tagsData,
-    error: false,
-    loading: false,
-  },
+  tags: tagsData,
+  error: false,
+  loading: false,
   photo,
   showEditPhotoForm: () => console.log("SHOW EDIT PHOTO FORM"),
 };
 
 export const WithDesc = Template.bind({});
 (WithDesc as any).args = {
-  tagsState: {
-    tags: tagsData,
-    error: false,
-    loading: false,
-  },
+  tags: tagsData,
+  error: false,
+  loading: false,
   photo: {
     id: "123ic",
     photo: {
@@ -80,22 +76,18 @@ export const WithDesc = Template.bind({});
 
 export const LoadingTags = Template.bind({});
 (LoadingTags as any).args = {
-  tagsState: {
-    tags: tagsData,
-    error: false,
-    loading: true,
-  },
+  tags: tagsData,
+  error: false,
+  loading: true,
   photo,
   showEditPhotoForm: () => console.log("SHOW EDIT PHOTO FORM"),
 };
 
 export const ErrorTags = Template.bind({});
 (ErrorTags as any).args = {
-  tagsState: {
-    tags: tagsData,
-    error: true,
-    loading: false,
-  },
+  tags: tagsData,
+  error: true,
+  loading: false,
   photo,
   showEditPhotoForm: () => console.log("SHOW EDIT PHOTO FORM"),
 };

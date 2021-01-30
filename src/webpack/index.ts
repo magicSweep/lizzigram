@@ -114,7 +114,11 @@ class Webpack {
         hot: true,
         //compress: true,
         //port: 80
-        headers: { "Access-Control-Allow-Origin": "*" },
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods":
+            "GET,HEAD,PUT,PATCH,POST,DELETE, OPTIONS",
+        },
       };
     } else {
       config.optimization = getOptimization();

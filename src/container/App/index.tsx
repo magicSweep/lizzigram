@@ -7,13 +7,20 @@ import classes from "./App.module.scss";
 //import Input from "../../component/FormElements/BaseInput";
 import Layout from "../partial/Layout";
 import Photos from "../../photos/container/Photos";
+import NotAuth from "../../component/NotAuth";
+
+import firebase from "firebase/app";
+import { photosCollectionName, limitPhotosPerQuery } from "../../config";
+import { getFirestoreDb } from "../../firebase/initFirestore";
+
+//import GetFirestorePhotos from "../../photos/test/GetFirestorePhotos";
 
 //import HelloButton from "./../Button";
 
 //const LoadableAuth = React.lazy(() => import("../../component/Auth"));
 
 const App = () => {
-  const [show, setShow] = useState(false);
+  //const [show, setShow] = useState(false);
 
   /* useEffect(() => {
     setTimeout(() => setShow(true), 3000);
@@ -21,6 +28,9 @@ const App = () => {
 
   return (
     <Layout>
+      {/*  <GetFirestorePhotos /> */}
+      <NotAuth />
+
       <Photos />
       {/*  {show && (
         <Suspense fallback={<div>Loading...</div>}>

@@ -16,12 +16,12 @@ interface IAddPhotoFormProps {
   addPhoto: (formData: IAddPhotoFormData) => void;
 }
 
-export interface IAddPhotoFormData {
+/* export interface IAddPhotoFormData {
   desc: string;
   date: Date;
   photoFile: FileList;
   tags: { [name: string]: boolean };
-}
+} */
 
 export const registerInfo = [
   { name: "tags", rules: tagsRules },

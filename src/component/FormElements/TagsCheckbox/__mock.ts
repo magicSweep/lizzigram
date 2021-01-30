@@ -17,13 +17,28 @@
 ]); */
 
 export const tagsData = new Map([
-  ["bCcRcxADj2xP9fkSXNpH", { title: "зюганов", name: "zuganov" }],
-  ["vekwWqVY1yYRd3XeERmd", { name: "pets", title: "с животными" }],
-  ["rNNyXhgNJUjsbGFzVGAL", { title: "на улице", name: "street" }],
-  ["WX6CY5kGx4FXvdZR6g8E", { name: "smile", title: "улыбка" }],
-  ["ieYx4ke8ms0DJb5APv4u", { title: "задумчиво", name: "thoughtfully" }],
-  ["ybrq9aFZlTk71akoH7Lz", { title: "дома", name: "home" }],
-  ["fYZ3uqG1vBLFH75Y0rjM", { title: "на природе", name: "nature" }],
+  [
+    "bCcRcxADj2xP9fkSXNpH",
+    { title: "зюганов", name: "zuganov", type: "feeling" },
+  ],
+  [
+    "vekwWqVY1yYRd3XeERmd",
+    { name: "pets", title: "с животными", type: "withWho" },
+  ],
+  [
+    "rNNyXhgNJUjsbGFzVGAL",
+    { title: "на улице", name: "street", type: "where" },
+  ],
+  ["WX6CY5kGx4FXvdZR6g8E", { name: "smile", title: "улыбка", type: "feeling" }],
+  [
+    "ieYx4ke8ms0DJb5APv4u",
+    { title: "задумчиво", name: "thoughtfully", type: "feeling" },
+  ],
+  ["ybrq9aFZlTk71akoH7Lz", { title: "дома", name: "home", type: "where" }],
+  [
+    "fYZ3uqG1vBLFH75Y0rjM",
+    { title: "на природе", name: "nature", type: "where" },
+  ],
 ]);
 
 export const state = {

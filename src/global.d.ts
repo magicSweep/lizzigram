@@ -1,4 +1,4 @@
-type TColorProp = "primary" | "secondary" | "disabled";
+type TColorProp = "primary" | "secondary" | "info" | "warning" | "disabled";
 
 declare module "*.module.scss" {
   interface IClassNames {

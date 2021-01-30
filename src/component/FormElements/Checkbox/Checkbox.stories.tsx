@@ -29,6 +29,7 @@ export const Default = Template.bind({});
 (Default as any).args = {
   label: "на природе",
   id: "checkbox1234",
+  type: "feeling",
   checked: false,
   onChange: (event: any) => console.log("change"),
   name: "checkbox-input",

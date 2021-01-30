@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../../component/Button";
 //import "firebase/firebase-firestore";
 import { getAll, generateAndSavePhotosData } from "../helper";
+import { testPhotosCollectionName } from "../../config";
 //import Button from "@material-ui/core/Button";
 
 import { getFirestoreDb } from "./../../firebase/initFirestore";
@@ -15,7 +16,7 @@ const GenerateTab = () => {
           const tags = await getAll(getFirestoreDb().collection("tags"));
 
           await generateAndSavePhotosData(
-            getFirestoreDb().collection("photos"),
+            getFirestoreDb().collection(testPhotosCollectionName),
             tags
           );
 

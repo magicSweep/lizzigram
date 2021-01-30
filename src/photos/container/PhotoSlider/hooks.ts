@@ -1,16 +1,18 @@
 import { useSelector } from "react-redux";
-import { usePhotos } from "../../store/hook";
-import { IGlobalState } from "./../../../store/types";
+import { usePhotos } from "../../hook/usePhotos";
 
 export const usePhotoSlider = () => {
-  const { photoState, loadMore } = usePhotos();
+  const { photos, loading, hasNextPage, error, loadMore } = usePhotos();
 
   const initActiveIndex = useSelector<IGlobalState, number>(
-    state => state.modal.initActiveIndex
+    (state) => state.modal.initActiveIndex
   );
 
   return {
-    photoState,
+    photos,
+    loading,
+    hasNextPage,
+    error,
     loadMore,
     initActiveIndex,
   };

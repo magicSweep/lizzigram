@@ -19,6 +19,13 @@ export interface IPhotoCardProps extends IBase64ImageProps {
 
 const PhotoCard: FC<IPhotoCardProps> = (props) => {
   const isEditable = props.isEditable === undefined ? false : props.isEditable;
+
+  const photo: IPhoto = {
+    ...props.photo,
+    srcSet: "",
+    src: props.photo.iconSrc,
+  };
+
   return (
     <div
       key={classes.container + props.index}
@@ -31,6 +38,7 @@ const PhotoCard: FC<IPhotoCardProps> = (props) => {
         wrapperWidth={320}
         wrapperAspectRatio={1.8}
         {...props}
+        photo={photo}
       />
 
       {isEditable && (

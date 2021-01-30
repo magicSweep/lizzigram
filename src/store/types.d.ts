@@ -57,10 +57,13 @@ interface IModalState {
   photo: TPhotoData | undefined;
 }
 
+type TTagType = "where" | "withWho" | "feeling";
+
 interface ICheckboxItemData {
   //_id: string;
   title: string;
   name: string;
+  type: TTagType;
 }
 
 type TTagsData = Map<string, ICheckboxItemData>;

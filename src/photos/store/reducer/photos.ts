@@ -63,14 +63,14 @@ const reducer: Reducer<IPhotosState, IPhotosAction> = (
     case "ADD_PHOTO_REQUEST_SUCCESS":
       return {
         ...state,
-        addLoading: false,
+        addLoading: action.isLast ? false : true,
         addError: false,
       };
     case "ADD_PHOTO_REQUEST_ERROR":
       return {
         ...state,
-        addLoading: false,
-        addError: true,
+        addLoading: action.isLast ? false : true,
+        addError: action.isLast ? false : true,
       };
 
     case "EDIT_PHOTO_START_REQUEST":
@@ -89,21 +89,21 @@ const reducer: Reducer<IPhotosState, IPhotosAction> = (
         return {
           ...state,
           photos: newPhotos2,
-          editLoading: false,
+          editLoading: action.isLast ? false : true,
           editError: false,
         };
       } else {
         return {
           ...state,
-          editLoading: false,
+          editLoading: action.isLast ? false : true,
           editError: false,
         };
       }
     case "EDIT_PHOTO_REQUEST_ERROR":
       return {
         ...state,
-        editLoading: false,
-        editError: true,
+        editLoading: action.isLast ? false : true,
+        editError: action.isLast ? false : true,
       };
 
     case "ADD_PHOTO":
@@ -112,27 +112,27 @@ const reducer: Reducer<IPhotosState, IPhotosAction> = (
       if (action.photo === undefined)
         throw new Error("No photo in add photo action");
 
-      const newPhotos = new Map([
-        [action.photo.id, action.photo.photo],
-        //@ts-ignore
-        ...state.photos,
-      ]);
       return {
         ...state,
-        photos: newPhotos as Map<string, IPhoto>,
+        photos: new Map([
+          [action.photo.id, action.photo.photo],
+          //@ts-ignore
+          ...state.photos,
+        ]),
       };
 
     case "EDIT_PHOTO":
       if (state.photos === undefined || action.photo === undefined)
         throw new Error("No photo state or photo on action");
-      const photos1 = state.photos;
-      photos1.set(action.photo.id, action.photo.photo);
-      const newPhotos1 = new Map(photos1);
+      //const photos1 = state.photos;
+      //photos1.set(action.photo.id, action.photo.photo);
+      //const newPhotos1 = new Map([...state.photos, ...action.photos]);
+      state.photos.set(action.photo.id, action.photo.photo);
 
-      console.log("EDIT_PHOTO", newPhotos1);
+      //console.log("EDIT_PHOTO", newPhotos1);
       return {
         ...state,
-        photos: newPhotos1,
+        photos: new Map(state.photos),
       };
 
     case "DELETE_PHOTO":

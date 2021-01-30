@@ -1,13 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { showEditFormAC } from "../../../store";
-import { useTags } from "../../../store/hooks";
-//import { IGlobalState, ITagsState } from "../../../store/types";
-import { TPhotoData } from "../../types";
+import { useTags } from "../../../hooks/useTags";
 
 export const usePhotoDesc = () => {
   const dispatch = useDispatch();
 
-  const { tagsState } = useTags();
+  const { tags, error, loading } = useTags();
 
   /* const photo = useSelector<IGlobalState, TPhotoData>(
     state => state.modal.photo
@@ -18,7 +16,9 @@ export const usePhotoDesc = () => {
 
   return {
     //photo,
-    tagsState,
+    tags,
+    error,
+    loading,
     showEditPhotoForm,
   };
 };

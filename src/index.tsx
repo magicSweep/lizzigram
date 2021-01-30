@@ -3,7 +3,13 @@ import ReactDOM from "react-dom";
 import ErrorBoundary from "./component/ErrorBoundary";
 import App from "./container/App";
 
-import { createStore, combineReducers, applyMiddleware, compose } from "redux";
+import {
+  createStore,
+  combineReducers,
+  applyMiddleware,
+  compose,
+  Middleware,
+} from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
@@ -26,7 +32,21 @@ const reducer = combineReducers({
 
 const composeEnhancers = compose;
 
-const middleware = [thunk]; //sagaMiddleware, thunk
+/**
+ * Logs all actions and states after they are dispatched.
+ */
+const logger: Middleware<any, {}, any> = (store) => (next) => (action) => {
+  console.group(action.type);
+  console.info("DISPATCHING");
+  console.info("ACTION", action);
+  console.info("PREV STORE", store.getState());
+  let result = next(action);
+  console.log("NEW STORE", store.getState());
+  console.groupEnd();
+  return result;
+};
+
+const middleware = [thunk, logger]; //sagaMiddleware, thunk
 
 const store = createStore(
   reducer,

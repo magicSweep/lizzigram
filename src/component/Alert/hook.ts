@@ -9,7 +9,9 @@ export const useAlert = () => {
     (state) => state.alert
   );
 
-  const hideAlert = () => dispatch(hideAlertAC());
+  const hideAlert = (event: any) => {
+    dispatch(hideAlertAC());
+  };
 
   return {
     alertState,

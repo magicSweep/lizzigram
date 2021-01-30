@@ -25,48 +25,13 @@ const _refSpinner = <Spinner />;
 
 const ISpinner = () => _refSpinner;
 
-/* END FINAL COMPONENTS */
-
-/* const useStyles = makeStyles({
-  root: {
-    width: "100%",
-    height: "100%",
-    backgroundColor: "black",
-  },
-  showDescButton: {
-    position: "absolute",
-    top: "100px",
-    right: "10px",
-    zIndex: 1310,
-  },
-  backdrop: {
-    zIndex: 1311,
-    color: "#fff",
-  },
-  itemContainer: {
-    position: "relative",
-    width: "100%",
-    height: "100%",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  loading: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    height: "100%",
-    backgroundColor: "rgba(100, 100, 100, 0.603)",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-}); */
-
 interface PhotoSliderProps {
   initActiveIndex?: number;
-  photoState: IPhotosState;
+  //photoState: IPhotosState;
+  photos: TPhotosData | undefined;
+  loading: boolean;
+  hasNextPage: boolean;
+  error: boolean;
   loadMorePhotos: () => void;
 }
 
@@ -156,7 +121,11 @@ interface IDescState {
 
 const PhotoSlider = ({
   initActiveIndex = 0,
-  photoState,
+  //photoState,
+  photos,
+  loading,
+  hasNextPage,
+  error,
   loadMorePhotos,
 }: PhotoSliderProps) => {
   //const classes = useStyles();
@@ -167,7 +136,7 @@ const PhotoSlider = ({
   });
 
   //TODO: on error show alert
-  const length = photoState.photos ? photoState.photos.size : 1;
+  const length = photos ? photos.size : 1;
 
   const { controller } = useCarouselOpacity(length, initActiveIndex);
 
@@ -186,7 +155,7 @@ const PhotoSlider = ({
       prevLoadingRef.current.length - controller.activeIndex === 1 &&
       prevLoadingRef.current.isData === true &&
       prevLoadingRef.current.isLoading === true &&
-      photoState.loading === false
+      loading === false
     ) {
       //console.log("[ON COMPLETED FETCH MORE] ", prevLoadingRef);
       prevLoadingRef.current = {
@@ -196,24 +165,25 @@ const PhotoSlider = ({
       };
 
       controller.onIncreaseIndex(undefined);
+
+      //console.log("---- INCREASE INDEX");
     }
 
     prevLoadingRef.current = {
-      isData: photoState.photos ? true : false,
-      isLoading: photoState.loading,
+      isData: photos ? true : false,
+      isLoading: loading,
       length,
     };
-  }, [photoState.loading]);
+  }, [loading]);
 
   const onShowDesc = () => {
-    if (photoState.photos === undefined)
-      throw new Error("No photos in photo state...");
+    if (photos === undefined) throw new Error("No photos in photo state...");
 
-    const photoIds = [...photoState.photos.keys()];
+    const photoIds = [...photos.keys()];
 
     const id = photoIds[controller.activeIndex];
 
-    const photo: IPhoto = photoState.photos.get(id) as any;
+    const photo: IPhoto = photos.get(id) as any;
 
     //console.log("onShowDesc", id, photo);
 
@@ -231,7 +201,7 @@ const PhotoSlider = ({
   };
 
   const onFetchMore =
-    photoState.photos && photoState.hasNextPage
+    photos && hasNextPage
       ? () => {
           console.log("loadMorePhotos");
           loadMorePhotos();
@@ -244,7 +214,7 @@ const PhotoSlider = ({
     "[PHOTO SLIDER WIDGET] RENDER",
     initActiveIndex,
     controller.activeIndex,
-    photoState.loading
+    loading
   );
   return (
     <div className={classes.root}>
@@ -260,13 +230,13 @@ const PhotoSlider = ({
         {useMemo(
           () =>
             getCarouselItems(
-              photoState.photos as TPhotosData,
-              photoState.loading,
-              photoState.error,
+              photos as TPhotosData,
+              loading,
+              error,
               controller.activeIndex,
               classes
             ),
-          [photoState.photos, photoState.loading, photoState.error]
+          [photos, loading, error]
         )}
       </CarouselOpacity>
       {/* <Backdrop className={classes.backdrop} open={photoState.loading}>

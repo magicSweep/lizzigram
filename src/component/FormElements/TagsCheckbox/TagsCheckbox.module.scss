@@ -11,7 +11,8 @@
     justify-content: space-around;
     //flex-grow: 0;
     //flex-shrink: 0;
-    border: 1px solid $font-primary;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
   }
 }

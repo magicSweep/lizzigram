@@ -5,7 +5,7 @@ export const millisecondsToYears = (mSeconds: number) => {
 };
 
 export const getLizzyYearsOld = () => {
-  const birthday = new Date(2018, 7, 8);
+  const birthday = new Date("2018-07-07");
 
   const now = new Date();
 
@@ -15,9 +15,15 @@ export const getLizzyYearsOld = () => {
 };
 
 export const getYearsOld = (date: Date) => {
-  const birthday = new Date(2018, 7, 8);
+  const birthday = new Date("2018-07-07");
+
+  //console.log("Date", date.getTime(), birthday.getTime());
 
   const mSeconds = date.getTime() - birthday.getTime();
+
+  //console.log("mSeconds", mSeconds);
+
+  //console.log("result", mSeconds / 31536000000);
 
   return millisecondsToYears(mSeconds);
 };

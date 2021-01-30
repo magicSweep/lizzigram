@@ -10,11 +10,7 @@ import {
   dateRules,
   tagsRules,
 } from "../Photo.rules";
-import {
-  getChangedData,
-  getDefaultTagsIds,
-  getDefaultPhotoDate,
-} from "./helper";
+import { getDefaultTagsIds, getDefaultPhotoDate } from "./helper";
 //import { connect } from "react-redux";
 //import { saveEditedPhoto } from "../../controller";
 //import { IGlobalState } from "../../../store/types";
@@ -26,12 +22,12 @@ import {
 import { editPhotoFormTitle } from "../../../config";
 import classes from "./EditPhotoForm.module.scss";
 
-export interface IEditPhotoFormData {
+/* export interface IEditPhotoFormData {
   desc?: string;
   date?: Date;
   photoFile?: FileList;
   tags?: { [name: string]: boolean };
-}
+} */
 
 interface EditPhotoFormProps {
   prevPhoto: TPhotoData | undefined;
@@ -40,8 +36,7 @@ interface EditPhotoFormProps {
 
   //searchState?: ISearchState;
   uploadLoading: boolean;
-  editPhoto: (photoId: string, formData: IEditPhotoFormData) => void;
-  showAlert: (message: string, type: TAlertType) => void;
+  editPhoto: (formData: IEditPhotoFormData) => void;
   /* onSuccessUpload?: (
     editPhotoData: any //IEditPhotoResponseToClient
   ) => void | undefined;
@@ -68,7 +63,6 @@ export const EditPhotoForm: FC<EditPhotoFormProps> = ({
   ///userUID,
   editPhoto,
   uploadLoading,
-  showAlert,
   /*  onSuccessUpload,
   onUploadError, */
   tagsData,
@@ -80,27 +74,9 @@ export const EditPhotoForm: FC<EditPhotoFormProps> = ({
   const defaultTagsIds = getDefaultTagsIds(prevPhoto.photo);
 
   const submit = (formData: IEditPhotoFormData) => {
-    const { photoFile, desc, date, tags } = formData;
+    console.log("SUBMIT");
 
-    //we check if desc or date is equal original we make it undefined
-    const changedData = getChangedData(
-      prevPhoto.photo,
-      tags,
-      desc,
-      date,
-      photoFile
-    );
-
-    console.log("SUBMIT", changedData, prevPhoto.id);
-
-    if (!changedData) {
-      //show alert with message nothing to change
-      showAlert("Вы ничего не изменили.", "error");
-      console.log("Nothing to change");
-      //showAlert();
-      return;
-    }
-    editPhoto(prevPhoto.id, changedData);
+    editPhoto(formData);
   };
 
   const defaultPhotoDate = getDefaultPhotoDate(

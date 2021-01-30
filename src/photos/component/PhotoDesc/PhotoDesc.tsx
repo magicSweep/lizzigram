@@ -6,29 +6,44 @@ import TagsSkeletons from "../../../fcomponent/TagsSkeletons";
 import Button from "../../../component/Button";
 import styles from "./../../../styles/classes.module.scss";
 import TagWidget from "../../../fcomponent/TagWidget";
+import { numberOfTagsByPhoto } from "../../../config";
 
 interface PhotoDescProps {
-  /* 
-  tags?: TTagsData;
-  tagsError?: boolean;
-  tagsLoading?: boolean; */
+  tags: TTagsData | undefined;
+  error: boolean;
+  loading: boolean;
   photo: TPhotoData;
-  tagsState: ITagsState;
+  //tagsState: ITagsState;
   showEditPhotoForm: (photo: TPhotoData) => void;
 }
 
-export const getTags = (
-  tagsState: ITagsState,
-  photoTags: { [id: string]: boolean },
+const tagTypeToColor = (tagType: TTagType): TColorProp => {
+  switch (tagType) {
+    case "withWho":
+      return "secondary";
+    case "where":
+      return "warning";
+    case "feeling":
+      return "info";
 
+    default:
+      throw new Error(`No implementation for type - ${tagType}`);
+  }
+};
+
+export const getTags = (
+  tags: TTagsData | undefined,
+  error: boolean,
+  loading: boolean,
+  photoTags: { [id: string]: boolean },
   classes: any
 ) => {
   let content = null;
 
-  if (tagsState.loading) {
+  if (loading) {
     content = (
       <ul className={classes.tagsContainer}>
-        <TagsSkeletons numberOfSkeletons={4} />
+        <TagsSkeletons numberOfSkeletons={numberOfTagsByPhoto} />
       </ul>
     );
     /* content = (
@@ -36,7 +51,7 @@ export const getTags = (
         <TagsSkeletons numberOfSkeletons={4} />
       </div>
     ); */
-  } else if (tagsState.error) {
+  } else if (error) {
     //content = <p className={classes.error}> Упс, тэги не загрузились...</p>;
     content = (
       <ul className={classes.tagsContainer}>
@@ -46,15 +61,16 @@ export const getTags = (
       </ul>
     );
   } else {
-    let tags = getPhotoTags(
-      tagsState.tags ? tagsState.tags : new Map(),
-      photoTags
-    );
+    console.log("getTags", loading, error, tags);
+    if (tags === undefined) throw new Error("No tags");
 
-    const tagsElements = tags.map((tag, index) => {
+    let tagsData = getPhotoTags(tags, photoTags);
+
+    const tagsElements = tagsData.map((tag, index) => {
+      const color = tagTypeToColor(tag.type);
       return (
         <li key={`${tag.id}_${index}`} className={classes.tags}>
-          <TagWidget label={tag.title} color="secondary" />
+          <TagWidget label={tag.title} color={color} />
         </li>
       );
     });
@@ -72,11 +88,11 @@ export const getTags = (
 
 export const PhotoDesc = ({
   //photo,
-  /*  tags,
-  tagsError,
-  tagsLoading, */
+  tags,
+  error,
+  loading,
   photo,
-  tagsState,
+  //tagsState,
   showEditPhotoForm,
 }: PhotoDescProps) => {
   //const classes = useStyles();
@@ -86,7 +102,7 @@ export const PhotoDesc = ({
   const paragraphClasses = `${styles.paragraphFont} ${classes.paragraph}`;
 
   //console.log("[PRE RENDER PHOTO DESC] ", date, typeof date);
-  const tagsElements = getTags(tagsState, photo.photo.tags, classes);
+  const tagsElements = getTags(tags, error, loading, photo.photo.tags, classes);
 
   const finalDate = getDate(photo.photo.date);
 

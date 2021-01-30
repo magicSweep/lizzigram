@@ -66,7 +66,7 @@ export const forgetPassRequestErrorAC = (): IAuthAction => {
   };
 }; */
 
-export const loginAC = (onError?: Function, onSuccess?: Function) => {
+/* export const loginAC = (onError?: Function, onSuccess?: Function) => {
   return async (dispatch: any) => {
     try {
       dispatch(loginRequestAC());
@@ -85,7 +85,7 @@ export const loginAC = (onError?: Function, onSuccess?: Function) => {
           .doc(user.uid)
           .get();
         isEditor = res.exists;
-      } */
+      } /
 
       dispatch(loginRequestSuccessAC());
       if (onSuccess) onSuccess();
@@ -94,7 +94,7 @@ export const loginAC = (onError?: Function, onSuccess?: Function) => {
       dispatch(loginRequestErrorAC());
     }
   };
-};
+}; */
 
 /* 
 export const loginAC = (
@@ -130,12 +130,11 @@ export const loginAC = (
   };
 }; */
 
-export const logoutAC = (onError?: Function, onSuccess?: Function) => {
+/* export const logoutAC = (onError?: Function, onSuccess?: Function) => {
   return async (dispatch: any) => {
     try {
       dispatch(logoutRequestAC());
 
-      //TODO request to auth to firebase
       await firebase.auth().signOut();
 
       localStorage.removeItem(authLocalStorageKey);
@@ -148,7 +147,7 @@ export const logoutAC = (onError?: Function, onSuccess?: Function) => {
       dispatch(logoutRequestErrorAC());
     }
   };
-};
+}; */
 
 /* export const forgetPassAC = (
   email: string,

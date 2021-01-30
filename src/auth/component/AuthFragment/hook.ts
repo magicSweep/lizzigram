@@ -1,46 +1,18 @@
-import { useDispatch } from "react-redux";
-import { logoutAC, loginAC } from "../../../auth/store/action";
-import { useAuth } from "../../../auth/hook/useAuth";
-//import { IGlobalState } from "./../../../store/types";
-//import { IUserResponseToClient } from "./../../../types";
-
-/*  user: state.auth.user,
-    loading: state.auth.loading,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    onLogin: () => dispatch(loginAC()),
-    logout: () => {
-      console.log("logout");
-      dispatch(logoutAC());
-    }, */
+import { useEditor } from "../../../auth/hook/useEditor";
+import { useLoginReq } from "../../hook/requests/useLoginReq";
+import { useLogoutReq } from "../../hook/requests/useLogoutReq";
 
 export const useHeader = () => {
-  const dispatch = useDispatch();
+  const { user, loading } = useEditor();
 
-  const { user, loading } = useAuth();
+  const { start: startLoginReq } = useLoginReq();
 
-  /* const { user, loading } = useSelector<
-    IGlobalState,
-    {
-      user: IUserResponseToClient;
-      loading: boolean;
-    }
-  >(state => ({
-    user: state.auth.user,
-    loading: state.auth.loading,
-  })); */
-
-  const logout = () => dispatch(logoutAC());
-
-  const login = () => dispatch(loginAC());
+  const { start: startLogoutReq } = useLogoutReq();
 
   return {
     user,
     loading,
-    logout,
-    login,
+    logout: startLogoutReq,
+    login: startLoginReq,
   };
 };

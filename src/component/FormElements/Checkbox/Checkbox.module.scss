@@ -13,9 +13,24 @@
   color: $font-secondary;
 }
 
-.label--checked {
+.label-primary--checked {
   border: 1px solid $primary;
   color: $primary;
+}
+
+.label-secondary--checked {
+  border: 1px solid $secondary;
+  color: $secondary;
+}
+
+.label-warning--checked {
+  border: 1px solid $warning;
+  color: $warning;
+}
+
+.label-info--checked {
+  border: 1px solid $info;
+  color: $info;
 }
 
 .label--disabled {

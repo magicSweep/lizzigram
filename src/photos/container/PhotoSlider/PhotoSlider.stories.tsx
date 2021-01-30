@@ -87,14 +87,14 @@ export const Default = () => {
   const [photoState, setPhotoState] = useState(initPhotoState);
 
   const fetchMore = async () => {
-    setPhotoState(state => ({
+    setPhotoState((state) => ({
       ...state,
       loading: true,
     }));
 
     const newPhotoData = await fetchPhoto(photoState.photos);
 
-    setPhotoState(state => ({
+    setPhotoState((state) => ({
       ...state,
       photos: newPhotoData,
       loading: false,
@@ -103,7 +103,14 @@ export const Default = () => {
 
   return (
     <Provider store={store}>
-      <PhotoSlider photoState={photoState as any} loadMorePhotos={fetchMore} />
+      <PhotoSlider
+        //photoState: IPhotosState;
+        photos={photoState.photos}
+        loading={photoState.loading}
+        hasNextPage={photoState.hasNextPage}
+        error={photoState.error}
+        loadMorePhotos={fetchMore}
+      />
     </Provider>
   );
 };

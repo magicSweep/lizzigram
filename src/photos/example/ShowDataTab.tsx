@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Button from "../../component/Button";
+import { testPhotosCollectionName } from "../../config";
 //import "firebase/firebase-firestore";
 import { getAll } from "../helper";
 import { getFirestoreDb } from "./../../firebase/initFirestore";
@@ -12,7 +13,7 @@ const ShowDataTab = () => {
         marginBottom: "20px",
       }}
     >
-      <h4>Show firestore data.</h4>
+      <h4>Firestore with native functions.</h4>
       <Button
         onClick={async () => {
           const tags = await getAll(getFirestoreDb().collection("tags"));
@@ -23,7 +24,9 @@ const ShowDataTab = () => {
 
       <Button
         onClick={async () => {
-          const photos = await getAll(getFirestoreDb().collection("photos"));
+          const photos = await getAll(
+            getFirestoreDb().collection(testPhotosCollectionName)
+          );
           console.log("[FIRESTORE] PHOTOS", photos);
         }}
         label="Get all photos to console."
@@ -36,7 +39,7 @@ const ShowDataTab = () => {
               ); */
 
           const result = await getFirestoreDb()
-            .collection("photos")
+            .collection(testPhotosCollectionName)
             .where("tags.Ql2r2DFzzjZnzP2adh9Z", "==", true)
             .where("yearsOld", "==", 0)
             .orderBy("date")

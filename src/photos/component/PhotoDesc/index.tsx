@@ -8,14 +8,16 @@ export interface IPhotoDescProps {
 }
 
 export const PhotoDesc: FC<IPhotoDescProps> = ({ photo }) => {
-  const { tagsState, showEditPhotoForm } = usePhotoDesc();
+  const { tags, error, loading, showEditPhotoForm } = usePhotoDesc();
 
   console.log("[RENDER PHOTO DESC] ");
 
   return (
     <PhotoDescWidget
       photo={photo}
-      tagsState={tagsState}
+      tags={tags}
+      loading={loading}
+      error={error}
       showEditPhotoForm={showEditPhotoForm}
     />
   );

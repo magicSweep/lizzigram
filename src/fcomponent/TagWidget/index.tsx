@@ -22,6 +22,16 @@ const TagWidget: FC<ITagWidgetProps> = ({ label, color }) => {
       frootClasses += ` ${styles.secondaryColorBorder}`;
       break;
 
+    case "warning":
+      flabelClasses += ` ${styles.warningColor}`;
+      frootClasses += ` ${styles.warningColorBorder}`;
+      break;
+
+    case "info":
+      flabelClasses += ` ${styles.infoColor}`;
+      frootClasses += ` ${styles.infoColorBorder}`;
+      break;
+
     case "disabled":
       flabelClasses += ` ${styles.disabledColor}`;
       frootClasses += ` ${styles.disabledBorder}`;

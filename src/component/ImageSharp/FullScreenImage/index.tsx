@@ -9,6 +9,20 @@ const getStyle = (isAspectRatio: boolean, aspectRatio: number) => {
   };
 };
 
+/* const getStyle = (isAspectRatio: boolean, aspectRatio: number) => {
+  const width = document.documentElement.clientWidth;
+  const height = document.documentElement.clientHeight;
+
+  return {
+    width: isAspectRatio
+      ? `${width}px`
+      : `${Math.floor(height * aspectRatio)}px`,
+    height: isAspectRatio
+      ? `${Math.floor(width * aspectRatio)}px`
+      : `${height}px`,
+  };
+}; */
+
 export interface IFullScreenImage extends IBase64ImageProps {}
 
 const FullScreenImage: FC<IFullScreenImage> = (props) => {

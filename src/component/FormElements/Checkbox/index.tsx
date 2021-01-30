@@ -4,7 +4,7 @@ import classes from "./Checkbox.module.scss";
 export interface ICheckboxProps {
   id: string;
   label: string;
-
+  type: TTagType;
   checked: boolean;
   inputRef?: any;
   name: string;
@@ -16,6 +16,7 @@ const Checkbox: FC<ICheckboxProps> = ({
   id,
   label,
   name,
+  type,
   checked,
   disabled,
   inputRef,
@@ -24,7 +25,22 @@ const Checkbox: FC<ICheckboxProps> = ({
   let labelClasses = classes.label;
 
   if (disabled) labelClasses += ` ${classes["label--disabled"]}`;
-  else if (checked) labelClasses += ` ${classes["label--checked"]}`;
+  else if (checked) {
+    switch (type) {
+      case "feeling":
+        labelClasses += ` ${classes["label-info--checked"]}`;
+        break;
+      case "where":
+        labelClasses += ` ${classes["label-warning--checked"]}`;
+        break;
+      case "withWho":
+        labelClasses += ` ${classes["label-secondary--checked"]}`;
+        break;
+
+      default:
+        throw new Error(`No implementation for type - ${type}`);
+    }
+  }
 
   return (
     <>
