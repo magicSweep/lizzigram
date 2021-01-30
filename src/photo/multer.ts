@@ -1,5 +1,5 @@
 import multer from "multer";
-import { IMulterRequest } from "../types";
+//import { IMulterRequest } from "../types";
 import { isValidUserUid, isValidID, isValidFile } from "./validator";
 import random from "lodash.random";
 

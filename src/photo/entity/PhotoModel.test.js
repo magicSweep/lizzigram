@@ -1,10 +1,10 @@
 import PhotoModel from "./PhotoModel";
 
 const pathsByWidths = new Map([
-  [400, "http://cloudinary.com/img_400.jpg"],
+  [320, "http://cloudinary.com/img_320.jpg"],
   [800, "http://cloudinary.com/img_800.jpg"],
-  [1200, "http://cloudinary.com/img_1200.jpg"],
-  [1900, "http://cloudinary.com/img_1900.jpg"],
+  [1280, "http://cloudinary.com/img_1200.jpg"],
+  [1920, "http://cloudinary.com/img_1900.jpg"],
   [3840, "http://cloudinary.com/img_3840.jpg"],
 ]);
 
@@ -89,10 +89,10 @@ describe("PhotoModel", () => {
     photoModel.setImageSrcAttrs(pathsByWidths);
 
     expect(photoModel.photo.src).toEqual(pathsByWidths.get(800));
-    expect(photoModel.photo.iconSrc).toEqual(pathsByWidths.get(400));
+    expect(photoModel.photo.iconSrc).toEqual(pathsByWidths.get(320));
 
     expect(photoModel.photo.srcSet).toEqual(
-      "http://cloudinary.com/img_400.jpg 400w, http://cloudinary.com/img_800.jpg 600w, http://cloudinary.com/img_1200.jpg 1000w, http://cloudinary.com/img_1900.jpg 1500w, http://cloudinary.com/img_3840.jpg 2200w"
+      "http://cloudinary.com/img_800.jpg 600w, http://cloudinary.com/img_1200.jpg 1000w, http://cloudinary.com/img_1900.jpg 1500w, http://cloudinary.com/img_3840.jpg 2300w"
     );
   });
 
@@ -108,11 +108,11 @@ describe("PhotoModel", () => {
       aspectRatio: 1.5,
       base64: "string64",
       files: ["ID234", "ID234"],
-      iconSrc: "http://cloudinary.com/img_400.jpg",
+      iconSrc: "http://cloudinary.com/img_320.jpg",
       isActive: true,
       src: "http://cloudinary.com/img_800.jpg",
       srcSet:
-        "http://cloudinary.com/img_400.jpg 400w, http://cloudinary.com/img_800.jpg 600w, http://cloudinary.com/img_1200.jpg 1000w, http://cloudinary.com/img_1900.jpg 1500w, http://cloudinary.com/img_3840.jpg 2200w",
+        "http://cloudinary.com/img_800.jpg 600w, http://cloudinary.com/img_1200.jpg 1000w, http://cloudinary.com/img_1900.jpg 1500w, http://cloudinary.com/img_3840.jpg 2300w",
     });
   });
 });

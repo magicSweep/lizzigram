@@ -1,11 +1,18 @@
 import admin from "firebase-admin";
 import { pathToFirestoreCredentials } from "../config";
 
-const serviceAccount = require(pathToFirestoreCredentials);
+//const serviceAccount = require(pathToFirestoreCredentials);
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+try {
+  admin.initializeApp({
+    credential: admin.credential.cert(pathToFirestoreCredentials),
+  });
+} catch (err) {
+  console.error(
+    "FIREBASE INIT ERROR",
+    err.message ? err.message : JSON.stringify(err)
+  );
+}
 
 export const db = admin.firestore();
 

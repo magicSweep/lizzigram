@@ -6,7 +6,7 @@
   TCloudinarySecureUrl,
 } from "../../types"; */
 import { UploadApiResponse } from "cloudinary";
-import { PHOTOS_FIRESTORE_COLLECTION_NAME } from "../../config";
+import { PHOTOS_FIRESTORE_COLLECTION_NAME, photoSizes } from "../../config";
 
 class PhotoModel {
   //cloudinaryInfoPhotosDiffWidths: Map<number, UploadApiResponse> = undefined;
@@ -171,20 +171,20 @@ class PhotoModel {
     //@ts-ignore
     for (let urlByWidth of photoCloudinaryUrlsByWidths) {
       switch (urlByWidth[0]) {
-        case 400:
-          result += `${urlByWidth[1]} ${urlByWidth[0]}w, `;
+        case 320:
+          //result += `${urlByWidth[1]} 400w, `;
           break;
         case 800:
           result += `${urlByWidth[1]} 600w, `;
           break;
-        case 1200:
+        case 1280:
           result += `${urlByWidth[1]} 1000w, `;
           break;
-        case 1900:
+        case 1920:
           result += `${urlByWidth[1]} 1500w, `;
           break;
         case 3840:
-          result += `${urlByWidth[1]} 2200w`;
+          result += `${urlByWidth[1]} 2300w`;
           break;
 
         default:
@@ -197,8 +197,8 @@ class PhotoModel {
     //this.photo.srcSet = result.slice(0, -2);
     this.photo.srcSet = result;
 
-    this.photo.src = photoCloudinaryUrlsByWidths.get(800);
-    this.photo.iconSrc = photoCloudinaryUrlsByWidths.get(400);
+    this.photo.src = photoCloudinaryUrlsByWidths.get(photoSizes[1].width);
+    this.photo.iconSrc = photoCloudinaryUrlsByWidths.get(photoSizes[0].width);
   };
 
   makeImageSizesAttr = (aspectRatio: number) => {

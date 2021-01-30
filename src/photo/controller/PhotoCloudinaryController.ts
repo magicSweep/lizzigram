@@ -1,6 +1,8 @@
 import ReSizedPhoto from "../helper/ReSizedPhoto";
 import PhotoModel from "../entity/PhotoModel";
 
+import { saveToGoogleDrive, updateGoogleDriveFile } from "./helper";
+
 import { NextFunction, Request, Response } from "express";
 //import { IErrorResponse, ISuccessResponse } from "../../types";
 import { db } from "./../../firestore";
@@ -17,8 +19,18 @@ export const addPhotoMiddleware = async (
 
   const file = req.file;
 
-  console.log("ADD PHOTO BODY", JSON.stringify(req.body));
-  console.log("ADD PHOTO FILE", JSON.stringify(req.file.originalname));
+  console.log(
+    "ADD PHOTO BODY",
+    JSON.stringify(req.body ? req.body : "No body")
+  );
+  console.log(
+    "ADD PHOTO FILE",
+    JSON.stringify(
+      req.file && req.file.originalname
+        ? req.file.originalname
+        : "No file original name"
+    )
+  );
 
   try {
     if (!req.body) throw new Error("Failed multer validation");
@@ -53,7 +65,8 @@ export const addPhotoMiddleware = async (
     photoResizer.removeTempPhotoDiffWidthsFiles();
 
     // SEND UPLOADED PHOTO TO GOOGLE DRIVE
-    photoResizer
+    saveToGoogleDrive(photoResizer, photoModel);
+    /* photoResizer
       .saveToGoogleDrive()
       .then((res) => {
         // ADD GOOGLE DRIVE ID TO FIRESTORE
@@ -63,10 +76,13 @@ export const addPhotoMiddleware = async (
 
         // REMOVE UPLOAD PHOTO
         photoResizer.removeUploadPhoto();
+
+        // REMOVE OPTIMIZED PHOTO
+        photoResizer.removeOptimizedPhoto();
       })
       .catch((err: Error) =>
         console.error(`Error on save photo to google drive`, err)
-      );
+      ); */
 
     // MAKE SUCCESS RESPONSE
     json = {
@@ -96,7 +112,7 @@ export const addPhotoMiddleware = async (
         );
       });
 
-    console.log("[ERROR ON ADD PHOTO]", JSON.stringify(err));
+    console.error("[ERROR ON ADD PHOTO]", JSON.stringify(err));
 
     next(err);
   }
@@ -154,15 +170,44 @@ export const editPhotoMiddleware = async (
       );
 
     // SEND UPLOADED PHOTO TO GOOGLE DRIVE
-    photoResizer
-      .updateGoogleDriveFile(photoModel.prevPhoto.googleDriveId)
-      .then((res) => {
-        // REMOVE UPLOAD PHOTO
-        photoResizer.removeUploadPhoto();
-      })
-      .catch((err: Error) =>
-        console.error(`Error on save photo to google drive`, err)
-      );
+    console.log("updateGoogleDriveFile", photoModel.prevPhoto.googleDriveId);
+    if (photoModel.prevPhoto.googleDriveId) {
+      console.log("updateGoogleDriveFile start", updateGoogleDriveFile);
+      updateGoogleDriveFile(photoResizer, photoModel.prevPhoto.googleDriveId);
+      /* photoResizer
+        .updateGoogleDriveFile(photoModel.prevPhoto.googleDriveId)
+        .then((res) => {
+          // REMOVE UPLOAD PHOTO
+          photoResizer.removeUploadPhoto();
+
+          // REMOVE OPTIMIZED PHOTO
+          photoResizer.removeOptimizedPhoto();
+        })
+        .catch((err: Error) =>
+          console.error(`Error on save photo to google drive`, err)
+        ); */
+    } else {
+      saveToGoogleDrive(photoResizer, photoModel);
+      /*  photoResizer
+        .saveToGoogleDrive()
+        .then((res) => {
+          // ADD GOOGLE DRIVE ID TO FIRESTORE
+          photoModel
+            .updateGoogleId(res.data.id)
+            .catch((err) =>
+              console.log("ERROR SET GOOGLE DRIVE PHOTO ID ", err)
+            );
+
+          // REMOVE UPLOAD PHOTO
+          photoResizer.removeUploadPhoto();
+
+          // REMOVE OPTIMIZED PHOTO
+          photoResizer.removeOptimizedPhoto();
+        })
+        .catch((err: Error) =>
+          console.error(`Error on save photo to google drive`, err)
+        ); */
+    }
 
     // MAKE SUCCESS RESPONSE
     json = {
@@ -182,7 +227,7 @@ export const editPhotoMiddleware = async (
       });
     }
 
-    console.log("[ERROR ON EDIT PHOTO]", JSON.stringify(err));
+    console.error("[ERROR ON EDIT PHOTO]", JSON.stringify(err));
 
     next(err);
   }

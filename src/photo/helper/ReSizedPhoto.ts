@@ -20,10 +20,10 @@ class ReSizedPhoto {
   sharpHelper: SharpHelper;
   paths: Map<TWidth, TPath>;
 
-  photoCloudinaryIds: TCloudinaryId[];
+  photoCloudinaryIds: TCloudinaryId[] = [];
   //photoTempFiles: TPath[];
 
-  photoCloudinaryUrls: Map<TWidth, TCloudinarySecureUrl>;
+  photoCloudinaryUrls: Map<TWidth, TCloudinarySecureUrl> = new Map();
 
   base64String: string;
   aspectRatio: number;
@@ -52,9 +52,15 @@ class ReSizedPhoto {
     this.aspectRatio = aspectRatio;
 
     // SAVE PHOTOS TO CLOUDINARY
-    const cloudinaryInfoPhotosDiffWidths = await this.uploadImagesToCloudinary();
+    const imagesInfo = await this.uploadImagesToCloudinary();
 
-    this.parseCloudinaryPhotosDiffWidthsInfo(cloudinaryInfoPhotosDiffWidths);
+    const {
+      photoCloudinaryIds,
+      photoCloudinaryUrls,
+    } = this.makeCloudinaryPhotosIdsAndUrls(imagesInfo);
+
+    this.photoCloudinaryIds = photoCloudinaryIds;
+    this.photoCloudinaryUrls = photoCloudinaryUrls;
   };
 
   saveToGoogleDrive = () => {
@@ -143,8 +149,8 @@ class ReSizedPhoto {
   };
 
   uploadImagesToCloudinary = async () => {
-    const cloudinaryPhotosInfoDiffWidths = new Map<number, UploadApiResponse>();
-    const imagesPromises = [];
+    //const cloudinaryPhotosInfoDiffWidths = new Map<number, UploadApiResponse>();
+    const imagesPromises: Promise<UploadApiResponse>[] = [];
 
     //@ts-ignore
     for (let width of this.paths.keys()) {
@@ -153,11 +159,26 @@ class ReSizedPhoto {
       imagesPromises.push(image);
     }
 
-    const imagesInfo = await Promise.all(imagesPromises);
+    return Promise.all(imagesPromises);
+
+    //const imagesInfo = await Promise.all(imagesPromises);
 
     //console.log("[photoResizer.make] imagesInfo", JSON.stringify(imagesInfo));
 
     //console.log();
+
+    /*  let i = 0;
+    //@ts-ignore
+    for (let width of this.paths.keys()) {
+      cloudinaryPhotosInfoDiffWidths.set(width, imagesInfo[i]);
+      i++;
+    }
+
+    return cloudinaryPhotosInfoDiffWidths; */
+  };
+
+  makeCloudinaryPhotosIdsAndUrls = (imagesInfo: UploadApiResponse[]) => {
+    const cloudinaryPhotosInfoDiffWidths = new Map<number, UploadApiResponse>();
 
     let i = 0;
     //@ts-ignore
@@ -166,11 +187,19 @@ class ReSizedPhoto {
       i++;
     }
 
-    return cloudinaryPhotosInfoDiffWidths;
+    const photoCloudinaryIds: TCloudinaryId[] = [];
+    const photoCloudinaryUrls = new Map<TWidth, TCloudinarySecureUrl>();
+
+    for (let [width, photoInfo] of cloudinaryPhotosInfoDiffWidths) {
+      photoCloudinaryIds.push(photoInfo.public_id);
+      photoCloudinaryUrls.set(width, photoInfo.secure_url);
+    }
+
+    return { photoCloudinaryIds, photoCloudinaryUrls };
   };
 
   makePhotoName = (width: number, name: string) => {
-    return `${name}-${width}.jpg`;
+    return `${name}-${width}.webp`;
   };
 
   generatePathsToDiffWidthPhotos = () => {
@@ -193,7 +222,7 @@ class ReSizedPhoto {
     this.paths = paths;
   };
 
-  parseCloudinaryPhotosDiffWidthsInfo = (
+  /* parseCloudinaryPhotosDiffWidthsInfo = (
     cloudinaryInfoPhotosDiffWidths: Map<number, UploadApiResponse>
   ) => {
     this.photoCloudinaryIds = [];
@@ -203,7 +232,7 @@ class ReSizedPhoto {
       this.photoCloudinaryIds.push(photoInfo.public_id);
       this.photoCloudinaryUrls.set(width, photoInfo.secure_url);
     }
-  };
+  }; */
 }
 
 export default ReSizedPhoto;

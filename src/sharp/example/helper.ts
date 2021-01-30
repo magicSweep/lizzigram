@@ -87,7 +87,17 @@ export const makeHtmlWithResizedPhotos = async (
     );
   }
 
-  await promisify(writeFile)(`${pathToExampleDir}/resize.html`, resultHtml, {
+  /* await promisify(writeFile)(`${pathToExampleDir}/resize.html`, resultHtml, {
+    encoding: "utf-8",
+  }); */
+
+  /* console.log(
+    "PATH RESOLVE",
+    resolve(__dirname, "resize.html"),
+    resolve("./resize.html")
+  ); */
+
+  await promisify(writeFile)(resolve(__dirname, "resize.html"), resultHtml, {
     encoding: "utf-8",
   });
 };
@@ -109,9 +119,13 @@ export const makeHtmlWithBase64 = async (base64: string, size: number) => {
     `${round(bytesToMegabytes(size), 5)}MB`
   );
 
-  await promisify(writeFile)(`${pathToExampleDir}/base64.html`, resultHtml, {
+  await promisify(writeFile)(resolve(__dirname, "./base64.html"), resultHtml, {
     encoding: "utf-8",
   });
+
+  /* await promisify(writeFile)(`${pathToExampleDir}/base64.html`, resultHtml, {
+    encoding: "utf-8",
+  }); */
 };
 
 export const getHeightByWidth = (width: number) => {

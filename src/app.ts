@@ -21,8 +21,10 @@ import {
   addPhotoMiddleware,
   editPhotoMiddleware,
 } from "./photo";
-import { IErrorResponse } from "./types";
+//import { IErrorResponse } from "./types";
 import { pathToUploadFilesDir } from "./config";
+import { mainLog } from "./middleware/logger";
+import cors from "cors";
 
 const dev = process.env.NODE_ENV !== "production";
 
@@ -62,12 +64,24 @@ export const init = async () => {
 
   const app = express();
 
-  app.use((req, res, next) => {
+  // SECURITY TODO:
+  // https://www.npmjs.com/package/helmet
+  // https://www.npmjs.com/package/csurf
+  // https://www.npmjs.com/package/express-rate-limit
+  // https://github.com/expressjs/cors
+
+  // LOGGER
+  app.use(mainLog);
+
+  // CORS
+  app.use(cors());
+
+  /* app.use((req, res, next) => {
     res.append("Access-Control-Allow-Origin", "*");
     //res.append("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
     //res.append("Access-Control-Allow-Headers", "Content-Type");
     next();
-  });
+  }); */
 
   // TEST MIDDLEWARE
   app.post("/is-photo", upload.single("file"), (req, res) => {

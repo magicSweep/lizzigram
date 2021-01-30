@@ -1,6 +1,7 @@
 import { google, drive_v3 } from "googleapis";
 import {
   readFile,
+  readFileSync,
   createWriteStream,
   createReadStream,
   statSync,
@@ -24,7 +25,12 @@ class GoogleDrive {
     if (!existsSync(this.pathToCredentials))
       throw new Error("No google drive credentials file");
 
-    const credentials = require(this.pathToCredentials);
+    //const credentials = require(this.pathToCredentials);
+
+    let credentials: any = readFileSync(this.pathToCredentials, {
+      encoding: "utf-8",
+    });
+    credentials = JSON.parse(credentials);
 
     const client = await google.auth.getClient({
       credentials,
