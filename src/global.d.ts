@@ -1,5 +1,7 @@
 type TColorProp = "primary" | "secondary" | "info" | "warning" | "disabled";
 
+type PImageZoom = 1 | 1.5 | 2 | 2.5 | 3;
+
 declare module "*.module.scss" {
   interface IClassNames {
     [className: string]: string;

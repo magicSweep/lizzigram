@@ -1,0 +1,17 @@
+{
+  "name": "Lizzygram",
+  "short_name": "Lizzygram",
+  "icons": [
+    {
+      "src": "/static/images/icons/app-icon-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "description": "Фото альбом малыша.",
+  "lang": "ru-RU"
+}
