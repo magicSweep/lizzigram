@@ -4,21 +4,21 @@ import { useAspectRatio } from "./hook";
 
 const getStyle = (
   isAspectRatio: boolean,
-  aspectRatio: number,
+  photoAspectRatio: number,
   zoom: number
 ) => {
   const fullSize = 100 * zoom;
 
   return {
-    width: isAspectRatio ? `${fullSize}vw` : `${aspectRatio * fullSize}vh`,
+    width: isAspectRatio ? `${fullSize}vw` : `${photoAspectRatio * fullSize}vh`,
     height: isAspectRatio
-      ? `${Math.round(fullSize / aspectRatio)}vw`
+      ? `${Math.round(fullSize / photoAspectRatio)}vw`
       : `${fullSize}vh`,
   };
 };
 
 export interface IFullScreenImage extends IBase64ImageProps {
-  zoom: PImageZoom;
+  zoom: number;
 }
 
 const FullScreenImage: FC<IFullScreenImage> = (props) => {
@@ -30,7 +30,12 @@ const FullScreenImage: FC<IFullScreenImage> = (props) => {
     props.zoom
   );
 
-  console.log("[FULL SCREEN IMAGE] RENDER");
+  console.log(
+    "[FULL SCREEN IMAGE] RENDER",
+    style,
+    props.zoom,
+    props.photo.aspectRatio
+  );
 
   return <PreloadBase64Image imageStyle={style} {...props} />;
 };

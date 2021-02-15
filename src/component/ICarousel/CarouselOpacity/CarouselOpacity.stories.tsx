@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 
 import CarouselOpacity from ".";
+import ControlPanel from "../../ControlPanel";
 import { useCarouselOpacity } from "./hook";
 
 export default {
@@ -43,6 +44,7 @@ export const Default = () => {
     <>
       <div
         style={{
+          position: "relative",
           backgroundColor: "rgba(0,0,0,0.05)",
           borderRadius: "5px",
           width: "700px",
@@ -53,6 +55,17 @@ export const Default = () => {
         <CarouselOpacity controller={controller}>
           {itemsElements}
         </CarouselOpacity>
+
+        <div
+          style={{
+            width: "100%",
+            height: "0",
+            position: "absolute",
+            bottom: "60px",
+          }}
+        >
+          <ControlPanel controller={controller} />
+        </div>
       </div>
     </>
   );

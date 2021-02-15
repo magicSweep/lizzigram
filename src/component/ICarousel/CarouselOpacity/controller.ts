@@ -95,9 +95,14 @@ export default class extends CarouselController<ICarouselState> {
 
     console.log("onPointerUp", newIndex);
 
-    this.setState((prevState) => ({
-      ...prevState,
-      activeIndex: newIndex,
-    }));
+    this.setState((prevState) => {
+      if (newIndex !== prevState.activeIndex && this.resetZoom)
+        this.resetZoom(undefined);
+
+      return {
+        ...prevState,
+        activeIndex: newIndex,
+      };
+    });
   };
 }

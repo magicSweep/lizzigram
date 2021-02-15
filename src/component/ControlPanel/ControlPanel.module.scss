@@ -1,29 +1,36 @@
-@import "./../../../styles/style.variables.scss";
+@import "./../../styles/style.variables.scss";
 
 .root {
-  position: absolute;
-  bottom: 35px;
+  position: relative;
+  //bottom: 35px;
+  //height: 32px;
   display: flex;
   justify-content: center;
+  align-items: center;
   width: 100%;
   opacity: 0.7;
 }
 
 .slider {
   position: relative;
-  height: 30px;
+  height: 42px;
   width: 65%;
   max-width: 360px;
-  background-color: rgb(255, 255, 255);
+  background-color: #fdf0d4;
   border-radius: 2px;
 
   cursor: pointer;
+
+  &:hover {
+    background-color: #f0e3c9;
+  }
 }
 
 .arrow {
   //width: 10%;
-  width: 50px;
-  background-color: rgb(255, 255, 255);
+  width: 46px;
+  height: 36px;
+  background-color: #fdf0d4;
   display: flex;
   justify-content: center;
   align-items: center;

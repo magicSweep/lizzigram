@@ -22,6 +22,7 @@ const MoreActionsBtn: FC<IMoreActionsBtnProps> = ({
     <BtnWithMenu
       menuButton={
         <IconButton
+          type="circle"
           icon={<MoreIcon color="secondary" width={28} height={28} />}
           ariaLabel={"Доступные действия для фото"}
           onClick={undefined}

@@ -5,7 +5,7 @@ import { useCarouselOpacity } from "../../../component/ICarousel/CarouselOpacity
 //import DescriptionIcon from "@material-ui/icons/Description";
 //import IconButton from "@material-ui/core/IconButton";
 import PhotoDesc from "../../component/PhotoDesc";
-import FullScreenImage from "../../../component/ImageSharp/FullScreenImage";
+//import FullScreenImage from "../../../component/ImageSharp/FullScreenImage";
 //import Backdrop from "@material-ui/core/Backdrop";
 //import CircularProgress from "@material-ui/core/CircularProgress";
 //import { IPhoto } from "../../../types";
@@ -15,9 +15,12 @@ import Modal from "../../../component/Modal";
 //import { TPhotosData, IPhotosState } from "./../../types";
 import classes from "./PhotoSlider.module.scss";
 import Spinner from "../../../component/Spinner";
-import IconButton from "../../../component/IconButton";
-import DescIcon from "../../../component/Icons/DescIcon";
+//import IconButton from "../../../component/IconButton";
+//import DescIcon from "../../../component/Icons/DescIcon";
 import ModalCloseButton from "../../../component/ModalCloseButton";
+import { getCarouselItems } from "./helper";
+import { useImgZoom } from "../../../hooks/useImgZoom";
+import PSHelperPanel from "../../component/PSHelperPanel";
 
 /* FINAL COMPONENTS */
 
@@ -35,86 +38,6 @@ interface PhotoSliderProps {
   loadMorePhotos: () => void;
 }
 
-export const getImageSharp = (photo: IPhoto, zoom: PImageZoom) => {
-  return (
-    <FullScreenImage
-      zoom={zoom}
-      photo={photo}
-      isActive={true}
-      alt="Зали что-то делает..."
-    />
-  );
-};
-
-export const getCarouselItems = (
-  photos: TPhotosData,
-  loading: boolean,
-  error: boolean,
-  activeIndex: number,
-  classes: any
-) => {
-  console.log("[PHOTO SLIDER] GET CAROUSEL ITEMS", activeIndex);
-
-  //if data === undefined and loading - show loading
-  //if data === undefined and error - show null
-  //else - show items
-
-  if (!photos && loading) {
-    return [
-      <div className={classes.itemContainer} key="loading">
-        <ISpinner />
-      </div>,
-    ];
-  }
-
-  if (!photos && error) {
-    return [<div key="error"></div>];
-  }
-
-  if (photos && loading) {
-    const iPhotos = [...photos.values()];
-
-    return iPhotos.map((photo, index) => {
-      const image = getImageSharp(photo);
-      if (index === activeIndex) {
-        return (
-          <div
-            key={classes.root + photo.aspectRatio + index}
-            className={classes.itemContainer}
-          >
-            {image}
-            <div className={classes.loading}>
-              <Spinner />
-            </div>
-          </div>
-        );
-      }
-      return (
-        <div
-          key={classes.root + photo.aspectRatio + index}
-          className={classes.itemContainer}
-        >
-          {image}
-        </div>
-      );
-    });
-  }
-
-  const iPhotos = [...photos.values()];
-
-  return iPhotos.map((photo, index) => {
-    const image = getImageSharp(photo);
-    return (
-      <div
-        key={classes.root + photo.aspectRatio + index}
-        className={classes.itemContainer}
-      >
-        {image}
-      </div>
-    );
-  });
-};
-
 interface IDescState {
   show: boolean;
   photo: TPhotoData | undefined;
@@ -131,6 +54,10 @@ const PhotoSlider = ({
 }: PhotoSliderProps) => {
   //const classes = useStyles();
 
+  const { zoomIn, zoomOut, cancel, maxZoom, minZoom, zoom } = useImgZoom();
+
+  const [showControlPanel, setShowControlPanel] = useState(true);
+
   const [descState, setDescState] = useState<IDescState>({
     show: false,
     photo: undefined,
@@ -140,6 +67,8 @@ const PhotoSlider = ({
   const length = photos ? photos.size : 1;
 
   const { controller } = useCarouselOpacity(length, initActiveIndex);
+
+  controller.resetZoom = cancel;
 
   const prevLoadingRef = useRef({ isData: false, isLoading: false, length });
 
@@ -177,7 +106,9 @@ const PhotoSlider = ({
     };
   }, [loading]);
 
-  const onShowDesc = () => {
+  const onShowDesc = (event: any) => {
+    event.stopPropagation();
+
     if (photos === undefined) throw new Error("No photos in photo state...");
 
     const photoIds = [...photos.keys()];
@@ -194,7 +125,9 @@ const PhotoSlider = ({
     });
   };
 
-  const onHideDesc = () => {
+  const onHideDesc = (event: any) => {
+    event.stopPropagation();
+
     setDescState({
       photo: undefined,
       show: false,
@@ -218,31 +151,51 @@ const PhotoSlider = ({
     loading
   );
   return (
-    <div className={classes.root}>
-      <div className={classes.showDescButton}>
+    <div
+      className={classes.root}
+      onClick={() => setShowControlPanel((prevShow) => !prevShow)}
+    >
+      {/* <div className={classes.showDescButton}>
         <IconButton
+          type="circle"
           icon={<DescIcon color="secondary" width={30} height={38} />}
           onClick={onShowDesc}
           ariaLabel="Показать описание фото..."
         />
-      </div>
+      </div> */}
 
       <CarouselOpacity controller={controller} onFetchMore={onFetchMore}>
         {useMemo(
           () =>
             getCarouselItems(
+              ISpinner,
+              zoom,
               photos as TPhotosData,
               loading,
               error,
               controller.activeIndex,
               classes
             ),
-          [photos, loading, error]
+          [photos, zoom, loading, error]
         )}
       </CarouselOpacity>
       {/* <Backdrop className={classes.backdrop} open={photoState.loading}>
         <Spinner />
       </Backdrop> */}
+
+      {showControlPanel && (
+        <PSHelperPanel
+          controller={controller}
+          onShowDesc={onShowDesc}
+          onCancel={cancel}
+          onZoomIn={zoomIn}
+          onZoomOut={zoomOut}
+          zoom={zoom}
+          maxZoom={maxZoom}
+          minZoom={minZoom}
+        />
+      )}
+
       {descState.show && (
         <Modal onClose={onHideDesc} type="form">
           <div className={classes.desc}>

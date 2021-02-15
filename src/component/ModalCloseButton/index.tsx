@@ -28,6 +28,7 @@ const ModalCloseButton = ({
     <div className={classes.root}>
       <IconButton
         icon={<CloseIcon width={16} height={16} color={color} />}
+        type="circle"
         onClick={onClick}
         ariaLabel={ariaLabel}
       />

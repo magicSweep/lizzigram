@@ -4,7 +4,7 @@ const photo1 = {
   description: "",
   base64:
     "UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoPAAgAAUAmJYgCdADdIVzaYAD++8vH57GpQTpXIWzlFXTFNb8OfQIKdNRid/ODNbJp+IDrvk4YW2AAAAA=",
-  aspectRation: 1.33,
+  aspectRatio: 1.78,
   srcSet:
     "https://res.cloudinary.com/dojbazopp/image/upload/v1611885673/l2yeq9pakemhrawhzjyp.webp 600w, https://res.cloudinary.com/dojbazopp/image/upload/v1611885673/yqq9hr0evl3zcba9gu0d.webp 1000w, https://res.cloudinary.com/dojbazopp/image/upload/v1611885673/p4jxrevqcytpm214egaf.webp 1500w, https://res.cloudinary.com/dojbazopp/image/upload/v1611885673/wrsojl0f1tq4hgwk3zg4.webp 2300w",
   tags: {
@@ -19,7 +19,7 @@ const photo2 = {
   description: "",
   base64:
     "UklGRrYAAABXRUJQVlA4IKoAAADQBACdASoPABQAPm0skkWkIqGYBABABsSyAE6ZQjgRYFCAiwACKgTSrq8QZMN3XAD+3/khcDlHMxgeh6rM8+cT/vuhwFKjvOKqgwrXC7lrJPMUMK2eKbZUjvfA1ydxLsTRf4DpUlB0QsM5a0rADNRTn+rN5QfK19pAFT+x9FFf596kN/PG/SLcaYpXxGp1D0hBfFZZOYJ3uJ5pr1h6juqUPirTbVsegAAAAA==",
-  aspectRation: 1.33,
+  aspectRatio: 0.75,
   srcSet:
     "https://res.cloudinary.com/dojbazopp/image/upload/v1611881224/gnmwk1khp1rgrryjrbay.webp 600w, https://res.cloudinary.com/dojbazopp/image/upload/v1611881224/rb7abnn3qo72gyinglra.webp 1000w, https://res.cloudinary.com/dojbazopp/image/upload/v1611881224/bqqpixsdc0dmzd85dd22.webp 1500w, https://res.cloudinary.com/dojbazopp/image/upload/v1611881225/kshwssu3cn26jh08ep1x.webp 2300w",
   tags: {

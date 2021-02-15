@@ -1,0 +1,1 @@
+type TIconBtnType = "box" | "circle";

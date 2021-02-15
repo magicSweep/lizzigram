@@ -131,6 +131,7 @@ export const Photos: FC<IPhotosProps> = ({
             <div className={classes.searchBtns}>
               <div className={classes.searchBtn}>
                 <IconButton
+                  type="circle"
                   icon={<SearchIcon width={32} height={32} />}
                   onClick={showSearchPhotoForm}
                   ariaLabel=""

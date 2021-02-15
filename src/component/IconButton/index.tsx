@@ -8,16 +8,40 @@ export interface IIconButtonProps {
   disabled?: boolean;
   index?: number;
   icon: any;
+  type: TIconBtnType;
 }
 
+const getWrapperClasses = (
+  type: TIconBtnType,
+  disabled: boolean | undefined,
+  bgClass: string,
+  classes: any
+) => {
+  let wrapperClasses = classes.wrapper;
+
+  if (type === "circle") wrapperClasses += ` ${classes["wrapper--circle"]}`;
+  else if (type === "box") wrapperClasses += ` ${classes["wrapper--box"]}`;
+  else throw new Error(`No implementation for icon btn type - ${type}`);
+
+  if (disabled) {
+    wrapperClasses += ` ${classes.disabled}`;
+  } else {
+    wrapperClasses += ` ${bgClass}`;
+  }
+
+  return wrapperClasses;
+};
+
 const IconButton = forwardRef<any, IIconButtonProps>(
-  ({ ariaLabel, onClick, disabled, icon, index }, ref) => {
+  ({ ariaLabel, onClick, disabled, icon, type, index }, ref) => {
     const { bgClass, onMouseDown, onMouseUp } = useButtonClick();
 
     const fIcon = React.cloneElement(icon, {
       iconClass: classes.svg,
       color: disabled ? "disabled" : icon.props.color,
     });
+
+    let wrapperClasses = getWrapperClasses(type, disabled, bgClass, classes);
 
     console.log("[RENDER ICON BUTTON]", icon.props);
 
@@ -31,15 +55,7 @@ const IconButton = forwardRef<any, IIconButtonProps>(
         aria-label={ariaLabel}
         ref={ref}
       >
-        <span
-          className={
-            disabled
-              ? `${classes.wrapper} ${classes.disabled}`
-              : `${classes.wrapper} ${bgClass}`
-          }
-        >
-          {fIcon}
-        </span>
+        <span className={wrapperClasses}>{fIcon}</span>
       </button>
     );
   }

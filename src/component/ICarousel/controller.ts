@@ -18,6 +18,8 @@ abstract class CarouselController<T> implements ICarouselController<T> {
 
   onFetchMore: undefined | (() => void);
 
+  resetZoom: ((event: any) => void) | undefined = undefined;
+
   //activeIndex: number = 0;
   itemsLength: number;
 
@@ -126,6 +128,8 @@ abstract class CarouselController<T> implements ICarouselController<T> {
       }
     }
 
+    if (this.resetZoom) this.resetZoom(undefined);
+
     //console.log("onIncreaseIndex2", newIndex);
 
     if (!this.setState) throw new Error("No setState");
@@ -146,6 +150,8 @@ abstract class CarouselController<T> implements ICarouselController<T> {
 
     if (this.activeIndex === newIndex) return;
 
+    if (this.resetZoom) this.resetZoom(undefined);
+
     if (!this.setState) throw new Error("No setState");
 
     this.setState((prevState) => ({
@@ -158,6 +164,8 @@ abstract class CarouselController<T> implements ICarouselController<T> {
     const newIndex = clamp(index, 0, this.itemsLength - 1);
 
     if (newIndex === this.activeIndex) return;
+
+    if (this.resetZoom) this.resetZoom(undefined);
 
     if (!this.setState) throw new Error("No setState");
 
