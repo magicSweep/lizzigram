@@ -12,8 +12,8 @@ import { path as rootPath } from "app-root-path";
 //import cookieParser from "cookie-parser";
 //import { v2 as cloudinary } from "cloudinary";
 import multer from "multer";
-import { readFile } from "fs";
-import { promisify } from "util";
+//import { readFile } from "fs";
+//import { promisify } from "util";
 import {
   fileFilter,
   fileName,
@@ -24,7 +24,10 @@ import {
 //import { IErrorResponse } from "./types";
 import { pathToUploadFilesDir } from "./config";
 import { mainLog } from "./middleware/logger";
+// PROTECT
 import cors from "cors";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 
 const dev = process.env.NODE_ENV !== "production";
 
@@ -33,9 +36,9 @@ console.log("IS DEV", dev);
 export const init = async () => {
   dotenv.config({ path: resolve(rootPath, ".env") });
 
-  const formHtml = await promisify(readFile)(
+  /* const formHtml = await promisify(readFile)(
     resolve(rootPath, "src/example/uploadForm.html")
-  );
+  ); */
 
   // MULTER
   var storage = multer.diskStorage({
@@ -73,8 +76,33 @@ export const init = async () => {
   // LOGGER
   app.use(mainLog);
 
+  // PROTECT
+
+  // HELMET
+  app.use(helmet());
+
   // CORS
-  app.use(cors());
+  app.use(
+    cors({
+      origin: [
+        "http://192.168.1.82:8080",
+        "http://127.0.0.1:8080",
+        "http://localhost:8080",
+      ],
+      methods: "POST,OPTIONS",
+    })
+  );
+
+  // RATE LIMIT
+  const apiLimiter = rateLimit({
+    windowMs: 1000 * 60 * 5, // 5 minutes
+    max: 10,
+    message: "Some error, please try again later.",
+  });
+  /* app.use(rateLimit({
+    windowMs: 5 * 60 * 1000, // 5 minutes
+    max: 30 // limit each IP to 100 requests per windowMs
+  })); */
 
   /* app.use((req, res, next) => {
     res.append("Access-Control-Allow-Origin", "*");
@@ -84,7 +112,7 @@ export const init = async () => {
   }); */
 
   // TEST MIDDLEWARE
-  app.post("/is-photo", upload.single("file"), (req, res) => {
+  /* app.post("/is-photo", upload.single("file"), (req, res) => {
     res.status(200).json({
       status: "ok",
       data: {
@@ -93,17 +121,27 @@ export const init = async () => {
         uid: req.body ? req.body.uid : "NO uid",
       },
     });
+  }); */
+
+  //PING TO HEROKU - DON'T SLEEP
+  app.get("/sleep", (req, res, next) => {
+    res.status(200).send("Not Authorized...");
   });
 
   // MAIN MIDDLEWARE
-  app.post("/add-photo", upload.single("file"), addPhotoMiddleware);
+  app.post("/add-photo", apiLimiter, upload.single("file"), addPhotoMiddleware);
 
-  app.post("/edit-photo", upload.single("file"), editPhotoMiddleware);
+  app.post(
+    "/edit-photo",
+    apiLimiter,
+    upload.single("file"),
+    editPhotoMiddleware
+  );
 
   // FOR TEST
-  app.get("/", (req, res) => {
+  /* app.get("/", (req, res) => {
     return res.status(200).end(formHtml);
-  });
+  }); */
 
   // GLOBAL_ERROR_HANDLER
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
