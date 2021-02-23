@@ -7,8 +7,9 @@ import classes from "./PhotoCard.module.scss";
 //import EditPhotoMenuBtn from "./../../../fcomponent/EditPhotoMenuBtn";
 
 export interface IPhotoCardProps extends IBase64ImageProps {
-  isEditable?: boolean;
-  showEditPhotoForm?: (index: number) => void;
+  isEditable: boolean;
+  showEditPhotoForm: (photo: TPhotoData) => void;
+  showPhotoDesc: (photo: TPhotoData) => void;
   /* photo: IPhoto;
   alt: string;
   //isHidden?: boolean;
@@ -20,10 +21,13 @@ export interface IPhotoCardProps extends IBase64ImageProps {
 const PhotoCard: FC<IPhotoCardProps> = (props) => {
   const isEditable = props.isEditable === undefined ? false : props.isEditable;
 
-  const photo: IPhoto = {
-    ...props.photo,
-    srcSet: "",
-    src: props.photo.iconSrc,
+  const photo: TPhotoData = {
+    id: props.photo.id,
+    photo: {
+      ...props.photo.photo,
+      srcSet: "",
+      src: props.photo.photo.iconSrc,
+    },
   };
 
   return (
@@ -41,14 +45,15 @@ const PhotoCard: FC<IPhotoCardProps> = (props) => {
         photo={photo}
       />
 
-      {isEditable && (
-        <div className={classes.moreActionsBtn}>
-          <MoreActionsBtn
-            index={props.index}
-            showEditPhotoForm={props.showEditPhotoForm}
-          />
-        </div>
-      )}
+      <div className={classes.moreActionsBtn}>
+        <MoreActionsBtn
+          photo={props.photo}
+          isEditable={isEditable}
+          index={props.index}
+          showEditPhotoForm={props.showEditPhotoForm}
+          showPhotoDesc={props.showPhotoDesc}
+        />
+      </div>
     </div>
   );
 };

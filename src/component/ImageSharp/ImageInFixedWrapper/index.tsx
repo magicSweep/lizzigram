@@ -34,7 +34,7 @@ export interface IImageInFixedWrapper extends IBase64ImageProps {
 const ImageInFixedWrapper: FC<IImageInFixedWrapper> = (props) => {
   const style = getImageStyle(
     props.wrapperAspectRatio,
-    props.photo.aspectRatio,
+    props.photo.photo.aspectRatio,
     props.wrapperWidth,
     props.wrapperHeight
   );

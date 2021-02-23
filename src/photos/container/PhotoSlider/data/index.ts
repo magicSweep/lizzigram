@@ -2,6 +2,7 @@ const id1 = "1601774491858";
 const photo1 = {
   date: new Date(2018, 11, 16),
   description: "",
+  googleDriveId: "super_id1234",
   base64:
     "UklGRk4AAABXRUJQVlA4IEIAAADQAQCdASoPAAgAAUAmJYgCdADdIVzaYAD++8vH57GpQTpXIWzlFXTFNb8OfQIKdNRid/ODNbJp+IDrvk4YW2AAAAA=",
   aspectRatio: 1.78,
@@ -17,6 +18,7 @@ const id2 = "1606353849249";
 const photo2 = {
   date: new Date(2020, 5, 23),
   description: "",
+  googleDriveId: "puper_id6578",
   base64:
     "UklGRrYAAABXRUJQVlA4IKoAAADQBACdASoPABQAPm0skkWkIqGYBABABsSyAE6ZQjgRYFCAiwACKgTSrq8QZMN3XAD+3/khcDlHMxgeh6rM8+cT/vuhwFKjvOKqgwrXC7lrJPMUMK2eKbZUjvfA1ydxLsTRf4DpUlB0QsM5a0rADNRTn+rN5QfK19pAFT+x9FFf596kN/PG/SLcaYpXxGp1D0hBfFZZOYJ3uJ5pr1h6juqUPirTbVsegAAAAA==",
   aspectRatio: 0.75,

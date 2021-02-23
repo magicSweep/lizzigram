@@ -1,42 +1,47 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, lazy } from "react";
 import "../../styles/style.scss";
-import classes from "./App.module.scss";
+//import classes from "./App.module.scss";
 //import image from "./../../static/ladki.jpg";
 //import iconSvg from "./../../static/google.svg";
 //import { square } from "../../component/Test/test";
 //import Input from "../../component/FormElements/BaseInput";
 import Layout from "../partial/Layout";
-import Photos from "../../photos/container/Photos";
-import NotAuth from "../../component/NotAuth";
+//import Photos from "../../photos/container/Photos";
+//import NotAuth from "../../component/NotAuth";
+import NotAuthWidget from "../../component/NotAuth/NotAuth";
+//import firebase from "firebase/app";
+import { limitPhotosPerQuery } from "../../config";
+import { useSelector } from "react-redux";
+import PhotoSkeletons from "../../fcomponent/PhotoSkeletons";
 
-import firebase from "firebase/app";
-import { photosCollectionName, limitPhotosPerQuery } from "../../config";
-import { getFirestoreDb } from "../../firebase/initFirestore";
+//const LoadableNotAuth = lazy(() => import("../../component/NotAuth"));
 
-//import GetFirestorePhotos from "../../photos/test/GetFirestorePhotos";
+const LoadablePhotos = lazy(() => import("../../photos/container/Photos"));
 
-//import HelloButton from "./../Button";
-
-//const LoadableAuth = React.lazy(() => import("../../component/Auth"));
+const PhotosSkeleton = () => (
+  <PhotoSkeletons numberOfSkeletons={limitPhotosPerQuery} />
+);
 
 const App = () => {
-  //const [show, setShow] = useState(false);
+  const { user, loading } = useSelector<
+    IGlobalState,
+    { user: IAuthUser | undefined; loading: boolean }
+  >((state) => ({
+    user: state.auth.user,
+    loading: state.auth.loading,
+  }));
 
-  /* useEffect(() => {
-    setTimeout(() => setShow(true), 3000);
-  }); */
+  const isAuth = user !== undefined;
 
   return (
     <Layout>
-      {/*  <GetFirestorePhotos /> */}
-      <NotAuth />
+      {!isAuth && <NotAuthWidget isAuth={isAuth} loading={loading} />}
 
-      <Photos />
-      {/*  {show && (
-        <Suspense fallback={<div>Loading...</div>}>
-          <LoadableAuth />
+      {isAuth && (
+        <Suspense fallback={PhotosSkeleton}>
+          <LoadablePhotos />
         </Suspense>
-      )} */}
+      )}
     </Layout>
   );
 };

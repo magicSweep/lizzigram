@@ -7,18 +7,22 @@ export const usePhotoDesc = () => {
 
   const { tags, error, loading } = useTags();
 
-  /* const photo = useSelector<IGlobalState, TPhotoData>(
-    state => state.modal.photo
-  ); */
+  const { photo, userUID } = useSelector<
+    IGlobalState,
+    { photo: TPhotoData | undefined; userUID: string }
+  >((state) => ({
+    photo: state.modal.photo,
+    userUID: state.auth.user ? state.auth.user.uid : "",
+  }));
 
-  const showEditPhotoForm = (photo: TPhotoData) =>
-    dispatch(showEditFormAC(photo));
+  const showEditPhotoForm = () => dispatch(showEditFormAC(photo));
 
   return {
-    //photo,
+    photo,
     tags,
     error,
     loading,
+    isEditable: photo ? photo.photo.addedByUserUID === userUID : false,
     showEditPhotoForm,
   };
 };

@@ -5,7 +5,7 @@ import classes from "./PreloadBase64Image.module.scss";
 export interface IBase64ImageProps {
   //type: TPhotoSizes;
   //imageClasses: string;
-  photo: IPhoto;
+  photo: TPhotoData;
   alt: string;
   //isHidden?: boolean;
   onImageClick?: (event: any) => void | undefined;
@@ -55,7 +55,7 @@ const PreloadBase64Image: FC<IPreloadBase64ImageProps> = ({
   const style = isBackground
     ? {
         ...imageStyle,
-        background: `url("data:image/jpeg;base64, ${photo.base64}") no-repeat`,
+        background: `url("data:image/jpeg;base64, ${photo.photo.base64}") no-repeat`,
         backgroundSize: "cover",
       }
     : imageStyle;
@@ -77,9 +77,9 @@ const PreloadBase64Image: FC<IPreloadBase64ImageProps> = ({
       style={style}
       data-index={index}
       onClick={onImageClick}
-      src={photo.src}
-      data-src={photo.src}
-      srcSet={photo.srcSet}
+      src={photo.photo.src}
+      data-src={photo.photo.src}
+      srcSet={photo.photo.srcSet}
       alt={alt}
       onLoad={onLoad}
     />

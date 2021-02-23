@@ -8,6 +8,7 @@ import {
   hidePhotoSliderAC,
   showSearchFormAC,
   hideSearchFormAC,
+  hidePhotoDescAC,
 } from "./../../../store";
 
 //import { IAuthUser } from "./../../../types";
@@ -36,6 +37,7 @@ export const usePhotoContainer = () => {
     isShowEditPhotoForm,
     isShowSearchPhotoForm,
     isShowPhotoSlider,
+    isShowPhotoDesc,
   } = useSelector<
     IGlobalState,
     {
@@ -46,6 +48,7 @@ export const usePhotoContainer = () => {
       isShowEditPhotoForm: boolean;
       isShowSearchPhotoForm: boolean;
       isShowPhotoSlider: boolean;
+      isShowPhotoDesc: boolean;
     }
   >(
     (state) => ({
@@ -56,6 +59,7 @@ export const usePhotoContainer = () => {
       isShowEditPhotoForm: state.modal.openEditForm,
       isShowSearchPhotoForm: state.modal.openSearch,
       isShowPhotoSlider: state.modal.openSlider,
+      isShowPhotoDesc: state.modal.openDescPhoto,
     }),
     shallowEqual
   );
@@ -83,6 +87,10 @@ export const usePhotoContainer = () => {
     dispatch(hidePhotoSliderAC());
   };
 
+  const hidePhotoDesc = () => {
+    dispatch(hidePhotoDescAC());
+  };
+
   const resetSearchState = () => {
     dispatch(resetSearchStateAC());
   };
@@ -95,6 +103,7 @@ export const usePhotoContainer = () => {
     isShowEditPhotoForm,
     isShowSearchPhotoForm,
     isShowPhotoSlider,
+    isShowPhotoDesc,
 
     showAddPhotoForm,
     //showEditPhotoForm,
@@ -103,6 +112,7 @@ export const usePhotoContainer = () => {
     hideEditPhotoForm,
     hideSearchPhotoForm,
     hidePhotoSlider,
+    hidePhotoDesc,
     resetSearchState,
   };
 };

@@ -16,6 +16,7 @@ export interface IConfig {
   react: boolean;
   preact: boolean;
   scss: boolean;
+  isAnalyze: boolean;
 }
 
 class Webpack {
@@ -80,7 +81,11 @@ class Webpack {
   };
 
   makePlugins = (): webpack.Configuration["plugins"] => {
-    const plugins = getPlugins(this.dev, this.pathToHtmlTemplate);
+    const plugins = getPlugins(
+      this.dev,
+      this.pathToHtmlTemplate,
+      this.config.isAnalyze
+    );
     const devPlugins = getDevPlugins();
     const prodPlugins = getProdPlugins();
 

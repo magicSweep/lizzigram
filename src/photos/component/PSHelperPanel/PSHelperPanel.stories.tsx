@@ -1,5 +1,5 @@
 import React from "react";
-import PSHelperPanel from ".";
+import PSHelperPanel from "./PSHelperPanel";
 import { controller } from "./../../../component/ControlPanel/ControlPanel.stories";
 
 export default {
@@ -22,7 +22,8 @@ const Template = (args: any) => {
 export const Default = Template.bind({});
 (Default as any).args = {
   controller,
-  onShowDesc: () => {},
+  activePhoto: { photo: { googleDriveId: "googleDriveId" } },
+  showDesc: () => {},
   onZoomIn: () => {},
   onZoomOut: () => {},
   onCancel: () => {},

@@ -1,15 +1,44 @@
-.ErrorBoundary {
-  width: 350px;
-  padding-top: 10vh;
+.root {
+  position: fixed;
+  height: 100%;
+  width: 100%;
 
-  margin: auto;
+  top: 0;
+  left: 0;
 
-  ul {
-    list-style: none;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  .title {
-    text-align: center;
-    //padding-bottom: 7px;
+  .wrapper {
+    position: relative;
+    box-sizing: border-box;
+
+    max-height: calc(100% - 32px);
+    max-width: calc(100% - 32px);
+    min-height: 140px;
+    min-width: 300px;
+    overflow-y: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+
+    padding: 20px 30px;
+    pointer-events: auto;
+
+    background-color: #f44336;
+
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.22) 0px 25.6px 57.6px 0px,
+      rgba(0, 0, 0, 0.18) 0px 4.8px 14.4px 0px;
+
+    ul {
+      list-style: none;
+    }
+
+    .title {
+      text-align: center;
+      padding-bottom: 7px;
+    }
   }
 }

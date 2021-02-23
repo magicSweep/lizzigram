@@ -1,10 +1,10 @@
-import React from "react";
+import React, { memo } from "react";
 import Header from "../Header";
 import classes from "./Layout.module.scss";
 import Alert from "../../../component/Alert";
 
 interface LayoutProps {
-  children: JSX.Element | JSX.Element[];
+  children: any;
 }
 
 /* FINAL COMPONENTS */

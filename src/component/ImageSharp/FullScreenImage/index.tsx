@@ -25,8 +25,8 @@ const FullScreenImage: FC<IFullScreenImage> = (props) => {
   const aspectRatio = useAspectRatio();
 
   const style = getStyle(
-    props.photo.aspectRatio >= aspectRatio,
-    props.photo.aspectRatio,
+    props.photo.photo.aspectRatio >= aspectRatio,
+    props.photo.photo.aspectRatio,
     props.zoom
   );
 
@@ -34,7 +34,7 @@ const FullScreenImage: FC<IFullScreenImage> = (props) => {
     "[FULL SCREEN IMAGE] RENDER",
     style,
     props.zoom,
-    props.photo.aspectRatio
+    props.photo.photo.aspectRatio
   );
 
   return <PreloadBase64Image imageStyle={style} {...props} />;

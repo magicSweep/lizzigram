@@ -76,7 +76,8 @@
 .modal {
   position: fixed;
   z-index: 1000000;
-  inset: 0px;
+  top: 0;
+  left: 0;
   //visibility: hidden;
 }
 

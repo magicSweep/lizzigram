@@ -40,25 +40,27 @@ export default {
 }); */
 
 const Template = (args: IBtnWithMenuProps) => (
-  <BtnWithMenu {...args}>
-    <BtnWithIcon
-      iconStart={<ArrowIcon width={10} height={10} direction="right" />}
-      label={"Влюбить"}
-      ariaLabel={"Влюбить"}
-      onClick={() => console.log("Logout")}
-      disabled={false}
-      fullWidth={true}
-    />
-    <BtnWithIcon
-      iconStart={<ExitIcon width={14} height={14} />}
-      label={"Выход"}
-      ariaLabel={"Выход из аккаутна"}
-      onClick={() => console.log("Logout")}
-      disabled={false}
-      fullWidth={true}
-      color="secondary"
-    />
-  </BtnWithMenu>
+  <div style={{ position: "absolute", left: "85vw" }}>
+    <BtnWithMenu {...args}>
+      <BtnWithIcon
+        iconStart={<ArrowIcon width={10} height={10} direction="right" />}
+        label={"Влюбить два раза"}
+        ariaLabel={"Влюбить"}
+        onClick={() => console.log("Logout")}
+        disabled={false}
+        fullWidth={true}
+      />
+      <BtnWithIcon
+        iconStart={<ExitIcon width={14} height={14} />}
+        label={"Выход на счет три"}
+        ariaLabel={"Выход из аккаутна"}
+        onClick={() => console.log("Logout")}
+        disabled={false}
+        fullWidth={true}
+        color="secondary"
+      />
+    </BtnWithMenu>
+  </div>
 );
 
 export const Default = Template.bind({});
@@ -84,6 +86,7 @@ export const OnlyIcon = Template.bind({});
   menuButton: (
     <IconButton
       icon={<MoreIcon width={20} height={20} />}
+      type="circle"
       ariaLabel={"Меню пользователя"}
       onClick={undefined}
       disabled={false}

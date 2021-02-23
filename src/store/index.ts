@@ -10,6 +10,8 @@ export {
   hidePhotoSliderAC,
   showSearchFormAC,
   hideSearchFormAC, //hideForgetPassFormAC, //showForgetPassFormAC,
+  hidePhotoDescAC,
+  showPhotoDescAC,
 } from "./action/modal";
 
 export { showAlertAC, hideAlertAC } from "./action/alert";

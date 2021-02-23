@@ -2,6 +2,7 @@ import React from "react";
 //import { action } from "@storybook/addon-actions";
 import BtnWithIcon, { IBtnWithIconProps } from ".";
 import ArrowIcon from "../Icons/ArrowIcon";
+import DownloadIcon from "../Icons/DownloadIcon";
 import ExitIcon from "../Icons/ExitIcon";
 import SmileIcon from "../Icons/SmileIcon";
 
@@ -14,8 +15,8 @@ export default {
         style={{
           width: "500px",
           margin: "auto",
-          paddingTop: "30px",
-          backgroundColor: "white",
+          padding: "30px",
+          backgroundColor: "black",
         }}
       >
         {story()}
@@ -71,6 +72,16 @@ export const EndIcon = Template.bind({});
   //type: "CONTAINED",
   disabled: true,
   onClick: () => console.log("Click"),
+};
+
+export const Link = Template.bind({});
+
+(Link as any).args = {
+  iconStart: <DownloadIcon width={20} height={20} />,
+  label: "Скачать оригинальный файл",
+  ariaLabel: "Скачать оригинальный файл фото",
+  href: "https://google.com",
+  //type: "CONTAINED",
 };
 
 export const InputLabel = () => {

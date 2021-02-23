@@ -14,7 +14,16 @@ export const showAddFormAC = (): IModalAction => {
   };
 };
 
-export const showEditFormAC = (photo: TPhotoData): IModalAction => {
+export const showPhotoDescAC = (
+  photo: TPhotoData | undefined
+): IModalAction => {
+  return {
+    type: "SHOW_PHOTO_DESC",
+    photo,
+  };
+};
+
+export const showEditFormAC = (photo: TPhotoData | undefined): IModalAction => {
   return {
     type: "SHOW_EDIT_FORM",
     photo,
@@ -50,6 +59,12 @@ export const showPhotoSliderAC = (
     type: "HIDE_LOGIN_FORM",
   };
 }; */
+
+export const hidePhotoDescAC = (): IModalAction => {
+  return {
+    type: "HIDE_PHOTO_DESC",
+  };
+};
 
 export const hideAddFormAC = (): IModalAction => {
   return {

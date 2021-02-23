@@ -5,14 +5,21 @@ import HtmlWebpackPlugin from "html-webpack-plugin";
 import { CleanWebpackPlugin } from "clean-webpack-plugin";
 import CopyPlugin from "copy-webpack-plugin";
 import WorkboxWebpackPlugin from "workbox-webpack-plugin";
+import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
+import CompressionPlugin from "compression-webpack-plugin";
+//import LoadablePlugin from "@loadable/webpack-plugin";
 import { join } from "path";
 
 /* PLUGINS */
 
-export const getPlugins = (dev: boolean, pathToHtmlTemplate: string) => {
+export const getPlugins = (
+  dev: boolean,
+  pathToHtmlTemplate: string,
+  isAnalyze: boolean
+) => {
   const copyPlugin = getCopyPlugin();
 
-  return [
+  const plugins = [
     copyPlugin,
     new HtmlWebpackPlugin({
       title: dev ? "Lizzygram - dev build" : "Lizzygram | фотографии малыша",
@@ -21,6 +28,10 @@ export const getPlugins = (dev: boolean, pathToHtmlTemplate: string) => {
     }),
     new CleanWebpackPlugin(),
   ];
+
+  if (isAnalyze) plugins.push(new BundleAnalyzerPlugin());
+
+  return plugins;
 };
 
 export const getDevPlugins = () => [new webpack.HotModuleReplacementPlugin()];
@@ -30,6 +41,12 @@ export const getProdPlugins = () => {
 
   return [
     // workbox,
+    //new LoadablePlugin() as any,
+    // GZIP
+    new CompressionPlugin({
+      exclude: ["/image", "/icons"], // /\/images?/
+      threshold: 10500, // do not compress file smaller than 10KB
+    }),
     new MiniCssExtractPlugin({
       //filename:  useVersioning ? '[name].[contenthash:6].css' : "[name].css"
       filename: "static/css/[name].[contenthash:12].css",
@@ -46,7 +63,7 @@ export const getCopyPlugin = () => {
       },
       {
         from: join(process.cwd(), "src/static/icon/app-icon-192x192.png"),
-        to: "static/images/icons/apple-icon-192x192.png",
+        to: "static/icons/apple-icon-192x192.png",
       },
     ],
   });

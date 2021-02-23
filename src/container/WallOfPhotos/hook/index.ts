@@ -1,7 +1,11 @@
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { usePhotos } from "../../../photos/hook/usePhotos";
-import { showPhotoSliderAC, showEditFormAC } from "../../../store";
+import {
+  showPhotoSliderAC,
+  showEditFormAC,
+  showPhotoDescAC,
+} from "../../../store";
 import { getPhotoIndex, getPhotoByIndex } from "./helper";
 
 export const useWallOfPhotos = () => {
@@ -37,14 +41,26 @@ export const useWallOfPhotos = () => {
     [photos]
   );
 
-  const showEditPhotoForm = useCallback(
+  /* const showEditPhotoForm = useCallback(
     (index: number) => {
       const photo = getPhotoByIndex(photos, index);
 
       dispatch(showEditFormAC(photo));
     },
     [photos]
-  );
+  ); */
+
+  const showEditPhotoForm = useCallback((photo: TPhotoData) => {
+    //const photo = getPhotoByIndex(photos, index);
+
+    dispatch(showEditFormAC(photo));
+  }, []);
+
+  const showPhotoDesc = useCallback((photo: TPhotoData) => {
+    //const photo = getPhotoByIndex(photos, index);
+
+    dispatch(showPhotoDescAC(photo));
+  }, []);
 
   return {
     photos,
@@ -56,6 +72,7 @@ export const useWallOfPhotos = () => {
     isSearch,
     showEditPhotoForm,
     showPhotoSlider,
+    showPhotoDesc,
     userUID,
   };
 };

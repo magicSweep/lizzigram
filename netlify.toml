@@ -1,0 +1,42 @@
+[build]
+    # base = ""
+
+    publish = "dist"
+
+    command = "npm run build"
+
+[[headers]]
+  # Define which paths this specific [[headers]] block will cover.
+  for = "/*"
+
+  [headers.values]
+
+    X-Frame-Options = "DENY"
+    
+    X-XSS-Protection = "1; mode=block"
+    
+    X-Content-Type-Options = "nosniff"
+    
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    
+    Feature-Policy = "geolocation 'none' ; camera 'none'; payment 'none'; sync-xhr 'none';"
+    
+    Content-Security-Policy = "frame-ancestors https://www.facebook.com"
+
+	Cache-Control = "public, max-age=604800, immutable"
+
+    Content-Security-Policy-Report-Only = '''
+        default-src 'none';
+        script-src 'self';
+        style-src 'self';
+        connect-src 'self' https://www.googleapis.com https://firestore.googleapis.com;
+        img-src 'self' https://res.cloudinary.com;
+        manifest-src 'self';
+        form-action 'none'; 
+        font-src 'none'; 
+        object-src 'none'; 
+        media-src 'none'; 
+        child-src 'none';
+    '''
+
+    

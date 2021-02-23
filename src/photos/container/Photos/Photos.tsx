@@ -1,30 +1,35 @@
-import React, { FC } from "react";
+import React, { FC, Suspense, lazy } from "react";
+import { batch } from "react-redux";
 //import Button from "@material-ui/core/Button";
-import Modal from "../../../component/Modal";
+//import Modal from "../../../component/Modal";
 import WallOfPhotos from "../../../container/WallOfPhotos";
-import AddPhotoForm from "../../form/AddPhotoForm";
-import EditPhotoForm from "../../form/EditPhotoForm";
-import SearchPhotoForm from "../../form/SearchPhotoForm";
+//import AddPhotoForm from "../../form/AddPhotoForm";
+//import EditPhotoForm from "../../form/EditPhotoForm";
+//import SearchPhotoForm from "../../form/SearchPhotoForm";
 //import { IAuthUser } from "./../../../types";
 import { usePhotoContainer } from "./hook";
 //import { IPhotosState } from "../../types";
 //import { makeStyles } from "@material-ui/core/styles";
 //import SearchButton from "../../../component/UI/SearchButton";
-import PhotoSlider from "./../PhotoSlider";
+//import PhotoSlider from "./../PhotoSlider";
 import classes from "./Photos.module.scss";
 import BtnWithIcon from "../../../component/BtnWithIcon";
 import PlusIcon from "../../../component/Icons/PlusIcon";
 import IconButton from "../../../component/IconButton";
 import SearchIcon from "../../../component/Icons/SearchIcon";
 import DeleteIcon from "../../../component/Icons/DeleteIcon";
+import ModalElementsFallback from "../../../component/ModalElementsFallback";
+//import Spinner from "../../../component/Spinner";
+//import ModalElements from "../ModalElements";
+//import PhotoDesc from "../../component/PhotoDesc";
 
 //!!!!!!!!!!!!!!!!!!!!
 //!!!!!!!!!!!!!!!!!!!!!!1
 // CHANGE THIS
-type IAuthUser = any;
+//type IAuthUser = any;
 
 export interface IPhotosProps {
-  authUser: IAuthUser;
+  authUser: IAuthUser | undefined;
   authLoading: boolean;
   //photoState: IPhotosState;
   //loadMore: () => void;
@@ -40,7 +45,11 @@ export interface IPhotosProps {
 
 /* FINAL COMPONENTS */
 
-const _refAddPhotoForm = <AddPhotoForm />;
+const _refWallOfPhotos = <WallOfPhotos />;
+
+const IWallOfPhotos = () => _refWallOfPhotos;
+
+/* const _refAddPhotoForm = <AddPhotoForm />;
 
 const IAddPhotoForm = () => _refAddPhotoForm;
 
@@ -52,15 +61,33 @@ const _refSearchPhotoForm = <SearchPhotoForm />;
 
 const ISearchPhotoForm = () => _refSearchPhotoForm;
 
-const _refWallOfPhotos = <WallOfPhotos />;
-
-const IWallOfPhotos = () => _refWallOfPhotos;
-
 const _refPhotoSlider = <PhotoSlider />;
 
-const IPhotoSlider = () => _refPhotoSlider;
+const IPhotoSlider = () => _refPhotoSlider; */
 
 /* END FINAL COMPONENTS */
+
+/* LOADABLE COMPONENTS */
+
+/* const LoadableAddPhotoForm = lazy(() => import("../../form/AddPhotoForm"));
+
+const LoadableEditPhotoForm = lazy(() => import("../../form/EditPhotoForm"));
+
+const LoadableSearchPhotoForm = lazy(() =>
+  import("../../form/SearchPhotoForm")
+);
+
+const LoadablePhotoSlider = lazy(() => import("./../PhotoSlider"));
+
+const LoadablePhotoDesc = lazy(() => import("../../component/PhotoDesc"));
+
+const ModalLoadable = ({ children }: any) => (
+  <Suspense fallback={Spinner}>{children}</Suspense>
+);
+ */
+const LoadableModalElements = lazy(() => import("../ModalElements"));
+
+/* END LOADABLE COMPONENTS */
 
 export const Photos: FC<IPhotosProps> = ({
   authUser,
@@ -76,6 +103,7 @@ export const Photos: FC<IPhotosProps> = ({
     isShowEditPhotoForm,
     isShowSearchPhotoForm,
     isShowPhotoSlider,
+    isShowPhotoDesc,
 
     showAddPhotoForm,
     //showEditPhotoForm,
@@ -84,6 +112,7 @@ export const Photos: FC<IPhotosProps> = ({
     hideEditPhotoForm,
     hideSearchPhotoForm,
     hidePhotoSlider,
+    hidePhotoDesc,
     resetSearchState,
   } = usePhotoContainer();
 
@@ -104,6 +133,23 @@ export const Photos: FC<IPhotosProps> = ({
 
   //const isLoading = authLoading || photosLoading;
   const isLoading = authLoading;
+
+  const isShowModal =
+    isShowAddPhotoForm ||
+    isShowEditPhotoForm ||
+    isShowSearchPhotoForm ||
+    isShowPhotoSlider ||
+    isShowPhotoDesc;
+
+  const closeFallback = () => {
+    batch(() => {
+      if (isShowAddPhotoForm) hideAddPhotoForm();
+      if (isShowEditPhotoForm) hideEditPhotoForm();
+      if (isShowSearchPhotoForm) hideSearchPhotoForm();
+      if (isShowPhotoSlider) hidePhotoSlider();
+      if (isShowPhotoDesc) hidePhotoDesc();
+    });
+  };
 
   console.log("[RENDER PHOTOS WIDGET]");
 
@@ -153,16 +199,39 @@ export const Photos: FC<IPhotosProps> = ({
 
           <IWallOfPhotos />
 
-          {isShowPhotoSlider && (
+          {isShowModal && (
+            <Suspense
+              fallback={() => <ModalElementsFallback onClose={closeFallback} />}
+            >
+              <LoadableModalElements
+                isShowAddPhotoForm={isShowAddPhotoForm}
+                isShowEditPhotoForm={isShowEditPhotoForm}
+                isShowSearchPhotoForm={isShowSearchPhotoForm}
+                isShowPhotoSlider={isShowPhotoSlider}
+                isShowPhotoDesc={isShowPhotoDesc}
+                hideAddPhotoForm={hideAddPhotoForm}
+                hideEditPhotoForm={hideEditPhotoForm}
+                hideSearchPhotoForm={hideSearchPhotoForm}
+                hidePhotoSlider={hidePhotoSlider}
+                hidePhotoDesc={hidePhotoDesc}
+              />
+            </Suspense>
+          )}
+
+          {/*   {isShowPhotoSlider && (
             <Modal onClose={hidePhotoSlider} type="slider">
-              <IPhotoSlider />
+              <ModalLoadable>
+                <LoadablePhotoSlider />
+              </ModalLoadable>
             </Modal>
           )}
 
           {isShowAddPhotoForm && (
             <Modal onClose={hideAddPhotoForm} type="form">
               <div className={classes.form}>
-                <IAddPhotoForm />
+                <ModalLoadable>
+                  <LoadableAddPhotoForm />
+                </ModalLoadable>
               </div>
             </Modal>
           )}
@@ -170,7 +239,9 @@ export const Photos: FC<IPhotosProps> = ({
           {isShowEditPhotoForm && (
             <Modal onClose={hideEditPhotoForm} type="form">
               <div className={classes.form}>
-                <IEditPhotoForm />
+                <ModalLoadable>
+                  <LoadableEditPhotoForm />
+                </ModalLoadable>
               </div>
             </Modal>
           )}
@@ -178,10 +249,22 @@ export const Photos: FC<IPhotosProps> = ({
           {isShowSearchPhotoForm && (
             <Modal onClose={hideSearchPhotoForm} type="form">
               <div className={classes.form}>
-                <ISearchPhotoForm />
+                <ModalLoadable>
+                  <LoadableSearchPhotoForm />
+                </ModalLoadable>
               </div>
             </Modal>
           )}
+
+          {isShowPhotoDesc && (
+            <Modal onClose={hidePhotoDesc} type="form">
+              <div className={classes.form}>
+                <ModalLoadable>
+                  <LoadablePhotoDesc />
+                </ModalLoadable>
+              </div>
+            </Modal>
+          )} */}
         </>
       )}
     </div>

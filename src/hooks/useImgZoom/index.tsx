@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const minZoom = 1;
+const minZoom = 0.5;
 const originZoom = 1;
 const maxZoom = 3;
 const margaZoom = 0.5;

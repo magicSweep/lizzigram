@@ -17,14 +17,16 @@ interface WallOfPhotosProps {
   error: boolean;
   isSearch: boolean;
   showPhotoSlider: (event: any) => void;
-  showEditPhotoForm: (index: number) => void;
+  showEditPhotoForm: (photo: TPhotoData) => void;
+  showPhotoDesc: (photo: TPhotoData) => void;
   userUID: string;
 }
 
 const getPhotosElements = (
   photos: TPhotosData,
   showPhotoSlider: (event: MouseEvent<any>) => void,
-  showEditPhotoForm: (index: number) => void,
+  showEditPhotoForm: (photo: TPhotoData) => void,
+  showPhotoDesc: (photo: TPhotoData) => void,
   userUID: string
 ) => {
   const elements: any[] = [];
@@ -35,9 +37,10 @@ const getPhotosElements = (
       <PhotoCard
         key={id}
         isEditable={userUID === photo.addedByUserUID}
-        photo={photo}
+        photo={{ id, photo }}
         onImageClick={showPhotoSlider}
         showEditPhotoForm={showEditPhotoForm}
+        showPhotoDesc={showPhotoDesc}
         index={index}
         alt="Лиза что-то делает"
       />
@@ -77,6 +80,7 @@ export const WallOfPhotos: FC<WallOfPhotosProps> = ({
   error,
   isSearch,
   showEditPhotoForm,
+  showPhotoDesc,
   showPhotoSlider,
   userUID,
 }) => {
@@ -98,6 +102,7 @@ export const WallOfPhotos: FC<WallOfPhotosProps> = ({
         photos,
         showPhotoSlider,
         showEditPhotoForm,
+        showPhotoDesc,
         userUID
       );
 
@@ -113,11 +118,14 @@ export const WallOfPhotos: FC<WallOfPhotosProps> = ({
       //content = getSkeletons(limit);
     }
   } else {
-    if (photos && photos.size > 0) {
+    if (photos === undefined) {
+      return null;
+    } else if (photos.size > 0) {
       content = getPhotosElements(
         photos,
         showPhotoSlider,
         showEditPhotoForm,
+        showPhotoDesc,
         userUID
       );
     } else {

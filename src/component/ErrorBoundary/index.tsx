@@ -1,4 +1,6 @@
 import React from "react";
+import Alert from "../Alert/Alert";
+import Portal from "../Portal";
 import classes from "./ErrorBoundary.module.scss";
 //import { Typography } from "@material-ui/core";
 //import MaterialLink from "@material-ui/core/Link";
@@ -27,13 +29,15 @@ class ErrorBoundary extends React.Component {
       // You can render any custom fallback UI
 
       return (
-        <div className={classes.ErrorBoundary}>
-          <h5 className={classes.title}>Какая-то ошибочка...</h5>
-          <ul>
-            <li>
-              <p>- Проверьте интернет соединение.</p>
-            </li>
-            {/* <li>
+        <Portal type="modal">
+          <div className={classes.root}>
+            <div className={classes.wrapper}>
+              <h5 className={classes.title}>Какая-то ошибочка...</h5>
+              <ul>
+                <li>
+                  <p>- Проверьте интернет соединение.</p>
+                </li>
+                {/* <li>
                       Попробуйте 
                       <Button 
                         label={"еще раз."} 
@@ -42,17 +46,19 @@ class ErrorBoundary extends React.Component {
                         ariaLabel={"Перезагрузить страницу."}
                       />
                     </li> */}
-            <li>
-              <p>- Попробуйте перезагрузить страницу.</p>
-            </li>
+                <li>
+                  <p>- Попробуйте перезагрузить страницу.</p>
+                </li>
 
-            {/*  <li>
+                {/*  <li>
               <Typography color="textSecondary">
                 <MaterialLink href="/">- На главную страницу.</MaterialLink>
               </Typography>
             </li> */}
-          </ul>
-        </div>
+              </ul>
+            </div>
+          </div>
+        </Portal>
       );
     }
 

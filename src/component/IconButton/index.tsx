@@ -9,6 +9,8 @@ export interface IIconButtonProps {
   index?: number;
   icon: any;
   type: TIconBtnType;
+  href?: string;
+  download?: string;
 }
 
 const getWrapperClasses = (
@@ -33,7 +35,10 @@ const getWrapperClasses = (
 };
 
 const IconButton = forwardRef<any, IIconButtonProps>(
-  ({ ariaLabel, onClick, disabled, icon, type, index }, ref) => {
+  (
+    { ariaLabel, onClick, disabled, icon, type, href, download, index },
+    ref
+  ) => {
     const { bgClass, onMouseDown, onMouseUp } = useButtonClick();
 
     const fIcon = React.cloneElement(icon, {
@@ -44,6 +49,23 @@ const IconButton = forwardRef<any, IIconButtonProps>(
     let wrapperClasses = getWrapperClasses(type, disabled, bgClass, classes);
 
     console.log("[RENDER ICON BUTTON]", icon.props);
+
+    if (href) {
+      return (
+        <a
+          className={classes.root}
+          onClick={onClick}
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
+          aria-label={ariaLabel}
+          href={href}
+          download={download}
+          ref={ref}
+        >
+          <span className={wrapperClasses}>{fIcon}</span>
+        </a>
+      );
+    }
 
     return (
       <button

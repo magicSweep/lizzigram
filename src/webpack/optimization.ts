@@ -7,7 +7,7 @@ export const getOptimization = (): webpack.Configuration["optimization"] => {
 
     runtimeChunk: true,
 
-    splitChunks: {
+    /* splitChunks: {
       chunks: "all",
       name(module: any, chunks: any, cacheGroupKey: any) {
         const moduleFileName = module
@@ -18,7 +18,7 @@ export const getOptimization = (): webpack.Configuration["optimization"] => {
         return `${cacheGroupKey}-${allChunksNames}`;
       },
     },
-
+ */
     minimizer: [
       new TerserPlugin({
         terserOptions: {

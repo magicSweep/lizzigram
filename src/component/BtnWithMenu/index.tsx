@@ -32,12 +32,12 @@ const getUpdatedChildren = (children: any[], itemClickHandler: () => void) => {
 
     let newChild = cloneElement(child, {
       onClick: (event: any) => {
-        child.props.onClick();
+        if (child.props.onClick) child.props.onClick();
         itemClickHandler();
       },
     });
 
-    return <li>{newChild}</li>;
+    return <li className={classes.item}>{newChild}</li>;
   });
 };
 

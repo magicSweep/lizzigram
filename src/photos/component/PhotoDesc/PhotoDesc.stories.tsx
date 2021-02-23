@@ -2,6 +2,7 @@ import React from "react";
 import { action } from "@storybook/addon-actions";
 import PhotoDesc from "./PhotoDesc";
 import { tagsData } from "../../../component/FormElements/TagsCheckbox/__mock";
+import image from "./../../../static/ladki.jpg";
 
 export default {
   component: PhotoDesc,
@@ -26,6 +27,7 @@ export default {
 
 const photo = {
   id: "123ic",
+  iconSrc: image,
   photo: {
     tags: {
       vekwWqVY1yYRd3XeERmd: true,
@@ -52,6 +54,17 @@ export const Default = Template.bind({});
   error: false,
   loading: false,
   photo,
+  isEditable: true,
+  showEditPhotoForm: () => console.log("SHOW EDIT PHOTO FORM"),
+};
+
+export const NotEditable = Template.bind({});
+(NotEditable as any).args = {
+  tags: tagsData,
+  error: false,
+  loading: false,
+  photo,
+  isEditable: false,
   showEditPhotoForm: () => console.log("SHOW EDIT PHOTO FORM"),
 };
 
@@ -60,6 +73,7 @@ export const WithDesc = Template.bind({});
   tags: tagsData,
   error: false,
   loading: false,
+  isEditable: true,
   photo: {
     id: "123ic",
     photo: {
@@ -80,6 +94,7 @@ export const LoadingTags = Template.bind({});
   error: false,
   loading: true,
   photo,
+  isEditable: true,
   showEditPhotoForm: () => console.log("SHOW EDIT PHOTO FORM"),
 };
 
@@ -89,6 +104,7 @@ export const ErrorTags = Template.bind({});
   error: true,
   loading: false,
   photo,
+  isEditable: true,
   showEditPhotoForm: () => console.log("SHOW EDIT PHOTO FORM"),
 };
 

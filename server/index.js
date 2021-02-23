@@ -5,12 +5,18 @@ const { makeCspHeader } = require("./csp");
 const app = express();
 const port = 8080;
 
+const fs = require("fs");
+
 const staticFolder = path.join(__dirname, "..", "dist");
+
 //const indexHtml = path.join(__dirname, "..", "dist", "index.html");
 
 const cspHeader = makeCspHeader();
 
 app.use((req, res, next) => {
+  //res.append("Content-Encoding", "gzip, deflate");
+
+  // CONTENT SECURITY HEADERS
   res.append("x-xss-protection", "1; mode=block");
   res.append(
     "strict-transport-security",
@@ -24,6 +30,17 @@ app.use((req, res, next) => {
   );
   res.append("Content-Security-Policy-Report-Only", cspHeader[1]);
 
+  next();
+});
+
+app.get("*.js", function (req, res, next) {
+  const pathToFile = `${staticFolder}${req.url}.gz`;
+  if (fs.existsSync(pathToFile)) {
+    req.url = req.url + ".gz";
+    res.set("Content-Encoding", "gzip");
+    res.set("Content-Type", "text/javascript");
+  }
+  //console.log("path", pathToFile);
   next();
 });
 

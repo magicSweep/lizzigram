@@ -29,6 +29,7 @@ const Modal: FC<IModalProps> = ({ onClose, type, children }) => {
   if (type === "slider") {
     return (
       <div className={classes.root}>
+        <div className={classes.overlay} onClick={onClose}></div>
         <ModalCloseButton
           onClick={onClose}
           color="secondary"

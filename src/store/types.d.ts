@@ -25,11 +25,13 @@ type TModalActionTypes =
   | "SHOW_EDIT_FORM"
   | "SHOW_PHOTO_SLIDER"
   | "SHOW_SEARCH_FORM"
+  | "SHOW_PHOTO_DESC"
   // | "SHOW_FORGET_PASS_FORM"
   //  | "HIDE_LOGIN_FORM"
   | "HIDE_ADD_FORM"
   | "HIDE_EDIT_FORM"
   | "HIDE_PHOTO_SLIDER"
+  | "HIDE_PHOTO_DESC"
   | "HIDE_SEARCH_FORM";
 // | "HIDE_FORGET_PASS_FORM"
 
@@ -50,6 +52,7 @@ interface IModalState {
   openSlider: boolean;
   openEditForm: boolean;
   openAddForm: boolean;
+  openDescPhoto: boolean;
   //openLoginForm: boolean;
   openSearch: boolean;
   // openForgetPassForm: boolean;

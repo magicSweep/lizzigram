@@ -5,6 +5,7 @@ const modalInitialState: IModalState = {
   openSlider: false,
   openEditForm: false,
   openAddForm: false,
+  openDescPhoto: false,
   //openLoginForm: false,
   openSearch: false,
   //openForgetPassForm: false,
@@ -29,6 +30,19 @@ const reducer: Reducer<IModalState, IModalAction> = (
       return {
         ...state,
         openSlider: false,
+      };
+
+    case "SHOW_PHOTO_DESC":
+      return {
+        ...state,
+        openDescPhoto: true,
+        photo: action.photo,
+      };
+
+    case "HIDE_PHOTO_DESC":
+      return {
+        ...state,
+        openDescPhoto: false,
       };
 
     /*  case "SHOW_LOGIN_FORM":

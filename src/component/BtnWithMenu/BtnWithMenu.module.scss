@@ -12,6 +12,7 @@
   position: absolute;
   height: 100%;
   width: 100%;
+  //overflow: hidden;
 }
 
 .menu {
@@ -28,6 +29,11 @@
   border-radius: 2px;
   box-shadow: rgba(0, 0, 0, 0.133) 0px 3.2px 7.2px 0px,
     rgba(0, 0, 0, 0.11) 0px 0.6px 1.8px 0px;
+}
+
+.item {
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 
 /* @import "./../../styles/style.variables.scss";

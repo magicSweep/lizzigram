@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 //import { action } from "@storybook/addon-actions";
 import Modal from ".";
+import Spinner from "../Spinner";
 
 export default {
   component: Modal,
@@ -69,6 +70,44 @@ export const SliderType = Template.bind({});
   children: (
     <div style={{ height: "100%", width: "100%", backgroundColor: "cyan" }}>
       <h4>Hello from SliderType modal.</h4>
+    </div>
+  ),
+};
+
+export const FormSpinnerType = Template.bind({});
+
+(FormSpinnerType as any).args = {
+  type: "form",
+  children: (
+    <div
+      style={{
+        position: "relative",
+        padding: "25px 20px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Spinner />
+    </div>
+  ),
+};
+
+export const SliderSpinnerType = Template.bind({});
+
+(SliderSpinnerType as any).args = {
+  type: "slider",
+  children: (
+    <div
+      style={{
+        position: "relative",
+        padding: "25px 20px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <Spinner />
     </div>
   ),
 };

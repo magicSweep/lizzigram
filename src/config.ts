@@ -35,6 +35,8 @@ export const expressUrl = "http://localhost:3009";
 
 export const addPhotoUrl = `${expressUrl}/add-photo`;
 export const editPhotoUrl = `${expressUrl}/edit-photo`;
+// download/:photoId
+export const downloadPhotoUrl = `${expressUrl}/download`;
 
 /* PHOTOS */
 export const limitPhotosPerQuery = 3;

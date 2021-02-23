@@ -2,6 +2,7 @@ import React from "react";
 //import { action } from "@storybook/addon-actions";
 import IconButton, { IIconButtonProps } from ".";
 import ArrowIcon from "../Icons/ArrowIcon";
+import DownloadIcon from "../Icons/DownloadIcon";
 import PlusIcon from "../Icons/PlusIcon";
 import SearchIcon from "../Icons/SearchIcon";
 
@@ -121,15 +122,16 @@ export const PlusIconBtn = Template.bind({});
   type: "circle",
   disabled: true,
   onClick: () => console.log("Click"),
-  icon: <PlusIcon width={32} height={32} color="secondary" />,
+  icon: <PlusIcon width={28} height={28} color="secondary" />,
 };
 
-/* export const ArrowIconBtn = Template.bind({});
+export const DownloadLink = Template.bind({});
 
-(ArrowIconBtn as any).args = {
+(DownloadLink as any).args = {
   ariaLabel: "Do something",
-  type: "box",
-  disabled: false,
+  type: "circle",
   onClick: () => console.log("Click"),
-  icon: <ArrowIcon width={16} height={16} color="primary" direction="right" />,
-}; */
+  icon: <DownloadIcon width={32} height={32} color="secondary" />,
+  href: "https://google.com",
+  download: "super-file",
+};

@@ -19,6 +19,7 @@ export const WallOfPhotos = () => {
     isSearch,
     showEditPhotoForm,
     showPhotoSlider,
+    showPhotoDesc,
     userUID,
   } = useWallOfPhotos();
 
@@ -35,6 +36,7 @@ export const WallOfPhotos = () => {
       isSearch={isSearch}
       showPhotoSlider={showPhotoSlider}
       showEditPhotoForm={showEditPhotoForm}
+      showPhotoDesc={showPhotoDesc}
       userUID={userUID}
     />
   );

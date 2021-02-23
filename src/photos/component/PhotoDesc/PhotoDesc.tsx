@@ -12,7 +12,8 @@ interface PhotoDescProps {
   tags: TTagsData | undefined;
   error: boolean;
   loading: boolean;
-  photo: TPhotoData;
+  photo: TPhotoData | undefined;
+  isEditable: boolean;
   //tagsState: ITagsState;
   showEditPhotoForm: (photo: TPhotoData) => void;
 }
@@ -92,10 +93,13 @@ export const PhotoDesc = ({
   error,
   loading,
   photo,
+  isEditable,
   //tagsState,
   showEditPhotoForm,
 }: PhotoDescProps) => {
   //const classes = useStyles();
+
+  if (photo === undefined) throw new Error("Bad, bad photo");
 
   const titleClasses = `${styles.titleFont} ${classes.title}`;
 
@@ -114,6 +118,10 @@ export const PhotoDesc = ({
 
   return (
     <div className={classes.root}>
+      <div className={classes.image}>
+        <img src={photo.photo.iconSrc} />
+      </div>
+
       <h4 className={titleClasses}>Дата:</h4>
 
       <p className={paragraphClasses}>{formatDate}</p>
@@ -133,9 +141,11 @@ export const PhotoDesc = ({
 
       {tagsElements}
 
-      <div className={classes.buttons}>
-        <Button onClick={onEdit} label="Изменить" />
-      </div>
+      {isEditable && (
+        <div className={classes.buttons}>
+          <Button onClick={onEdit} label="Изменить" />
+        </div>
+      )}
     </div>
   );
 };
