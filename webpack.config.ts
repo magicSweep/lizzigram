@@ -12,7 +12,7 @@ const wConfig: IConfig = {
   /* use preact over react */
   preact: true,
   scss: true,
-  isAnalyze: true,
+  isAnalyze: process.env.NODE_WEBPACK_ANALYZE === "analyze",
 };
 
 const webpackHelper = new Webpack(
