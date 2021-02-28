@@ -13,12 +13,13 @@ import {
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 
-import { initApp } from "./firebase/initApp";
+//import { initApp } from "./firebase/initApp";
 import { modalReducer, alertReducer, tagsReducer } from "./store";
 import { photoReducer, searchReducer } from "./photos";
 import { authReducer } from "./auth";
+//import { loadableReady } from "@loadable/component";
 
-initApp();
+//initApp();
 
 //CONFIG REDUX
 const reducer = combineReducers({
@@ -53,7 +54,18 @@ const store = createStore(
   composeEnhancers(applyMiddleware(...middleware))
 );
 
-ReactDOM.render(
+/* loadableReady(() => {
+  ReactDOM.hydrate(
+    <ErrorBoundary>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ErrorBoundary>,
+    document.getElementById("root")
+  );
+}); */
+
+ReactDOM.hydrate(
   <ErrorBoundary>
     <Provider store={store}>
       <App />

@@ -2,9 +2,9 @@ import * as path from "path";
 import * as webpack from "webpack";
 import Webpack, { IWebpackConfig } from "./src/webpack";
 
-const entry = "./src/index.tsx";
-const pathToOutputDir = path.resolve(__dirname, "dist");
-const pathToHtmlTemplate = path.resolve(__dirname, "./src/template.html");
+const entry = "./src/ssr/index.tsx";
+const pathToOutputDir = path.resolve(__dirname, "dist-ssr");
+//const pathToHtmlTemplate = path.resolve(__dirname, "./src/template.html");
 
 const wConfig: IWebpackConfig = {
   typescript: true,
@@ -12,17 +12,12 @@ const wConfig: IWebpackConfig = {
   /* use preact over react */
   preact: true,
   scss: true,
-  isSsr: false,
-  withSsr: false,
+  isSsr: true,
+  withSsr: true,
   isAnalyze: process.env.NODE_WEBPACK_ANALYZE === "analyze",
 };
 
-const webpackHelper = new Webpack(
-  wConfig,
-  entry,
-  pathToOutputDir,
-  pathToHtmlTemplate
-);
+const webpackHelper = new Webpack(wConfig, entry, pathToOutputDir, "");
 
 const config = webpackHelper.makeConfig();
 

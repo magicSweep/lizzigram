@@ -13,6 +13,7 @@ import NotAuthWidget from "../../component/NotAuth/NotAuth";
 import { limitPhotosPerQuery } from "../../config";
 import { useSelector } from "react-redux";
 import PhotoSkeletons from "../../fcomponent/PhotoSkeletons";
+import { WindowResizeProvider } from "../../provider/WindowResizer";
 
 //const LoadableNotAuth = lazy(() => import("../../component/NotAuth"));
 
@@ -34,15 +35,17 @@ const App = () => {
   const isAuth = user !== undefined;
 
   return (
-    <Layout>
-      {!isAuth && <NotAuthWidget isAuth={isAuth} loading={loading} />}
+    <WindowResizeProvider>
+      <Layout>
+        {!isAuth && <NotAuthWidget isAuth={isAuth} loading={loading} />}
 
-      {isAuth && (
-        <Suspense fallback={PhotosSkeleton}>
-          <LoadablePhotos />
-        </Suspense>
-      )}
-    </Layout>
+        {isAuth && (
+          <Suspense fallback={PhotosSkeleton}>
+            <LoadablePhotos />
+          </Suspense>
+        )}
+      </Layout>
+    </WindowResizeProvider>
   );
 };
 

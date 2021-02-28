@@ -1,6 +1,6 @@
 import React from "react";
 //import { action } from "@storybook/addon-actions";
-import BtnWithMenu, { IBtnWithMenuProps } from ".";
+import BtnWithMenu from ".";
 import BtnWithIcon from "../BtnWithIcon";
 import IconButton from "../IconButton";
 import ArrowIcon from "../Icons/ArrowIcon";
@@ -78,6 +78,7 @@ export const Default = Template.bind({});
   ),
   //type: "CONTAINED",
   disabled: false,
+  positionType: "start",
 };
 
 export const OnlyIcon = Template.bind({});
@@ -94,4 +95,5 @@ export const OnlyIcon = Template.bind({});
   ),
   //type: "CONTAINED",
   disabled: false,
+  positionType: "end",
 };

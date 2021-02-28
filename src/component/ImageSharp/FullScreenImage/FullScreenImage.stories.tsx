@@ -6,6 +6,7 @@ import image3 from "./../../../static/ladki.jpg";
 import imageLizzySad from "./../../../../../../../Project/lizzygram/backend/src/sharp/images/liza_sad_wallpaper.png";
 //Liza_firstWeek
 import imageLizzyFirstWeek from "./../../../../../../../Project/lizzygram/backend/src/sharp/images/Liza_firstWeek.png";
+import { WindowResizeProvider } from "../../../provider/WindowResizer";
 
 export default {
   component: FullScreenImage,
@@ -26,7 +27,11 @@ const photo = {
   aspectRatio: 1.78,
 };
 
-const Template = (args: any) => <FullScreenImage {...args} />;
+const Template = (args: any) => (
+  <WindowResizeProvider>
+    <FullScreenImage {...args} />
+  </WindowResizeProvider>
+);
 
 const baseArgs = {
   //wrapperAspectRatio: 1.75,
@@ -38,40 +43,48 @@ export const Default = Template.bind({});
 (Default as any).args = {
   ...baseArgs,
   zoom: 1,
-  photo: photo as any,
+  photo: { id: "boom", photo },
 };
 
 export const OnlyBase64 = Template.bind({});
 (OnlyBase64 as any).args = {
   ...baseArgs,
   zoom: 1,
-  photo: { ...photo, src: "", srcSet: "" } as any,
+  photo: { id: "hello1243", photo: { ...photo, src: "", srcSet: "" } },
 };
 
 export const WithZoom = () => {
   const { zoomIn, zoomOut, cancel, maxZoom, minZoom, zoom } = useImgZoom();
 
-  return (
-    <div style={{ position: "relative" }}>
-      <FullScreenImage alt="photo" photo={photo as any} zoom={zoom} />
+  console.log("RENDER WITH ZOOM", zoom);
 
-      <div
-        style={{
-          width: "100%",
-          height: "0",
-          position: "fixed",
-          bottom: "60px",
-        }}
-      >
-        <ImgZoomControlPanel
-          onCancel={cancel}
-          onZoomIn={zoomIn}
-          onZoomOut={zoomOut}
+  return (
+    <WindowResizeProvider>
+      <div style={{ position: "relative" }}>
+        <FullScreenImage
+          alt="photo"
+          photo={{ id: "boom", photo } as any}
           zoom={zoom}
-          maxZoom={maxZoom}
-          minZoom={minZoom}
         />
+
+        <div
+          style={{
+            width: "100%",
+            height: "0",
+            position: "fixed",
+            bottom: "60px",
+          }}
+        >
+          <ImgZoomControlPanel
+            onCancel={cancel}
+            onZoomIn={zoomIn}
+            onZoomOut={zoomOut}
+            zoom={zoom}
+            maxZoom={maxZoom}
+            minZoom={minZoom}
+          />
+        </div>
       </div>
-    </div>
+    </WindowResizeProvider>
   );
 };

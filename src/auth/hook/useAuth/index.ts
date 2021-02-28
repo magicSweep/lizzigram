@@ -3,6 +3,9 @@ import { useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { makeSubscribe } from "./controller";
 //import { IGlobalState } from "../../store/types";
+import { initApp } from "./../../../firebase/initApp";
+
+initApp();
 
 let unsubscribe: any = undefined;
 

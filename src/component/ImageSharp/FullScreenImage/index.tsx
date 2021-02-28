@@ -1,6 +1,7 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
+import { WindowResizeContext } from "../../../provider/WindowResizer";
 import PreloadBase64Image, { IBase64ImageProps } from "./../PreloadBase64Image";
-import { useAspectRatio } from "./hook";
+//import { useAspectRatio } from "./hook";
 
 const getStyle = (
   isAspectRatio: boolean,
@@ -22,7 +23,11 @@ export interface IFullScreenImage extends IBase64ImageProps {
 }
 
 const FullScreenImage: FC<IFullScreenImage> = (props) => {
-  const aspectRatio = useAspectRatio();
+  //const aspectRatio = useAspectRatio();
+
+  const aspectRatio = useContext(WindowResizeContext);
+
+  if (aspectRatio === 0) return null;
 
   const style = getStyle(
     props.photo.photo.aspectRatio >= aspectRatio,
@@ -33,8 +38,9 @@ const FullScreenImage: FC<IFullScreenImage> = (props) => {
   console.log(
     "[FULL SCREEN IMAGE] RENDER",
     style,
-    props.zoom,
-    props.photo.photo.aspectRatio
+    props.photo
+    //props.zoom,
+    //props.photo.photo.aspectRatio
   );
 
   return <PreloadBase64Image imageStyle={style} {...props} />;

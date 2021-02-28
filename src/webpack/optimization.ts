@@ -21,16 +21,22 @@ export const getOptimization = (): webpack.Configuration["optimization"] => {
  */
     minimizer: [
       new TerserPlugin({
-        terserOptions: {
-          output: {
-            comments: false,
-          },
-          /* format: {
-            comments: /@license/i,
-          }, */
-        },
         extractComments: false,
       }),
     ],
   };
 };
+
+/* 
+{
+        /* terserOptions: {
+          output: {
+            comments: false,
+          },
+          /* format: {
+            comments: /@license/i,
+          }, 
+        }, 
+        //extractComments: false,
+      }
+*/

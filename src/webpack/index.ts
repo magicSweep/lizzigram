@@ -10,13 +10,18 @@ import {
   getSvgLoader,
 } from "./loaders";
 import { getOptimization } from "./optimization";
+import nodeExternals from "webpack-node-externals";
 
-export interface IConfig {
+export interface IWebpackConfig {
   typescript: boolean;
   react: boolean;
   preact: boolean;
   scss: boolean;
   isAnalyze: boolean;
+  // do we use ssr in our build
+  withSsr: boolean;
+  // is it render ssr version
+  isSsr: boolean;
 }
 
 class Webpack {
@@ -24,12 +29,12 @@ class Webpack {
   entry: string;
   pathToOutputDir: string;
   pathToHtmlTemplate: string;
-  config: IConfig;
+  config: IWebpackConfig;
   //output: webpack.Configuration["output"];
   //resolve: webpack.Configuration["resolve"];
 
   constructor(
-    config: IConfig,
+    config: IWebpackConfig,
     entry: string,
     pathToOutputDir: string,
     pathToHtmlTemplate: string
@@ -44,7 +49,10 @@ class Webpack {
   makeOutput = (): webpack.Configuration["output"] => {
     return {
       path: this.pathToOutputDir,
-      filename: this.dev ? "main.bundle.js" : "[name].[contenthash:12].js",
+      filename:
+        this.dev || this.config.isSsr
+          ? "main.bundle.js"
+          : "[name].[contenthash:12].js",
       publicPath: "/",
     };
   };
@@ -84,10 +92,11 @@ class Webpack {
     const plugins = getPlugins(
       this.dev,
       this.pathToHtmlTemplate,
-      this.config.isAnalyze
+      this.config.isAnalyze,
+      this.config.isSsr
     );
     const devPlugins = getDevPlugins();
-    const prodPlugins = getProdPlugins();
+    const prodPlugins = getProdPlugins(this.config.isSsr, this.config.withSsr);
 
     const result = this.dev
       ? plugins.concat(devPlugins)
@@ -109,6 +118,11 @@ class Webpack {
 
     config.module = this.makeLoaders();
 
+    if (this.config.isSsr) {
+      config.target = "node";
+      config.externals = [nodeExternals()];
+    }
+
     if (this.dev) {
       config.devtool = "inline-source-map";
 
@@ -125,7 +139,11 @@ class Webpack {
             "GET,HEAD,PUT,PATCH,POST,DELETE, OPTIONS",
         },
       };
-    } else {
+    } /* else {
+      config.optimization = getOptimization();
+    } */
+
+    if (!this.dev && !this.config.isSsr) {
       config.optimization = getOptimization();
     }
 

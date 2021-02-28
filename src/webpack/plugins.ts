@@ -7,7 +7,7 @@ import CopyPlugin from "copy-webpack-plugin";
 import WorkboxWebpackPlugin from "workbox-webpack-plugin";
 import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 import CompressionPlugin from "compression-webpack-plugin";
-//import LoadablePlugin from "@loadable/webpack-plugin";
+import LoadablePlugin from "@loadable/webpack-plugin";
 import { join } from "path";
 
 /* PLUGINS */
@@ -15,9 +15,23 @@ import { join } from "path";
 export const getPlugins = (
   dev: boolean,
   pathToHtmlTemplate: string,
-  isAnalyze: boolean
+  isAnalyze: boolean,
+  isSsr: boolean
 ) => {
-  const copyPlugin = getCopyPlugin();
+  const plugins: webpack.WebpackPluginInstance[] = [new CleanWebpackPlugin()];
+
+  if (!isSsr) plugins.push(getCopyPlugin());
+
+  if (!isSsr)
+    plugins.push(
+      new HtmlWebpackPlugin({
+        title: dev ? "Lizzygram - dev build" : "Lizzygram | фотографии малыша",
+        template: pathToHtmlTemplate, // шаблон
+        filename: "index.html", // название выходного файла
+      })
+    );
+
+  /*  const copyPlugin = getCopyPlugin();
 
   const plugins = [
     copyPlugin,
@@ -27,7 +41,7 @@ export const getPlugins = (
       filename: "index.html", // название выходного файла
     }),
     new CleanWebpackPlugin(),
-  ];
+  ]; */
 
   if (isAnalyze) plugins.push(new BundleAnalyzerPlugin());
 
@@ -36,10 +50,29 @@ export const getPlugins = (
 
 export const getDevPlugins = () => [new webpack.HotModuleReplacementPlugin()];
 
-export const getProdPlugins = () => {
+export const getProdPlugins = (isSsr: boolean, withSsr: boolean) => {
   //const workbox = getWorkboxWebpackPlugin_InjectManifest();
 
-  return [
+  const plugins: webpack.WebpackPluginInstance[] = [
+    new MiniCssExtractPlugin({
+      //filename:  useVersioning ? '[name].[contenthash:6].css' : "[name].css"
+      filename: "static/css/[name].[contenthash:12].css",
+    }),
+  ];
+
+  //if (withSsr) plugins.push(new LoadablePlugin() as any);
+
+  if (!isSsr)
+    plugins.push(
+      new CompressionPlugin({
+        exclude: ["/image", "/icons"], // /\/images?/
+        threshold: 10500, // do not compress file smaller than 10KB
+      })
+    );
+
+  return plugins;
+
+  /* return [
     // workbox,
     //new LoadablePlugin() as any,
     // GZIP
@@ -51,7 +84,7 @@ export const getProdPlugins = () => {
       //filename:  useVersioning ? '[name].[contenthash:6].css' : "[name].css"
       filename: "static/css/[name].[contenthash:12].css",
     }),
-  ];
+  ]; */
 };
 
 export const getCopyPlugin = () => {
@@ -62,8 +95,11 @@ export const getCopyPlugin = () => {
         to: "manifest.json",
       },
       {
-        from: join(process.cwd(), "src/static/icon/app-icon-192x192.png"),
-        to: "static/icons/apple-icon-192x192.png",
+        from: join(
+          process.cwd(),
+          "src/static/icon/app-icon-192x192_1w34rw.png"
+        ),
+        to: "static/icons/app-icon-192x192_1w34rw.png",
       },
     ],
   });

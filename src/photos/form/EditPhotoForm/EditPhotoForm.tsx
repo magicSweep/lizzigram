@@ -101,7 +101,7 @@ export const EditPhotoForm: FC<EditPhotoFormProps> = ({
   return (
     <>
       <div className={classes.wrapper}>
-        <img src={prevPhoto.photo.iconSrc} />
+        <img className={classes.photo} src={prevPhoto.photo.iconSrc} />
       </div>
 
       <IAddEditPhotoFormWidget

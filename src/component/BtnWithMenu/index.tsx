@@ -7,24 +7,10 @@ import React, {
   useState,
 } from "react";
 import classes from "./BtnWithMenu.module.scss";
-import styles from "./../../styles/classes.module.scss";
-import { useButtonClick } from "./../Button/hook";
-import BtnWithIcon, { IBtnWithIconProps } from "../BtnWithIcon";
+//import styles from "./../../styles/classes.module.scss";
+//import { useButtonClick } from "./../Button/hook";
+//import BtnWithIcon, { IBtnWithIconProps } from "../BtnWithIcon";
 import Portal from "../Portal";
-
-//export type BUTTON_TYPE = "TEXT" | "OUTLINED" | "CONTAINED";
-
-/* export interface IBtnWithMenuProps extends IBtnWithIconProps {
-  //menuItemsInfo: any[];
-  children: any;
-} */
-
-export interface IBtnWithMenuProps {
-  //menuItemsInfo: any[];
-  menuButton: any;
-  disabled: boolean;
-  children: any;
-}
 
 const getUpdatedChildren = (children: any[], itemClickHandler: () => void) => {
   return Children.map(children, (child, i) => {
@@ -49,12 +35,12 @@ const BtnWithMenu: FC<IBtnWithMenuProps> = ({
   //label,
   //ariaLabel,
   disabled,
+  positionType,
 }) => {
   //let buttonClasses: string = getButtonClasses(type);
-  const [state, setState] = useState({
+  const [state, setState] = useState<IBtnWithMenuState>({
     show: false,
-    left: 0,
-    top: 0,
+    position: {},
   });
 
   const containerRef = useRef<any>();
@@ -80,28 +66,44 @@ const BtnWithMenu: FC<IBtnWithMenuProps> = ({
     };
   }, []);
 
-  /* const onScroll = () => {
-    console.log("On scroll");
-
-    document.removeEventListener("scroll", onScroll);
-
-    setState((prevState: any) => ({ ...prevState, show: false }));
-  }; */
-
   const onOpenMenu = (event: any) => {
     const rect = containerRef.current.getBoundingClientRect();
+    const windowClientWidth = document.documentElement.clientWidth;
+
+    const position: IPosition = {};
+
+    switch (positionType) {
+      case "start":
+        position.top = rect.bottom;
+        position.left = rect.left;
+        break;
+      case "end":
+        position.top = rect.bottom;
+        position.right = windowClientWidth - rect.left - rect.width;
+        break;
+
+      default:
+        throw new Error(
+          `No implementation for position type | ${positionType} |`
+        );
+    }
+
+    console.log(
+      "OPEN MENU",
+      containerRef.current.getBoundingClientRect(),
+      position
+    );
 
     document.addEventListener("scroll", onScrollOrResizeRef.current);
     window.addEventListener("resize", onScrollOrResizeRef.current);
 
-    setState((prevState: any) => {
+    setState((prevState: IBtnWithMenuState) => {
       if (prevState.show === true) {
         return { ...prevState, show: false };
       } else {
         return {
           show: true,
-          left: rect.left,
-          top: rect.bottom,
+          position,
         };
       }
     });
@@ -133,13 +135,7 @@ const BtnWithMenu: FC<IBtnWithMenuProps> = ({
         <Portal type="context-menu">
           <>
             <div className={classes.overlay} onClick={onCloseMenu}></div>
-            <ul
-              className={classes.menu}
-              style={{
-                top: state.top,
-                left: state.left,
-              }}
-            >
+            <ul className={classes.menu} style={state.position}>
               {updatedChildren}
             </ul>
           </>

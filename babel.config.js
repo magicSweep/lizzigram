@@ -1,4 +1,5 @@
 const isTest = process.env.NODE_ENV === "test";
+const isProd = process.env.NODE_ENV === "production";
 
 const presets = [
   [
@@ -19,5 +20,7 @@ const plugins = [
   //"@babel/plugin-syntax-dynamic-import",
   //"@loadable/babel-plugin",
 ];
+
+//if (isProd) plugins.push("transform-remove-console");
 
 module.exports = { presets, plugins };

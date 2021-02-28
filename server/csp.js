@@ -41,7 +41,7 @@ exports.getConnectSrc = function () {
 };
 
 exports.getImageSrc = function () {
-  return "img-src 'self' https://res.cloudinary.com;";
+  return "img-src 'self' data: https://res.cloudinary.com;";
 };
 
 //manifest-src

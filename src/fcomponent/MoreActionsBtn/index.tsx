@@ -44,6 +44,7 @@ const MoreActionsBtn: FC<IMoreActionsBtnProps> = ({
       }
       //type: "CONTAINED",
       disabled={false}
+      positionType="end"
     >
       {isEditable && (
         <BtnWithIcon

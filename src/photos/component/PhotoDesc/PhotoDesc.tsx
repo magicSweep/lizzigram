@@ -118,8 +118,8 @@ export const PhotoDesc = ({
 
   return (
     <div className={classes.root}>
-      <div className={classes.image}>
-        <img src={photo.photo.iconSrc} />
+      <div className={classes.wrapper}>
+        <img className={classes.photo} src={photo.photo.iconSrc} />
       </div>
 
       <h4 className={titleClasses}>Дата:</h4>

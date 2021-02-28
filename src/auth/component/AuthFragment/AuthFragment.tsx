@@ -49,6 +49,7 @@ const AuthFragment: FC<IAuthFragmentProps> = ({
         }
         //type: "CONTAINED",
         disabled={false}
+        positionType="start"
       >
         <BtnWithIcon
           iconStart={<ExitIcon width={14} height={14} />}

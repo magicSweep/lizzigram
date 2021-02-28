@@ -1,14 +1,23 @@
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import classes from "./Header.module.scss";
 import Logo from "./../../../component/Logo";
-import { AuthSkeleton } from "../../../auth/component/AuthFragment/AuthFragment";
+//import loadable from "@loadable/component";
+//import { AuthSkeleton } from "../../../auth/component/AuthFragment/AuthFragment";
+//import { useShowOnDidMount } from "../../../hooks/useShowOnDidMount";
+import AuthFragment from "../../../auth/component/AuthFragment";
 
-const LoadableAuthFragment = lazy(() =>
+/* const LoadableAuthFragment = loadable(
+  () => import("../../../auth/component/AuthFragment"),
+  { fallback: <AuthSkeleton /> }
+); */
+
+/* const LoadableAuthFragment = lazy(() =>
   import("../../../auth/component/AuthFragment")
-);
+); */
 
 const Header = () => {
   //const classes = useStyles();
+  //const isShow = useShowOnDidMount();
 
   console.log("[RENDER HEADER WIDGET]");
 
@@ -17,9 +26,15 @@ const Header = () => {
       <div className={classes.toolbar}>
         <Logo />
 
-        <Suspense fallback={AuthSkeleton}>
-          <LoadableAuthFragment />
-        </Suspense>
+        <AuthFragment />
+
+        {/*  {!isShow && <AuthSkeleton />} */}
+
+        {/* {isShow && (
+          <Suspense fallback={AuthSkeleton}>
+            <LoadableAuthFragment />
+          </Suspense>
+        )} */}
       </div>
     </header>
   );

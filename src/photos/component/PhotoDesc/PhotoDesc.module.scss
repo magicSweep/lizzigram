@@ -4,12 +4,15 @@
   max-width: 600px;
 }
 
-.image {
-  height: 150px;
-  width: auto;
+.wrapper {
   display: flex;
   justify-content: center;
   padding: 20px;
+
+  .photo {
+    height: 150px;
+    width: auto;
+  }
 }
 
 .buttons {
@@ -38,7 +41,7 @@
 
 .tagsContainer {
   list-style: none;
-  padding: 30px 15px;
+  padding: 20px 15px;
   //padding-left: 20px;
   //padding-right: 20px;
   //border: 1px solid $font-primary;
@@ -60,6 +63,7 @@
   /* min-width: 50px;
   padding: 8px;
   color: violet; */
+  padding-top: 10px;
   margin-right: 8px;
 }
 
