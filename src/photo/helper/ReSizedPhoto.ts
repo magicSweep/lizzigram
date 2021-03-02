@@ -199,7 +199,7 @@ class ReSizedPhoto {
   };
 
   makePhotoName = (width: number, name: string) => {
-    return `${name}-${width}.webp`;
+    return `${name}-${width}.jpg`;
   };
 
   generatePathsToDiffWidthPhotos = () => {

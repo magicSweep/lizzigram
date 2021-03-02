@@ -18,3 +18,9 @@ export const getFileNameWithoutExtension = (filename: string) => {
     return res.join(".");
   }
 };
+
+export const isValidPhotoId = (photoId: string) => {
+  const res = photoId.match(/[a-zA-Z0-9_-]*/);
+
+  return res[0] === photoId;
+};

@@ -4,6 +4,19 @@ import { path as appRootPath } from "app-root-path";
 export const pathToTempDiffWidthsPhotos = resolve(appRootPath, "temp");
 export const pathToUploadFilesDir = resolve(appRootPath, "uploads");
 
+// EXPRESS PATHS
+
+export const selfDomainName = "localhost";
+
+export const port = 80;
+
+export const addPhotoUrl = "/add-photo";
+export const editPhotoUrl = "/edit-photo";
+// Dyno do not sleep
+export const herokuPingUrl = "/sleep_q23we4rt5";
+// Download original photo from google drive
+export const downloadPhotoUrl = "/download/:photoId";
+
 //export const photoWidths = [400, 800, 1200, 1600, 1900];
 //export const photoHeights = [300, 600, 700, 900, 1000];
 
@@ -23,9 +36,6 @@ export const pathToFirestoreCredentials = resolve(
   "credentials",
   "lizzigram-1600291187801-firebase-adminsdk-uef40-d840b18e39.json"
 );
-
-// GOOGLE DRIVE
-export const googleDriveParentId = "1wTRcXEhl_gZ2Ppb6c2RO19M0qeG9xI6P";
 
 export const pathToGoogleDriveCredentials = resolve(
   appRootPath,

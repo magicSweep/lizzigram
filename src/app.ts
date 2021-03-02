@@ -22,8 +22,16 @@ import {
   editPhotoMiddleware,
 } from "./photo";
 //import { IErrorResponse } from "./types";
-import { pathToUploadFilesDir } from "./config";
+import {
+  pathToUploadFilesDir,
+  addPhotoUrl,
+  editPhotoUrl,
+  herokuPingUrl,
+  downloadPhotoUrl,
+} from "./config";
 import { mainLog } from "./middleware/logger";
+import { downloadOriginalPhoto } from "./middleware/downloadOriginalPhoto";
+
 // PROTECT
 import cors from "cors";
 import helmet from "helmet";
@@ -88,6 +96,7 @@ export const init = async () => {
         "http://192.168.1.82:8080",
         "http://127.0.0.1:8080",
         "http://localhost:8080",
+        "https://lizzygram.netlify.app",
       ],
       methods: "POST,OPTIONS",
     })
@@ -123,16 +132,40 @@ export const init = async () => {
     });
   }); */
 
+  app.get("/get-photo", (req, res, next) => {
+    res.status(200).send(`
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Hello friends</title>
+      </head>
+      <body>
+        <div>
+          <img width="600" src="/freestocks-9U.jpg" alt="" />
+        </div>
+        <!--a href="/download/freestocks-9U.jpg">Download image</a-->
+        <a href="/download/1J4yFOQMprUYK_lMmbz5NO_eSAGGmrcou" download="lizzy-photo">Download image</a>
+      </body>
+    </html>
+    
+    `);
+  });
+
+  // DOWNLOAD ORIGINAL PHOTO
+  app.get(downloadPhotoUrl, downloadOriginalPhoto);
+
   //PING TO HEROKU - DON'T SLEEP
-  app.get("/sleep", (req, res, next) => {
+  app.get(herokuPingUrl, (req, res, next) => {
     res.status(200).send("Not Authorized...");
   });
 
   // MAIN MIDDLEWARE
-  app.post("/add-photo", apiLimiter, upload.single("file"), addPhotoMiddleware);
+  app.post(addPhotoUrl, apiLimiter, upload.single("file"), addPhotoMiddleware);
 
   app.post(
-    "/edit-photo",
+    editPhotoUrl,
     apiLimiter,
     upload.single("file"),
     editPhotoMiddleware

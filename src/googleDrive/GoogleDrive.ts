@@ -8,33 +8,52 @@ import {
   existsSync,
 } from "fs";
 
+google.auth.GoogleAuth;
+
+const auth = new google.auth.GoogleAuth({});
+
+/* const client = await google.auth.getClient({
+  credentials: {
+    private_key: process.env.DRIVE_PRIVATE_KEY,
+    client_email: process.env.DRIVE_CLIENT_EMAIL
+  },
+  scopes: "https://www.googleapis.com/auth/drive",
+  projectId: process.env.PROJECT_ID,
+}); */
+
 class GoogleDrive {
-  pathToCredentials: TPath;
+  //pathToCredentials: TPath;
   parents: string[];
   drive: drive_v3.Drive = undefined;
 
-  constructor(
-    pathToGoogleDriveCredentials: TPath,
-    googleDriveParentId: string
-  ) {
-    this.pathToCredentials = pathToGoogleDriveCredentials;
-    this.parents = [googleDriveParentId];
+  constructor() //googleDriveParentId: string //pathToGoogleDriveCredentials: TPath,
+  {
+    //this.pathToCredentials = pathToGoogleDriveCredentials;
+    this.parents = [process.env.DRIVE_PARENT_ID];
   }
 
   init = async () => {
-    if (!existsSync(this.pathToCredentials))
-      throw new Error("No google drive credentials file");
+    /* if (!existsSync(this.pathToCredentials))
+      throw new Error("No google drive credentials file"); */
 
     //const credentials = require(this.pathToCredentials);
 
-    let credentials: any = readFileSync(this.pathToCredentials, {
+    /*  let credentials: any = readFileSync(this.pathToCredentials, {
       encoding: "utf-8",
     });
-    credentials = JSON.parse(credentials);
+    credentials = JSON.parse(credentials); */
 
+    //console.log("!!!!!!!!!", process.env.DRIVE_PRIVATE_KEY);
+
+    //getClient
     const client = await google.auth.getClient({
-      credentials,
+      credentials: {
+        private_key: process.env.DRIVE_PRIVATE_KEY,
+        client_email: process.env.DRIVE_CLIENT_EMAIL,
+      },
+      //credentials,
       scopes: "https://www.googleapis.com/auth/drive",
+      projectId: process.env.PROJECT_ID,
     });
 
     this.drive = google.drive({
@@ -113,6 +132,17 @@ class GoogleDrive {
     });
 
     //console.log(`Response - ${JSON.stringify(res)}`);
+  };
+
+  downloadImageStream = async (fileId: string) => {
+    if (!this.drive) throw new Error("Do you forget call init?");
+
+    const res = await this.drive.files.get(
+      { fileId, alt: "media" },
+      { responseType: "stream" }
+    );
+
+    return res.data;
   };
 
   downloadImageFromDrive = async (fileId: string, destPath: TPath) => {

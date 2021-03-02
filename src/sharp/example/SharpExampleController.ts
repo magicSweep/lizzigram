@@ -38,11 +38,11 @@ class SharpExampleController {
     const pathToResultDir = this.sharpHelper.pathToTempDir;
 
     const pathsByWidths = new Map([
-      [320, `${pathToResultDir}/photo_320.webp`],
-      [800, `${pathToResultDir}/photo_800.webp`],
-      [1280, `${pathToResultDir}/photo_1280.webp`],
-      [1920, `${pathToResultDir}/photo_1920.webp`],
-      [3840, `${pathToResultDir}/photo_3840.webp`],
+      [320, `${pathToResultDir}/photo_320.jpg`],
+      [800, `${pathToResultDir}/photo_800.jpg`],
+      [1280, `${pathToResultDir}/photo_1280.jpg`],
+      [1920, `${pathToResultDir}/photo_1920.jpg`],
+      [3840, `${pathToResultDir}/photo_3840.jpg`],
     ]);
 
     const {

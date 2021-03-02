@@ -38,6 +38,8 @@ export const saveToGoogleDrive = (
       photoResizer.removeOptimizedPhoto();
     })
     .catch((err: Error) =>
-      console.error(`Error on save photo to google drive`, err)
+      console.error(
+        `Error on save photo to google drive ${err.message} | ${photoResizer.photoFileName} | ${photoResizer.sharpHelper.pathToPhoto} |`
+      )
     );
 };

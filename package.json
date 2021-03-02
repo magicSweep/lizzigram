@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "pm2:runtime:serve": "cross-env NODE_ENV=\"production\" pm2-runtime ./dist/server/index.js",
     "pm2:serve": "cross-env NODE_ENV=\"production\" pm2 start ./dist/server/index.js -i 1 --max-memory-restart 490M",
     "pm2:monit": "pm2 monit",
     "pm2:plus": "pm2 plus",
@@ -12,7 +13,7 @@
     "serve": "cross-env NODE_ENV=\"production\" node ./dist/server/index.js",
     "build": "cross-env BUILD_TYPE=\"server\" NODE_ENV=\"production\" TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack",
     "start": "cross-env BUILD_TYPE=\"server\" NODE_ENV=\"development\" TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack && node -r source-map-support/register ./dist/server/index.js ",
-    "test": "./node_modules/.bin/jest ",
+    "test": "./node_modules/.bin/jest",
     "babel": "./node_modules/.bin/babel",
     "sharp:start": "npm run sharp:build && node ./dist/sharp/index.js",
     "sharp:build": "cross-env BUILD_TYPE=\"sharp\" NODE_ENV=\"development\" TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack"

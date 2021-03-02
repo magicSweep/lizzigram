@@ -172,7 +172,7 @@ export const editPhotoMiddleware = async (
     // SEND UPLOADED PHOTO TO GOOGLE DRIVE
     console.log("updateGoogleDriveFile", photoModel.prevPhoto.googleDriveId);
     if (photoModel.prevPhoto.googleDriveId) {
-      console.log("updateGoogleDriveFile start", updateGoogleDriveFile);
+      //console.log("updateGoogleDriveFile start");
       updateGoogleDriveFile(photoResizer, photoModel.prevPhoto.googleDriveId);
       /* photoResizer
         .updateGoogleDriveFile(photoModel.prevPhoto.googleDriveId)
