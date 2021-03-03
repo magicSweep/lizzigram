@@ -16,7 +16,7 @@ let server: any;
 const wakeUpDynoOptions = {
   hostname:
     process.env.IENV === "local" ? selfDomainNameLocal : selfDomainNameHeroku,
-  port,
+  port: process.env.IENV === "local" ? port : 443,
   path: herokuPingUrl,
 };
 

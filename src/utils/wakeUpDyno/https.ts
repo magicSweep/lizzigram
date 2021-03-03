@@ -1,6 +1,6 @@
 import { IncomingMessage } from "http";
 import https from "https";
-import http from "http";
+//import http from "http";
 
 let opts: https.RequestOptions = {
   hostname: "",
@@ -16,7 +16,7 @@ let opts: https.RequestOptions = {
   },
 };
 
-export const sendHttpsReq = (options: http.RequestOptions = undefined) => {
+export const sendHttpsReq = (options: https.RequestOptions = undefined) => {
   if (options) {
     opts = { ...opts, ...options };
   }
@@ -26,7 +26,7 @@ export const sendHttpsReq = (options: http.RequestOptions = undefined) => {
       try {
         let data = "";
 
-        const req = http.request(opts, (res) => {
+        const req = https.request(opts, (res) => {
           res.setEncoding("utf8");
           res.on("data", (chunk) => {
             //console.log(`BODY: ${chunk}`);
