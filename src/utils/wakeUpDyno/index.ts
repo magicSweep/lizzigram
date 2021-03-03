@@ -4,6 +4,16 @@ import { getMoscowHours } from "./moscowTime";
 
 export let timeoutId: NodeJS.Timeout;
 
+export const initWakeUpDyno = (options: https.RequestOptions) => {
+  const hours = getMoscowHours();
+
+  console.log("MOSCOW HOUR", hours);
+
+  sendHttpsReq(options).catch((err) =>
+    console.log(`PING ERROR - ${err.message}.`)
+  );
+};
+
 export const wakeUpDyno = (
   options: https.RequestOptions,
   intervalMinutes = 25

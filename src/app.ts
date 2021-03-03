@@ -133,7 +133,9 @@ export const init = async () => {
     });
   }); */
 
-  /* app.get("/get-photo", (req, res, next) => {
+  /* 
+  //TEST DOWNLOAD PHOTO 
+  app.get("/get-photo", (req, res, next) => {
     res.status(200).send(`
     <!DOCTYPE html>
     <html lang="en">

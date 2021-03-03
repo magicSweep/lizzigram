@@ -4,7 +4,7 @@ import {
   selfDomainNameHeroku,
   selfDomainNameLocal,
 } from "./config";
-import { wakeUpDyno, timeoutId } from "./utils/wakeUpDyno";
+import { wakeUpDyno, initWakeUpDyno, timeoutId } from "./utils/wakeUpDyno";
 //import admin from "firebase-admin";
 
 const port = parseInt(process.env.PORT, 10) || 3009;
@@ -13,23 +13,21 @@ const port = parseInt(process.env.PORT, 10) || 3009;
 
 let server: any;
 
-const selfDomainName =
-  process.env.IENV === "local" ? selfDomainNameLocal : selfDomainNameHeroku;
+const wakeUpDynoOptions = {
+  hostname:
+    process.env.IENV === "local" ? selfDomainNameLocal : selfDomainNameHeroku,
+  port,
+  path: herokuPingUrl,
+};
 
 const start = async () => {
   const app = await init();
 
-  wakeUpDyno(
-    {
-      hostname: selfDomainName,
-      port,
-      path: herokuPingUrl,
-    },
-    25
-  );
+  wakeUpDyno(wakeUpDynoOptions, 25);
 
   server = app.listen(port, () => {
     console.log(`> Ready on http://localhost:${port}`);
+    initWakeUpDyno(wakeUpDynoOptions);
   });
 };
 
