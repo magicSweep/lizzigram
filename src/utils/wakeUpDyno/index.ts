@@ -9,9 +9,9 @@ export const initWakeUpDyno = (options: https.RequestOptions) => {
 
   console.log("MOSCOW HOUR", hours);
 
-  sendHttpsReq(options).catch((err) =>
-    console.log(`PING ERROR - ${err.message}.`)
-  );
+  sendHttpsReq(options)
+    .then((res) => console.log(`PING SUCCESS`))
+    .catch((err) => console.log(`PING ERROR - ${err.message}.`));
 };
 
 export const wakeUpDyno = (

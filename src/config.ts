@@ -6,7 +6,7 @@ export const pathToUploadFilesDir = resolve(appRootPath, "uploads");
 
 // EXPRESS PATHS
 
-export const selfDomainNameHeroku = "https://lizzygram.herokuapp.com";
+export const selfDomainNameHeroku = "lizzygram.herokuapp.com";
 export const selfDomainNameLocal = "localhost";
 
 //export const port = 80;
