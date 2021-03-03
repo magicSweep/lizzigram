@@ -3,12 +3,10 @@ import admin from "firebase-admin";
 
 //const serviceAccount = require(pathToFirestoreCredentials);
 
-let privateKey = "";
-
 try {
   //console.log("!!!!!!!!!!!!!!!!!!!", process.env.PROJECT_ID);
 
-  privateKey = process.env.FIRESTORE_PRIVATE_KEY;
+  let privateKey = process.env.FIRESTORE_PRIVATE_KEY;
   if (process.env.IENV === "heroku") {
     privateKey = privateKey.replace(/\\n/g, "\n");
   }
@@ -32,7 +30,6 @@ try {
 } catch (err) {
   console.error(
     "FIREBASE INIT ERROR",
-    `PRIVATE KEY - |${privateKey}|`,
     err.message ? err.message : JSON.stringify(err)
   );
 }

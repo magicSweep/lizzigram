@@ -26,8 +26,7 @@ class GoogleDrive {
   parents: string[];
   drive: drive_v3.Drive = undefined;
 
-  constructor() //googleDriveParentId: string //pathToGoogleDriveCredentials: TPath,
-  {
+  constructor() { //googleDriveParentId: string //pathToGoogleDriveCredentials: TPath,
     //this.pathToCredentials = pathToGoogleDriveCredentials;
     this.parents = [process.env.DRIVE_PARENT_ID];
   }
@@ -46,9 +45,15 @@ class GoogleDrive {
     //console.log("!!!!!!!!!", process.env.DRIVE_PRIVATE_KEY);
 
     //getClient
+
+    let private_key = process.env.DRIVE_PRIVATE_KEY;
+    if (process.env.IENV === "heroku") {
+      private_key = private_key.replace(/\\n/g, "\n");
+    }
+
     const client = await google.auth.getClient({
       credentials: {
-        private_key: process.env.DRIVE_PRIVATE_KEY,
+        private_key,
         client_email: process.env.DRIVE_CLIENT_EMAIL,
       },
       //credentials,
