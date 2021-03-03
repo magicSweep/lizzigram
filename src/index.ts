@@ -1,8 +1,9 @@
 import { init } from "./app";
-import { herokuPingUrl, selfDomainName, port } from "./config";
+import { herokuPingUrl, selfDomainName } from "./config";
 import { wakeUpDyno, timeoutId } from "./utils/wakeUpDyno";
 
-//const port = parseInt(process.env.PORT, 10) || 3009;
+const port = parseInt(process.env.PORT, 10) || 3009;
+
 let server: any;
 
 const start = async () => {

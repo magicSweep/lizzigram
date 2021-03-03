@@ -8,7 +8,7 @@ export const pathToUploadFilesDir = resolve(appRootPath, "uploads");
 
 export const selfDomainName = "localhost";
 
-export const port = 80;
+//export const port = 80;
 
 export const addPhotoUrl = "/add-photo";
 export const editPhotoUrl = "/edit-photo";
