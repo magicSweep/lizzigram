@@ -1,10 +1,20 @@
 import { init } from "./app";
-import { herokuPingUrl, selfDomainName } from "./config";
+import {
+  herokuPingUrl,
+  selfDomainNameHeroku,
+  selfDomainNameLocal,
+} from "./config";
 import { wakeUpDyno, timeoutId } from "./utils/wakeUpDyno";
+//import admin from "firebase-admin";
 
 const port = parseInt(process.env.PORT, 10) || 3009;
 
+//admin.initializeApp();
+
 let server: any;
+
+const selfDomainName =
+  process.env.IENV === "local" ? selfDomainNameLocal : selfDomainNameHeroku;
 
 const start = async () => {
   const app = await init();

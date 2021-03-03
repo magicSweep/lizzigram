@@ -42,14 +42,15 @@ const dev = process.env.NODE_ENV !== "production";
 console.log("IS DEV", dev);
 
 export const init = async () => {
-  dotenv.config({ path: resolve(rootPath, ".env") });
+  if (process.env.IENV === "local")
+    dotenv.config({ path: resolve(rootPath, ".env") });
 
   /* const formHtml = await promisify(readFile)(
     resolve(rootPath, "src/example/uploadForm.html")
   ); */
 
   // MULTER
-  var storage = multer.diskStorage({
+  const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, pathToUploadFilesDir);
     },
@@ -132,7 +133,7 @@ export const init = async () => {
     });
   }); */
 
-  app.get("/get-photo", (req, res, next) => {
+  /* app.get("/get-photo", (req, res, next) => {
     res.status(200).send(`
     <!DOCTYPE html>
     <html lang="en">
@@ -152,12 +153,14 @@ export const init = async () => {
     
     `);
   });
-
+ */
   // DOWNLOAD ORIGINAL PHOTO
   app.get(downloadPhotoUrl, downloadOriginalPhoto);
 
   //PING TO HEROKU - DON'T SLEEP
   app.get(herokuPingUrl, (req, res, next) => {
+    const date = new Date();
+    console.log(`PING AT - ${date.toUTCString()}`);
     res.status(200).send("Not Authorized...");
   });
 

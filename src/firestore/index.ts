@@ -2,18 +2,23 @@ import admin from "firebase-admin";
 //import { pathToFirestoreCredentials } from "../config";
 
 //const serviceAccount = require(pathToFirestoreCredentials);
-let a: admin.AppOptions;
-let aa: admin.ServiceAccount;
+
+let privateKey = "";
 
 try {
   //console.log("!!!!!!!!!!!!!!!!!!!", process.env.PROJECT_ID);
+
+  privateKey = process.env.FIRESTORE_PRIVATE_KEY;
+  if (process.env.IENV === "heroku") {
+    privateKey = privateKey.replace(/\\n/g, "\n");
+  }
 
   admin.initializeApp({
     credential: admin.credential.cert({
       //type: "service_account",
       //private_key_id: "d840b18e39d60eb7000d658180ec8fbaa06bdd18",
       projectId: process.env.PROJECT_ID,
-      privateKey: process.env.FIRESTORE_PRIVATE_KEY,
+      privateKey,
       clientEmail: process.env.FIRESTORE_CLIENT_EMAIL,
       /*       client_id: "102514509935869039049",
       auth_uri: "https://accounts.google.com/o/oauth2/auth",
@@ -27,6 +32,7 @@ try {
 } catch (err) {
   console.error(
     "FIREBASE INIT ERROR",
+    `PRIVATE KEY - |${privateKey}|`,
     err.message ? err.message : JSON.stringify(err)
   );
 }
