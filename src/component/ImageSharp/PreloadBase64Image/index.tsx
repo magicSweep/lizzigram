@@ -55,7 +55,7 @@ const PreloadBase64Image: FC<IPreloadBase64ImageProps> = ({
   const style = isBackground
     ? {
         ...imageStyle,
-        background: `url("data:image/jpeg;base64, ${photo.photo.base64}") no-repeat`,
+        background: `url("data:image/jpg;base64, ${photo.photo.base64}") no-repeat`,
         backgroundSize: "cover",
       }
     : imageStyle;

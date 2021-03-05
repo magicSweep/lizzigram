@@ -1,5 +1,7 @@
 import React, { FC } from "react";
 import classes from "./Checkbox.module.scss";
+import commonClasses from "./../classes.module.scss";
+import { getRootClassesByColor, tagTypeToColor } from "./../helper";
 
 export interface ICheckboxProps {
   id: string;
@@ -22,11 +24,14 @@ const Checkbox: FC<ICheckboxProps> = ({
   inputRef,
   onChange,
 }) => {
-  let labelClasses = classes.label;
+  let labelClasses = `${commonClasses.root} ${classes.root}`;
 
   if (disabled) labelClasses += ` ${classes["label--disabled"]}`;
   else if (checked) {
-    switch (type) {
+    const color = tagTypeToColor(type);
+
+    labelClasses += ` ${getRootClassesByColor(color)}`;
+    /* switch (type) {
       case "feeling":
         labelClasses += ` ${classes["label-info--checked"]}`;
         break;
@@ -39,7 +44,9 @@ const Checkbox: FC<ICheckboxProps> = ({
 
       default:
         throw new Error(`No implementation for type - ${type}`);
-    }
+    } */
+  } else {
+    labelClasses += ` ${getRootClassesByColor("noncolor")}`;
   }
 
   return (

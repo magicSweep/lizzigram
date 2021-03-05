@@ -8,7 +8,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";*/
 //import Typography from "@material-ui/core/Typography";
-import TagsCheckbox from "../../../component/FormElements/TagsCheckbox";
+import TagsCheckbox from "../../../component/Tags/TagsCheckbox";
 import { useSearchForm } from "./hook";
 //import { IGlobalState, TTagsData } from "./../../../store/types";
 //import { connect } from "react-redux";

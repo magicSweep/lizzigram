@@ -18,6 +18,14 @@ export const sendGetWithJsonResponse = async (url: string) => {
   return await response.json();
 }; */
 
+export const get = (url: string, headers?: any) => {
+  //if we use FormData, it add headers by themselve
+  return fetch(url, {
+    method: "get",
+    headers: headers,
+  });
+};
+
 export const post = (url: string, data: FormData, headers?: any) => {
   //if we use FormData, it add headers by themselve
   return fetch(url, {

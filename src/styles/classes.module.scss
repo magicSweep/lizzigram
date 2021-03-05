@@ -13,6 +13,7 @@
 .titleFont {
   font-weight: 600;
   //font-size: 14px;
+  line-height: 1.67;
   color: $font-primary;
 }
 
@@ -20,10 +21,12 @@
   text-indent: 15px;
 }
 
-.paragraphFont {
+.paragraph {
   font-weight: 400;
   //font-size: 14px;
   color: $font-secondary;
+  text-indent: 15px;
+  line-height: 1.67;
 }
 
 .errorColor {
@@ -82,6 +85,14 @@
 }
 
 /* COLOR */
+.nonColor {
+  color: $font-primary;
+}
+
+.nonColorBorder {
+  border: 1px solid $font-primary;
+}
+
 .primaryColor {
   color: $primary;
 }

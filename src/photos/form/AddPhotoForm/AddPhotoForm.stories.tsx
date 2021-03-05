@@ -10,7 +10,7 @@ import {
   //alertReducer,
   tagsReducer,
 } from "../../../store";
-import { tagsData } from "../../../component/FormElements/TagsCheckbox/__mock";
+import { tagsData } from "../../../component/Tags/TagsCheckbox/__mock";
 
 //CONFIG REDUX
 const reducer = combineReducers({
@@ -34,7 +34,7 @@ export default {
   component: AddPhotoForm,
   title: "Photos/Forms/AddPhotoForm",
   decorators: [
-    story => (
+    (story: any) => (
       <Provider store={store}>
         <div
           style={{
@@ -51,9 +51,9 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-const Template = args => <AddPhotoForm {...args} />;
+const Template = (args: any) => <AddPhotoForm {...args} />;
 
-export const Default = Template.bind({});
+export const Default: any = Template.bind({});
 Default.args = {
   tagsData,
   uploadLoading: false,

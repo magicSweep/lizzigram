@@ -1,0 +1,15 @@
+@import "./../../../styles/style.variables.scss";
+
+.root {
+  cursor: pointer;
+}
+
+.label--disabled {
+  border: 1px solid $disabled;
+  color: $disabled;
+  cursor: default;
+}
+
+.input {
+  display: none;
+}

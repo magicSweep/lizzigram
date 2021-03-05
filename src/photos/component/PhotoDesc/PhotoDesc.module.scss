@@ -1,7 +1,10 @@
-@import "./../../../styles/style.variables.scss";
-
 .root {
   max-width: 600px;
+}
+
+.element {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .wrapper {
@@ -26,14 +29,14 @@
 }
 
 .title {
-  padding-bottom: 12px;
+  padding-bottom: 6px;
 }
 
 .paragraph {
   padding-left: 10px;
 }
 
-.tagsWrapper {
+/* .tagsWrapper {
   position: relative;
   padding-top: 20px;
   padding-bottom: 10px;
@@ -62,7 +65,7 @@
 .tags {
   /* min-width: 50px;
   padding: 8px;
-  color: violet; */
+  color: violet; /
   padding-top: 10px;
   margin-right: 8px;
 }
@@ -78,9 +81,10 @@
 
 .sceleton {
   margin-right: 8px;
-} */
+} /
 .error {
   padding-top: 15px;
   text-align: center;
   color: red;
 }
+ */

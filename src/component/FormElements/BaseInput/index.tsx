@@ -31,7 +31,7 @@ const BaseInput: FC<IBaseInputProps> = ({
   disabled,
 }) => {
   //let helperClasses = "";
-  let inputClasses = `${styles.paragraphFont} ${classes.input}`;
+  let inputClasses = `${styles.paragraph} ${classes.input}`;
   let borderBottomClasses = classes.borderBottom;
   let labelClasses = `${styles.labelFont} ${classes.label}`;
 

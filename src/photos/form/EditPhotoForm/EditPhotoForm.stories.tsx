@@ -12,7 +12,7 @@ import {
 } from "../../../store";
 
 //import logo from "./../../../../static/logo.svg";
-import { tagsData } from "../../../component/FormElements/TagsCheckbox/__mock";
+import { tagsData } from "../../../component/Tags/TagsCheckbox/__mock";
 //import { TPhotoData } from "./../../types";
 
 //CONFIG REDUX

@@ -16,7 +16,7 @@
   ["12wwsdf343423", { title: "с петами", name: "pets" }],
 ]); */
 
-export const tagsData = new Map([
+export const tagsData: TTagsData = new Map([
   [
     "bCcRcxADj2xP9fkSXNpH",
     { title: "зюганов", name: "zuganov", type: "feeling" },
@@ -25,6 +25,15 @@ export const tagsData = new Map([
     "vekwWqVY1yYRd3XeERmd",
     { name: "pets", title: "с животными", type: "withWho" },
   ],
+  [
+    "vekwWqVY1yYRd3XeER12",
+    { name: "parents", title: "с родителями", type: "withWho" },
+  ],
+  [
+    "vekwWqVY1222d3XeERmd",
+    { name: "grandmother", title: "с бабушкой", type: "withWho" },
+  ],
+  ["vekwWqVY1222eeXeERmd", { name: "man", title: "с дядей", type: "withWho" }],
   [
     "rNNyXhgNJUjsbGFzVGAL",
     { title: "на улице", name: "street", type: "where" },
@@ -49,6 +58,9 @@ export const state = {
   ieYx4ke8ms0DJb5APv4u: false,
   ybrq9aFZlTk71akoH7Lz: false,
   fYZ3uqG1vBLFH75Y0rjM: false,
+  vekwWqVY1yYRd3XeER12: false,
+  vekwWqVY1222d3XeERmd: false,
+  vekwWqVY1222eeXeERmd: false,
 };
 
 export const defaultTagsIds = [

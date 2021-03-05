@@ -10,7 +10,7 @@ import {
   //alertReducer,
   tagsReducer,
 } from "../../../store";
-import { tagsData } from "../../../component/FormElements/TagsCheckbox/__mock";
+import { tagsData } from "../../../component/Tags/TagsCheckbox/__mock";
 
 //CONFIG REDUX
 const reducer = combineReducers({
@@ -34,7 +34,7 @@ export default {
   component: SearchPhotoForm,
   title: "Photos/Forms/SearchPhotoForm",
   decorators: [
-    story => (
+    (story: any) => (
       <Provider store={store}>
         <div
           style={{
@@ -58,9 +58,9 @@ const state = {
   yearsOld: -1,
 };
 
-const Template = args => <SearchPhotoForm {...args} />;
+const Template = (args: any) => <SearchPhotoForm {...args} />;
 
-export const Default = Template.bind({});
+export const Default: any = Template.bind({});
 Default.args = {
   state,
   tagsData,
@@ -76,7 +76,7 @@ const initState = {
   yearsOld: 2,
 };
 
-export const InitState = Template.bind({});
+export const InitState: any = Template.bind({});
 InitState.args = {
   state: initState,
   tagsData,

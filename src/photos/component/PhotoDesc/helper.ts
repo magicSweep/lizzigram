@@ -1,28 +1,9 @@
-//import { IGlobalState, TTagsData } from "../../../store/types";
+import { getYearsOld, getFormattedYearsOld } from "../../../utils";
 
-//import { ICheckboxItemData } from "../../../component/FormElements/TagsCheckbox";
+export const getYearsOldFormated = (date: Date) => {
+  const yearsOld = getYearsOld(date);
 
-interface ITagData extends ICheckboxItemData {
-  id: string;
-}
-
-export const getPhotoTags = (
-  tagsData: TTagsData,
-  photoTags: { [id: string]: boolean }
-): ITagData[] => {
-  const res = [];
-
-  for (let tagId in photoTags) {
-    if (photoTags[tagId] === true && tagsData.has(tagId)) {
-      const data = tagsData.get(tagId);
-      res.push({
-        id: tagId,
-        ...data,
-      });
-    }
-  }
-
-  return res as any;
+  return getFormattedYearsOld(yearsOld);
 };
 
 export const getMonth = (date: Date) => {

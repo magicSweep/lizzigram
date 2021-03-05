@@ -7,7 +7,7 @@ import { tagsReducer } from "../../../store";
 import { useUploadPhotoForm } from "../hook";
 import { photoFileRules, descRules } from "../Photo.rules";
 import { registerInfo } from "../AddPhotoForm/AddPhotoForm";
-import { tagsData } from "../../../component/FormElements/TagsCheckbox/__mock";
+import { tagsData } from "../../../component/Tags/TagsCheckbox/__mock";
 
 export default {
   component: AddEditPhotoFormWidget,

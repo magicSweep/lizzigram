@@ -4,7 +4,7 @@ import TagWidget, { ITagWidgetProps } from ".";
 
 export default {
   component: TagWidget,
-  title: "Component/TagWidget",
+  title: "Tags/TagWidget",
   decorators: [
     (story: any) => (
       <div

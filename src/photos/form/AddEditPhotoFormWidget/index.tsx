@@ -9,7 +9,7 @@ import classes from "./AddEditPhotoFormWidget.module.scss";
 //import Button from "@material-ui/core/Button";
 
 import UploadButton from "../../../component/FormElements/UploadButton";
-import TagsCheckbox from "../../../component/FormElements/TagsCheckbox";
+import TagsCheckbox from "../../../component/Tags/TagsCheckbox";
 //import { Typography } from "@material-ui/core";
 
 //import TextField from "@material-ui/core/TextField";

@@ -1,4 +1,10 @@
-type TColorProp = "primary" | "secondary" | "info" | "warning" | "disabled";
+type TColorProp =
+  | "noncolor"
+  | "primary"
+  | "secondary"
+  | "info"
+  | "warning"
+  | "disabled";
 
 //type PImageZoom = 1 | 1.5 | 2 | 2.5 | 3;
 

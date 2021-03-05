@@ -5,6 +5,8 @@ export const modalId = "modal";
 export const alertId = "alert";
 
 /* FIRESTORE */
+// [ feeling, withWho, where]
+export const numberOfTagsByType = [3, 4, 3];
 export const numberOfTags = 11;
 export const numberOfTagsByPhoto = 4;
 
@@ -31,7 +33,10 @@ export const authLocalStorageKey = "lg_super_puper_user";
 
 /* EXPRESS SERVER */
 
-export const expressUrl = "http://localhost:3009";
+export const expressUrl = "https://lizzygram.herokuapp.com";
+//export const expressUrl = "http://localhost:3009";
+
+export const herokuPingUrl = `${expressUrl}/sleep_q23we4rt5`;
 
 export const addPhotoUrl = `${expressUrl}/add-photo`;
 export const editPhotoUrl = `${expressUrl}/edit-photo`;

@@ -26,9 +26,7 @@ const NotAuth: FC<INotAuthProps> = ({ isAuth, loading }) => {
         <h4 className={[commomClasses.titleFont, classes.title].join(" ")}>
           Добро пожаловать, леди и джентельмены.
         </h4>
-        <p
-          className={[commomClasses.paragraphFont, classes.paragraph].join(" ")}
-        >
+        <p className={[commomClasses.paragraph, classes.paragraph].join(" ")}>
           Вам нужно лишь войти на сайт через свой google аккаунт, дабы перед вам
           открылся дивный мир жизни и творчества Цибизовой Елизаветы Кирилловны.{" "}
         </p>

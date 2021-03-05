@@ -24,7 +24,7 @@ const tagsRules = {
 
 export default {
   component: TagsCheckbox,
-  title: "FormElements/TagsCheckbox",
+  title: "Tags/TagsCheckbox",
   decorators: [
     (story: any) => (
       <div style={{ width: "500px", margin: "auto", paddingTop: "20px" }}>

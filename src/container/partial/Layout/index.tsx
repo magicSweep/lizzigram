@@ -1,9 +1,9 @@
-import React, { lazy, Suspense } from "react";
-import { useShowOnDidMount } from "../../../hooks/useShowOnDidMount";
+import React from "react";
+//import { useShowOnDidMount } from "../../../hooks/useShowOnDidMount";
 import Header from "../Header";
 import classes from "./Layout.module.scss";
 //import loadable from "@loadable/component";
-//import Alert from "../../../component/Alert";
+import Alert from "../../../component/Alert";
 
 interface LayoutProps {
   children: any;
@@ -15,18 +15,18 @@ const _refHeader = <Header />;
 
 const IHeader = () => _refHeader;
 
-/* const _refAlert = <Alert />;
+const _refAlert = <Alert />;
 
-const IAlert = () => _refAlert; */
+const IAlert = () => _refAlert;
 
-const LoadableAlert = lazy(() =>
-  import(/* webpackPreload: true */ "../../../component/Alert")
-);
+/* const LoadableAlert = lazy(() =>
+  import(/* webpackPreload: true / "../../../component/Alert")
+); */
 
 /* END FINAL COMPONENTS */
 
 export const Layout = ({ children }: LayoutProps) => {
-  const isShow = useShowOnDidMount();
+  //const isShow = useShowOnDidMount();
 
   console.log("[RENDER LAYOUT]");
 
@@ -34,11 +34,7 @@ export const Layout = ({ children }: LayoutProps) => {
     <>
       <IHeader />
       <main className={classes.container}>{children}</main>
-      {isShow && (
-        <Suspense fallback={null}>
-          <LoadableAlert />
-        </Suspense>
-      )}
+      <IAlert />
     </>
   );
 };

@@ -26,15 +26,11 @@ const Header = () => {
       <div className={classes.toolbar}>
         <Logo />
 
-        <AuthFragment />
+        {/*  <AuthFragment /> */}
 
         {/*  {!isShow && <AuthSkeleton />} */}
 
-        {/* {isShow && (
-          <Suspense fallback={AuthSkeleton}>
-            <LoadableAuthFragment />
-          </Suspense>
-        )} */}
+        <AuthFragment />
       </div>
     </header>
   );

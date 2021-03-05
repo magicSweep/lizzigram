@@ -16,7 +16,7 @@ const UploadButton: FC<IUploadButtonProps> = ({
   helperText,
   disabled,
 }) => {
-  let labelClasses = `${styles.paragraphFont} ${classes.label}`;
+  let labelClasses = `${styles.labelFont} ${classes.label}`;
   let svgClasses = classes.svg;
   let buttonClasses = classes.button;
 

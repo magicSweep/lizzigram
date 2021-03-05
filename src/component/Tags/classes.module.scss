@@ -1,0 +1,57 @@
+@import "./../../styles/style.variables.scss";
+
+.root {
+  font-size: 14px;
+  //border: 1px solid $font-secondary;
+  text-align: center;
+
+  padding: 4px 16px;
+  border-radius: 16px;
+  min-width: 80px;
+  height: 32px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  //color: $font-secondary;
+}
+
+.tagsWrapper {
+  position: relative;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  border: none;
+
+  .title {
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    background-color: white;
+    //color: $font-primary;
+  }
+
+  .tagsContainer {
+    list-style: none;
+    padding: 25px 15px;
+    //padding-left: 20px;
+    //padding-right: 20px;
+    //border: 1px solid $font-primary;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+  }
+
+  .tagsContainer--flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+
+  .tag {
+    /* min-width: 50px;
+      padding: 8px;
+      color: violet; */
+    padding-top: 10px;
+    margin-right: 8px;
+  }
+}

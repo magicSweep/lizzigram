@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { showEditFormAC } from "../../../store";
-import { useTags } from "../../../hooks/useTags";
+//import { useTags } from "../../../hooks/useTags";
 
 export const usePhotoDesc = () => {
   const dispatch = useDispatch();
 
-  const { tags, error, loading } = useTags();
+  //const { tags, error, loading } = useTags();
 
   const { photo, userUID } = useSelector<
     IGlobalState,
@@ -19,9 +19,9 @@ export const usePhotoDesc = () => {
 
   return {
     photo,
-    tags,
+    /*  tags,
     error,
-    loading,
+    loading, */
     isEditable: photo ? photo.photo.addedByUserUID === userUID : false,
     showEditPhotoForm,
   };

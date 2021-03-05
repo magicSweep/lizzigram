@@ -14,6 +14,7 @@ import { limitPhotosPerQuery } from "../../config";
 import { useSelector } from "react-redux";
 import PhotoSkeletons from "../../fcomponent/PhotoSkeletons";
 import { WindowResizeProvider } from "../../provider/WindowResizer";
+import { useHerokuPing } from "./hook";
 
 //const LoadableNotAuth = lazy(() => import("../../component/NotAuth"));
 
@@ -24,6 +25,9 @@ const PhotosSkeleton = () => (
 );
 
 const App = () => {
+  // AWAKE HEROKU
+  useHerokuPing();
+
   const { user, loading } = useSelector<
     IGlobalState,
     { user: IAuthUser | undefined; loading: boolean }

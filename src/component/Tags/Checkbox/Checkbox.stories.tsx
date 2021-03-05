@@ -4,7 +4,7 @@ import Checkbox, { ICheckboxProps } from ".";
 
 export default {
   component: Checkbox,
-  title: "Form_Elements/Checkbox",
+  title: "Tags/Checkbox",
   decorators: [
     (story: any) => (
       <div

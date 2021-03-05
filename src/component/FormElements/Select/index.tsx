@@ -39,7 +39,7 @@ const Select: FC<ISelectProps> = ({
   value,
   onChange,
 }) => {
-  let selectClasses = `${styles.paragraphFont} ${classes.select}`;
+  let selectClasses = `${styles.paragraph} ${classes.select}`;
   let labelClasses = `${styles.labelFont} ${classes.label}`;
 
   if (disabled) {

@@ -16,7 +16,7 @@ const Textarea: FC<ITextareaProps> = ({
   disabled,
 }) => {
   let labelClasses = `${styles.labelFont} ${classes.label}`;
-  let textareaClasses = `${styles.paragraphFont} ${classes.textarea}`;
+  let textareaClasses = `${styles.paragraph} ${classes.textarea}`;
 
   if (disabled) {
     labelClasses += ` ${styles.disabledColor}`;
