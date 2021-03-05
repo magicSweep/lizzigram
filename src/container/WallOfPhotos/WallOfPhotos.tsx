@@ -8,7 +8,7 @@ import PhotoSkeletons from "../../fcomponent/PhotoSkeletons";
 //import styles from "./../../../styles/classes.module.scss";
 import Button from "../../component/Button";
 
-interface WallOfPhotosProps {
+export interface IWallOfPhotosProps {
   photos: TPhotosData | undefined;
   loadMorePhotos: () => void;
   reLoadPhotos: () => void;
@@ -71,7 +71,7 @@ const getLoadMoreButton = (
   );
 };
 
-export const WallOfPhotos: FC<WallOfPhotosProps> = ({
+export const WallOfPhotos: FC<IWallOfPhotosProps> = ({
   photos,
   loadMorePhotos,
   reLoadPhotos,
@@ -87,6 +87,14 @@ export const WallOfPhotos: FC<WallOfPhotosProps> = ({
   //const classes = useStyles();
 
   let content = undefined;
+
+  console.log(
+    "[RENDER WALL_OF_PHOTS WIDGET]",
+    photos,
+    isSearch,
+    loading,
+    error
+  );
 
   if (error) {
     content = (
@@ -156,8 +164,6 @@ export const WallOfPhotos: FC<WallOfPhotosProps> = ({
   );
 
   //const photoElements = getPhotos(photos, loading, error, onImgClick, limit);
-
-  console.log("[RENDER WALL_OF_PHOTS WIDGET]", isSearch, loading, error);
 
   return (
     <>

@@ -16,6 +16,10 @@ const getUpdatedChildren = (children: any[], itemClickHandler: () => void) => {
   return Children.map(children, (child, i) => {
     //console.log("Before clone child", child.props);
 
+    //console.log("CHILD", child);
+
+    if (!child) return null;
+
     let newChild = cloneElement(child, {
       onClick: (event: any) => {
         if (child.props.onClick) child.props.onClick();

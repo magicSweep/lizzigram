@@ -48,11 +48,11 @@ const baseArgs = {
 export const Default = Template.bind({});
 (Default as any).args = {
   ...baseArgs,
-  photo: photo as any,
+  photo: { id: "id", photo: photo as any },
 };
 
 export const OnlyBase64 = Template.bind({});
 (OnlyBase64 as any).args = {
   ...baseArgs,
-  photo: { ...photo, src: "", srcSet: "" } as any,
+  photo: { id: "id", photo: { ...photo, src: "", srcSet: "" } as any },
 };

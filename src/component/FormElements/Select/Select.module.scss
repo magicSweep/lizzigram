@@ -15,6 +15,10 @@
   .select {
     //min-width: 300px;
     //width: auto;
+    font-weight: 400;
+    //font-size: 14px;
+    color: $font-secondary;
+
     cursor: pointer;
     display: inline-flex;
     height: 32px;

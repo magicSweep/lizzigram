@@ -13,40 +13,34 @@ import { makeQueryBySerchTerm, isInitState } from "../../helper/QueryHelper";
 
 export let query: firebase.firestore.Query;
 
+let prevSearchState: ISearchState;
+
 export const prepareQuery = (searchState: ISearchState) => {
   query = getFirestoreDb().collection(photosCollectionName);
   query = makeQueryBySerchTerm(query, searchState);
 };
 
-/* export const request = async (nextPageDocRef?: any) => {
-  let querySnapshot: firebase.firestore.QuerySnapshot;
-
-  console.log("REQUEST", nextPageDocRef);
-
-  if (nextPageDocRef) {
-    console.log("REQUEST 223", nextPageDocRef);
-    querySnapshot = await query
-      .startAt(nextPageDocRef)
-      //.limit(limitPhotosPerQuery + 1)
-      .get();
-  } else {
-    querySnapshot = await query.get();
-  }
-
-  return makeNewPhotoStateItems(querySnapshot, limitPhotosPerQuery);
-}; */
-
 // LOAD PHOTOS
 export const loadPhotos = async (searchState: ISearchState) => {
+  /*  prepareQuery(searchState);
+
+  const querySnapshot = await query.limit(limitPhotosPerQuery + 1).get();
+
+  return makeNewPhotoStateItems(querySnapshot, limitPhotosPerQuery); */
+
   prepareQuery(searchState);
+
+  prevSearchState = searchState;
 
   const querySnapshot = await query.limit(limitPhotosPerQuery + 1).get();
 
   return makeNewPhotoStateItems(querySnapshot, limitPhotosPerQuery);
 
-  /* const querySnapshot = await query.get();
+  /* const q = getFirestoreDb().collection(photosCollectionName);
 
-  return makeNewPhotoStateItems(querySnapshot, limitPhotosPerQuery); */
+  const querySnapshot = await q.get();
+
+  return makeNewPhotoStateItems(querySnapshot, 25); */
 };
 
 export const onStartLoadPhotos = (dispatch: any) =>
@@ -61,13 +55,14 @@ export const onSuccessLoadPhotos = (dispatch: any, data: TGetPhotosData) =>
 export const loadMore = async (nextPageDocRef: any) => {
   if (!nextPageDocRef) throw new Error("No NEXT PAGE REF...");
 
-  if (!query) throw new Error("Bad firestore query ...");
+  //if (!query) throw new Error("Bad firestore query ...");
 
-  //query.startAt(nextPageDocRef);
+  prepareQuery(prevSearchState);
 
-  //return request(nextPageDocRef);
-
-  const querySnapshot = await query.startAt(nextPageDocRef).get();
+  const querySnapshot = await query
+    .startAt(nextPageDocRef)
+    .limit(limitPhotosPerQuery + 1)
+    .get();
 
   return makeNewPhotoStateItems(querySnapshot, limitPhotosPerQuery);
 };
@@ -81,42 +76,3 @@ export const onSuccessLoadMorePhotos = (
 ) => {
   dispatch(fetchMorePhotosRequestSuccessAC(data));
 };
-
-/* isNeedNewRequest = (searchState: ISearchState, photoStateLoading: boolean) => {
-  const isNeed =
-    (this.prevSearchState === undefined ||
-      !isEqualSearchState(this.prevSearchState, searchState)) &&
-    photoStateLoading !== true;
-
-  this.prevSearchState = searchState;
-
-  return isNeed;
-};
-
-fetchPhotos = async (dispatch: any, isFetchMore: boolean = false) => {
-  try {
-    if (!isFetchMore) dispatch(allPhotosStartNewRequestAC());
-    else dispatch(allPhotosStartMoreRequestAC());
-
-    if (!query) throw new Error("Bad firestore query ...");
-
-    const querySnapshot = await this.firestoreReq.syncStart(this.query);
-
-    const { hasNextPage, nextPageDocRef, photos } = makeNewPhotoStateItems(
-      querySnapshot,
-      limitPhotosPerQuery
-    );
-
-    if (isFetchMore)
-      this.dispatch(
-        fetchMorePhotosRequestSuccessAC(photos, nextPageDocRef, hasNextPage)
-      );
-    else
-      this.dispatch(
-        allPhotosRequestSuccessAC(photos, nextPageDocRef, hasNextPage)
-      );
-  } catch (err) {
-    this.dispatch(allPhotosRequestErrorAC());
-  }
-};
- */

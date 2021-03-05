@@ -69,7 +69,7 @@ const PreloadBase64Image: FC<IPreloadBase64ImageProps> = ({
     ? `${imageClasses} ${classes.background}`
     : imageClasses; */
 
-  console.log("[PRELOAD_BASE64_IMAGE] RENDER");
+  console.log("[PRELOAD_BASE64_IMAGE] RENDER", photo);
 
   return (
     <img

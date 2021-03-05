@@ -24,9 +24,7 @@ const ShowDataTab = () => {
 
       <Button
         onClick={async () => {
-          const photos = await getAll(
-            getFirestoreDb().collection(testPhotosCollectionName)
-          );
+          const photos = await getAll(getFirestoreDb().collection("photos"));
           console.log("[FIRESTORE] PHOTOS", photos);
         }}
         label="Get all photos to console."

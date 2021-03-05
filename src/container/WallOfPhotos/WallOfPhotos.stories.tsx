@@ -1,5 +1,5 @@
 import React from "react";
-import WallOfPhotos from "./WallOfPhotos";
+import WallOfPhotos, { IWallOfPhotosProps } from "./WallOfPhotos";
 import { photosData } from "./../../photos/__mock/data";
 
 export default {
@@ -11,7 +11,7 @@ export default {
   excludeStories: /.*Data$/,
 };
 
-const Template = (args: any) => <WallOfPhotos {...args} />;
+const Template = (args: IWallOfPhotosProps) => <WallOfPhotos {...args} />;
 
 /* photos,
   loadMorePhotos,
@@ -20,8 +20,12 @@ const Template = (args: any) => <WallOfPhotos {...args} />;
   loading,
   error, */
 
-export const Default = Template.bind({});
-(Default as any).args = {
+type D<T> = {
+  args: T;
+};
+
+export const Default: D<IWallOfPhotosProps> = Template.bind({}) as any;
+Default.args = {
   photos: photosData,
   loading: false,
   hasNextPage: false,
@@ -31,11 +35,12 @@ export const Default = Template.bind({});
   error: false,
   showPhotoSlider: () => console.log("showPhotoSlider"),
   showEditPhotoForm: () => console.log("showEditPhotoForm"),
+  showPhotoDesc: () => console.log("showPhotoDesc"),
   userUID: "user13",
 };
 
-export const Loading = Template.bind({});
-(Loading as any).args = {
+export const Loading: D<IWallOfPhotosProps> = Template.bind({}) as any;
+Loading.args = {
   photos: undefined,
   loading: true,
   isSearch: false,
@@ -45,10 +50,12 @@ export const Loading = Template.bind({});
   error: false,
   showPhotoSlider: () => console.log("showPhotoSlider"),
   showEditPhotoForm: () => console.log("showEditPhotoForm"),
+  showPhotoDesc: () => console.log("showPhotoDesc"),
+  userUID: "",
 };
 
-export const Error = Template.bind({});
-(Error as any).args = {
+export const Error: D<IWallOfPhotosProps> = Template.bind({}) as any;
+Error.args = {
   photos: undefined,
   loading: true,
   isSearch: false,
@@ -58,11 +65,13 @@ export const Error = Template.bind({});
   error: true,
   showPhotoSlider: () => console.log("showPhotoSlider"),
   showEditPhotoForm: () => console.log("showEditPhotoForm"),
+  showPhotoDesc: () => console.log("showPhotoDesc"),
+  userUID: "",
 };
 
-export const NoPhoto = Template.bind({});
-(NoPhoto as any).args = {
-  photos: undefined,
+export const NoPhoto: D<IWallOfPhotosProps> = Template.bind({}) as any;
+NoPhoto.args = {
+  photos: new Map(),
   loading: false,
   hasNextPage: false,
   isSearch: false,
@@ -71,11 +80,13 @@ export const NoPhoto = Template.bind({});
   error: false,
   showPhotoSlider: () => console.log("showPhotoSlider"),
   showEditPhotoForm: () => console.log("showEditPhotoForm"),
+  showPhotoDesc: () => console.log("showPhotoDesc"),
+  userUID: "",
 };
 
-export const NoPhotoOnSearch = Template.bind({});
-(NoPhotoOnSearch as any).args = {
-  photos: undefined,
+export const NoPhotoOnSearch: D<IWallOfPhotosProps> = Template.bind({}) as any;
+NoPhotoOnSearch.args = {
+  photos: new Map(),
   loading: false,
   hasNextPage: false,
   isSearch: true,
@@ -84,4 +95,6 @@ export const NoPhotoOnSearch = Template.bind({});
   error: false,
   showPhotoSlider: () => console.log("showPhotoSlider"),
   showEditPhotoForm: () => console.log("showEditPhotoForm"),
+  showPhotoDesc: () => console.log("showPhotoDesc"),
+  userUID: "",
 };

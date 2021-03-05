@@ -30,6 +30,8 @@ const PhotoCard: FC<IPhotoCardProps> = (props) => {
     },
   };
 
+  console.log("[RENDER PHOTO CARD]");
+
   return (
     <div
       key={classes.container + props.index}
