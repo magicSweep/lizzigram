@@ -32,6 +32,12 @@ const PSHelperPanel: FC<IPSHelperPanelWidgetProps> = ({
   minZoom,
   zoom,
 }) => {
+  const downloadImgName = `lizzy-image_${Date.now()}${
+    activePhoto.photo.imageExtention
+      ? "." + activePhoto.photo.imageExtention
+      : ""
+  }`;
+
   return (
     <>
       <div className={classes.showDescButton}>
@@ -48,7 +54,7 @@ const PSHelperPanel: FC<IPSHelperPanelWidgetProps> = ({
           type="circle"
           icon={<DownloadIcon color="secondary" width={28} height={28} />}
           href={`${downloadPhotoUrl}/${activePhoto.photo.googleDriveId}`}
-          download="lizzy-image"
+          download={downloadImgName}
           ariaLabel="Скачать оригинальный файл..."
         />
       </div>

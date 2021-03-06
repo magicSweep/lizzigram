@@ -38,6 +38,8 @@ declare module "*.svg" {
 
 /* TYPES */
 
+type TImgExt = "jpeg" | "jpg" | "png";
+
 type TTagsFormState = { [id: string]: boolean };
 
 interface IPhoto {
@@ -58,6 +60,7 @@ interface IPhoto {
   };
 
   googleDriveId: string;
+  imageExtention: TImgExt;
   addedByUserUID: string;
   // do we make changes by express
   isActive: boolean;
