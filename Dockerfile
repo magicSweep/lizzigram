@@ -9,6 +9,10 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt update && apt install -y --no-i
 #COPY package.json .
 COPY . .
 
+# make dir for uploads image and temp files
+RUN mkdir uploads
+RUN mkdir temp
+
 RUN npm install
 
 #RUN npm install pm2 -g
