@@ -41,6 +41,7 @@ describe("SharpImage", () => {
 
       expect(metadata.width).toEqual(1920);
       expect(metadata.width / metadata.height).toEqual(1.6);
+      expect(metadata.format).toEqual("jpeg");
     });
   });
 
@@ -95,7 +96,7 @@ describe("SharpImage", () => {
     });
   });
 
-  describe("makeOptimizedWebp", () => {
+  /*   describe("makeOptimizedWebp", () => {
     test("", async () => {
       const result = await makeOptimizedWebp(pathToPhoto, pathToOptimizedPhoto);
 
@@ -130,4 +131,5 @@ describe("SharpImage", () => {
       expect(existsSync(pathToResizedPhoto)).toEqual(true);
     });
   });
+ */
 });

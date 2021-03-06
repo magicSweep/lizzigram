@@ -55,6 +55,7 @@ class SharpHelper {
       base64String: base64AndAspectRation[0],
       aspectRatio: base64AndAspectRation[1],
       photosInfo: photoInfo,
+      imageExtention: metadata.format,
     };
   };
 

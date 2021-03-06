@@ -133,9 +133,8 @@ export const init = async () => {
     });
   }); */
 
-  /* 
-  //TEST DOWNLOAD PHOTO 
-  app.get("/get-photo", (req, res, next) => {
+  //TEST DOWNLOAD PHOTO
+  /* app.get("/get-photo", (req, res, next) => {
     res.status(200).send(`
     <!DOCTYPE html>
     <html lang="en">
@@ -149,13 +148,13 @@ export const init = async () => {
           <img width="600" src="/freestocks-9U.jpg" alt="" />
         </div>
         <!--a href="/download/freestocks-9U.jpg">Download image</a-->
-        <a href="/download/1J4yFOQMprUYK_lMmbz5NO_eSAGGmrcou" download="lizzy-photo">Download image</a>
+        <a href="/download/1J4yFOQMprUYK_lMmbz5NO_eSAGGmrcou" download="lizzy-photo.jpeg">Download image</a>
       </body>
     </html>
     
     `);
-  });
- */
+  }); */
+
   // DOWNLOAD ORIGINAL PHOTO
   app.get(downloadPhotoUrl, downloadOriginalPhoto);
 
@@ -185,27 +184,23 @@ export const init = async () => {
   app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
     let message = "";
 
-    if (dev) {
-      if (err.message) {
-        message = `
+    if (err.message) {
+      message = `
           MESSAGE - ${err.message} 
           NAME - ${err.name}
           FILENAME - ${(err as any).filename}
           LINENUMBER - ${(err as any).lineNumber}
           STACK - ${err.stack}
         `;
-      } else {
-        message = JSON.stringify(err);
-      }
+    } else {
+      message = JSON.stringify(err);
+    }
 
-      message = `
+    message = `
         REQUEST_PATH - ${req.path}
         REQUEST_BODY - ${req.body ? JSON.stringify(req.body) : "NO BODY"}
         ${message}
       `;
-    } else {
-      message = "Server error";
-    }
 
     console.log(`[GLOBAL_ERROR_HANDLER] ${message}`);
 

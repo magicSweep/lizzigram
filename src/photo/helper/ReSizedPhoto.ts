@@ -27,6 +27,7 @@ class ReSizedPhoto {
 
   base64String: string;
   aspectRatio: number;
+  imageExtention: TImgExt;
 
   googleDriveId: string;
 
@@ -44,12 +45,15 @@ class ReSizedPhoto {
     this.generatePathsToDiffWidthPhotos();
 
     // MAKE DIFFERENT SIZES PHOTOS AND GET BASE64 AND ASPECT RATIO
-    const { base64String, aspectRatio } = await this.sharpHelper.make(
-      this.paths
-    );
+    const {
+      base64String,
+      aspectRatio,
+      imageExtention,
+    } = await this.sharpHelper.make(this.paths);
 
     this.base64String = base64String;
     this.aspectRatio = aspectRatio;
+    this.imageExtention = imageExtention as TImgExt;
 
     // SAVE PHOTOS TO CLOUDINARY
     const imagesInfo = await this.uploadImagesToCloudinary();

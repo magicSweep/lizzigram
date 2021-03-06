@@ -26,6 +26,7 @@ class PhotoModel {
     iconSrc: "",
     src: "",
     googleDriveId: "",
+    imageExtention: "jpeg",
     isActive: false,
   };
 
@@ -159,6 +160,10 @@ class PhotoModel {
 
   setAspectRatio = (aspectRatio: number) => {
     this.photo.aspectRatio = aspectRatio;
+  };
+
+  setImageExtention = (imageExtention: TImgExt) => {
+    this.photo.imageExtention = imageExtention;
   };
 
   setImageSrcAttrs = (

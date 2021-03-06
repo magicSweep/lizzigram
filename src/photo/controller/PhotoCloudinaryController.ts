@@ -52,9 +52,8 @@ export const addPhotoMiddleware = async (
 
     // SET ATTRIBUTES TO PHOTO MODEL
     photoModel.setAspectRatio(photoResizer.aspectRatio);
-
+    photoModel.setImageExtention(photoResizer.imageExtention);
     //console.log("[SET ATTRIBUTES TO PHOTO MODEL]", photoResizer.base64String);
-
     photoModel.setBase64String(photoResizer.base64String);
     photoModel.setImageSrcAttrs(photoResizer.photoCloudinaryUrls);
     photoModel.setFiles(photoResizer.photoCloudinaryIds);

@@ -59,6 +59,8 @@ type TCloudinaryId = string;
 
 type TCloudinarySecureUrl = string;
 
+type TImgExt = "jpeg" | "jpg" | "png";
+
 /* export interface IAddToFirebasePhoto {
   //_id: any;
   base64: string;
@@ -86,6 +88,7 @@ interface IFirebasePhoto {
 
   _timestamp?: Date;
 
+  imageExtention: TImgExt;
   googleDriveId: string;
   //addedByUserUID: string;
   isActive: boolean;
