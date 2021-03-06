@@ -10,8 +10,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && apt update && apt install -y --no-i
 COPY . .
 
 # make dir for uploads image and temp files
-RUN mkdir uploads
-RUN mkdir temp
+#RUN mkdir uploads
+#RUN mkdir temp
 
 RUN npm install
 

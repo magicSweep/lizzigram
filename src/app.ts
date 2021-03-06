@@ -24,6 +24,7 @@ import {
 //import { IErrorResponse } from "./types";
 import {
   pathToUploadFilesDir,
+  pathToTempDiffWidthsPhotos,
   addPhotoUrl,
   editPhotoUrl,
   herokuPingUrl,
@@ -31,7 +32,7 @@ import {
 } from "./config";
 import { mainLog } from "./middleware/logger";
 import { downloadOriginalPhoto } from "./middleware/downloadOriginalPhoto";
-import { existsSync } from "fs";
+import { existsSync, mkdirSync } from "fs";
 
 // PROTECT
 import cors from "cors";
@@ -40,14 +41,27 @@ import rateLimit from "express-rate-limit";
 
 const dev = process.env.NODE_ENV !== "production";
 
-console.group("INIT");
-console.log("is dev", dev);
-console.log("rootPath", rootPath);
-console.log("pathToUploadFilesDir", pathToUploadFilesDir);
-console.log("is exists pathToUploadFilesDir", existsSync(pathToUploadFilesDir));
-console.groupEnd();
-
 export const init = async () => {
+  // MAKE UPLOADS AND TEMP DIRS
+  if (!existsSync(pathToUploadFilesDir)) {
+    mkdirSync(pathToUploadFilesDir);
+  }
+
+  if (!existsSync(pathToTempDiffWidthsPhotos)) {
+    mkdirSync(pathToTempDiffWidthsPhotos);
+  }
+
+  console.group("INIT");
+  console.log("is dev", dev);
+  console.log("rootPath", rootPath);
+  console.log("pathToUploadFilesDir", pathToUploadFilesDir);
+  console.log(
+    "is exists pathToUploadFilesDir",
+    existsSync(pathToUploadFilesDir)
+  );
+  console.groupEnd();
+
+  // SET ENV VARIABLES
   if (process.env.IENV === "local")
     dotenv.config({ path: resolve(rootPath, ".env") });
 
