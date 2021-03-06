@@ -129,6 +129,17 @@ export const editPhotoMiddleware = async (
 
   const file = req.file;
 
+  console.log(
+    "EDIT PHOTO BODY",
+    JSON.stringify(req.body ? req.body : "No body")
+  );
+  console.log(
+    "EDIT PHOTO FILE",
+    req.file && req.file.originalname
+      ? req.file.originalname
+      : "No file original name"
+  );
+
   try {
     if (!req.body) throw new Error("Failed multer validation");
 

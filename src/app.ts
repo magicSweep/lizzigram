@@ -31,6 +31,7 @@ import {
 } from "./config";
 import { mainLog } from "./middleware/logger";
 import { downloadOriginalPhoto } from "./middleware/downloadOriginalPhoto";
+import { existsSync } from "fs";
 
 // PROTECT
 import cors from "cors";
@@ -39,7 +40,12 @@ import rateLimit from "express-rate-limit";
 
 const dev = process.env.NODE_ENV !== "production";
 
-console.log("IS DEV", dev);
+console.group("INIT");
+console.log("is dev", dev);
+console.log("rootPath", rootPath);
+console.log("pathToUploadFilesDir", pathToUploadFilesDir);
+console.log("is exists pathToUploadFilesDir", existsSync(pathToUploadFilesDir));
+console.groupEnd();
 
 export const init = async () => {
   if (process.env.IENV === "local")
