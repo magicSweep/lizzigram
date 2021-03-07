@@ -1,5 +1,9 @@
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { useDispatch, useSelector, shallowEqual, batch } from "react-redux";
 import { resetSearchStateAC } from "../../store/action/search";
+import {
+  addPhotoAnotherFormAC,
+  editPhotoAnotherFormAC,
+} from "../../store/action/photos";
 //import { IGlobalState } from "./../../../store/types";
 import {
   showAddFormAC,
@@ -74,10 +78,16 @@ export const usePhotoContainer = () => {
   };
 
   const hideAddPhotoForm = () => {
-    dispatch(hideAddFormAC());
+    batch(() => {
+      dispatch(addPhotoAnotherFormAC());
+      dispatch(hideAddFormAC());
+    });
   };
   const hideEditPhotoForm = () => {
-    dispatch(hideEditFormAC());
+    batch(() => {
+      dispatch(editPhotoAnotherFormAC());
+      dispatch(hideEditFormAC());
+    });
   };
   //hidePhotoSliderAC
   const hideSearchPhotoForm = () => {

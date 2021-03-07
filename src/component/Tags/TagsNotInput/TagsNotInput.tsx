@@ -1,10 +1,10 @@
 import React, { FC } from "react";
 import TagsSkeletons from "../TagsSkeletons";
 import TagWidget from "../TagWidget";
-import classes from "./TagsNotInput.module.scss";
+//import classes from "./TagsNotInput.module.scss";
 import styles from "./../../../styles/classes.module.scss";
 import commonClasses from "./../classes.module.scss";
-import { numberOfTagsByPhoto } from "../../../config";
+//import { numberOfTagsByPhoto } from "../../../config";
 import { getPhotoTags, tagTypeToColor } from "./helper";
 import TagsError from "../TagsError";
 

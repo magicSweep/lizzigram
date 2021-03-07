@@ -25,7 +25,8 @@ export const editPhoto = async (
   photoId: string,
   userUid: string,
   photoFormData: IEditPhotoFormData,
-  searchState: ISearchState
+  searchState: ISearchState,
+  anotherForm: boolean
 ) => {
   try {
     const requests: Promise<any>[] = [];
@@ -64,7 +65,8 @@ export const editPhoto = async (
         dispatch(editPhotoRequestSuccessAC(isLastReq, photoId));
       }
 
-      dispatch(hideEditFormAC());
+      //console.log("Hide edit form", anotherForm);
+      if (!anotherForm) dispatch(hideEditFormAC());
 
       dispatch(showAlertAC("Фото успешно изменено.", "success"));
     }

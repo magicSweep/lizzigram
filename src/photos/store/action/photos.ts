@@ -47,6 +47,12 @@ export const addPhotoStartRequestAC = (): IPhotosAction => {
   };
 };
 
+export const addPhotoAnotherFormAC = (): IPhotosAction => {
+  return {
+    type: "ADD_PHOTO_ANOTHER_FORM",
+  };
+};
+
 export const addPhotoRequestSuccessAC = (isLast: boolean): IPhotosAction => {
   return {
     type: "ADD_PHOTO_REQUEST_SUCCESS",
@@ -64,6 +70,12 @@ export const addPhotoRequestErrorAC = (isLast: boolean): IPhotosAction => {
 export const editPhotoStartRequestAC = (): IPhotosAction => {
   return {
     type: "EDIT_PHOTO_START_REQUEST",
+  };
+};
+
+export const editPhotoAnotherFormAC = (): IPhotosAction => {
+  return {
+    type: "EDIT_PHOTO_ANOTHER_FORM",
   };
 };
 

@@ -20,6 +20,7 @@ export const getImageStyle = (
   return {
     //display: "block",
     //margin: "auto",
+    cursor: "pointer",
     width,
     height,
   };

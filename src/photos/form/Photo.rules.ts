@@ -26,22 +26,20 @@ export const photoFileRules = {
 
 export const dateRules = {
   required: "Укажите в какое время сделана фота, хотя бы примерно, пожалуйста.",
-  validate: {
-    date: (value: any) => {
-      console.log("isDate", value);
-      //if (!value) return true;
-      const minDate = new Date("2018-07-07");
-      const maxDate = new Date();
-      const date = new Date(value);
-      //@ts-ignore
-      if (!isDate(date, "dd/MM/yyyy")) return "Некорректная дата.";
+  validate: (value: any) => {
+    console.log("isDate", value);
+    //if (!value) return true;
+    const minDate = new Date("2018-07-07");
+    const maxDate = new Date();
+    const date = new Date(value);
+    //@ts-ignore
+    if (!isDate(date, "dd/MM/yyyy")) return "Некорректная дата.";
 
-      if (date < minDate) return "Раньше 2018-07-08?";
-      if (date > maxDate) return "Фотка сделана в будущем?";
+    if (date < minDate) return "Раньше 2018-07-08?";
+    if (date > maxDate) return "Фотка сделана в будущем?";
 
-      return true;
-      //return isDate(value, "MM/dd/yyyy") || "Некорректная дата.";
-    },
+    return true;
+    //return isDate(value, "MM/dd/yyyy") || "Некорректная дата.";
   },
 };
 

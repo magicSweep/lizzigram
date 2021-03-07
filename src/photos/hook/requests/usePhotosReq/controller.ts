@@ -14,6 +14,7 @@ import { makeQueryBySerchTerm, isInitState } from "../../helper/QueryHelper";
 export let query: firebase.firestore.Query;
 
 let prevSearchState: ISearchState;
+let isInitSearchState: boolean;
 
 export const prepareQuery = (searchState: ISearchState) => {
   query = getFirestoreDb().collection(photosCollectionName);
@@ -30,7 +31,11 @@ export const loadPhotos = async (searchState: ISearchState) => {
 
   prepareQuery(searchState);
 
+  isInitSearchState = isInitState(searchState);
+
   prevSearchState = searchState;
+
+  if (isInitSearchState) query = query.orderBy("_timestamp", "desc");
 
   const querySnapshot = await query.limit(limitPhotosPerQuery + 1).get();
 
@@ -58,6 +63,8 @@ export const loadMore = async (nextPageDocRef: any) => {
   //if (!query) throw new Error("Bad firestore query ...");
 
   prepareQuery(prevSearchState);
+
+  if (isInitSearchState) query = query.orderBy("_timestamp", "desc");
 
   const querySnapshot = await query
     .startAt(nextPageDocRef)

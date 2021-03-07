@@ -3,7 +3,7 @@ import React, { FC } from "react";
 import Skeleton from "../../Skeleton";
 import classes from "./TagsSkeletons.module.scss";
 import checkboxClasses from "./../TagsCheckbox/TagsCheckbox.module.scss";
-import { numberOfTagsByType, numberOfTags } from "../../../config";
+import { numberOfTagsByType, numberOfTagsByPhoto } from "../../../config";
 import styles from "./../../../styles/classes.module.scss";
 //import commonClasses from "./../classes.module.scss";
 
@@ -61,7 +61,7 @@ const getDescSkeletons = (numberOfSkeletons: number) => {
 const TagsSkeletons: FC<{ type: "desc" | "checkbox" }> = ({ type }) => {
   console.log("[PHOTO SKELETONS RENDER]");
 
-  if (type === "desc") return getDescSkeletons(numberOfTags);
+  if (type === "desc") return getDescSkeletons(numberOfTagsByPhoto);
 
   if (type === "checkbox") return getTagCheckboxSkeletons(numberOfTagsByType);
 

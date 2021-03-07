@@ -20,18 +20,20 @@ export const useAddPhotoReqs = () => {
 
   const { start: getAddedPhotoReq } = useGetAddedPhotoReq();
 
-  const { loading, error, userUid } = useSelector<
+  const { loading, error, userUid, anotherForm } = useSelector<
     IGlobalState,
     {
       loading: boolean;
       error: boolean;
       userUid: string;
+      anotherForm: boolean;
     }
   >(
     (state) => ({
       loading: state.photos.addLoading,
       error: state.photos.addError,
       userUid: state.auth.user ? state.auth.user.uid : "",
+      anotherForm: state.photos.addAnotherForm,
     }),
     shallowEqual
   );
@@ -46,7 +48,8 @@ export const useAddPhotoReqs = () => {
         isLastWorkerReq,
         dispatch,
         photoFormData,
-        userUid
+        userUid,
+        anotherForm
       );
     },
     [userUid]

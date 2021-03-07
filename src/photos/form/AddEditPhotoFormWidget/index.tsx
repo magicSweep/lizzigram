@@ -26,6 +26,7 @@ interface IAddEditPhotoFormWidgetProps {
   title?: string;
   photoFileRules: any;
   descRules: any;
+  dateRules: any;
   onSubmit: (...args: any) => void;
   uploadLoading?: boolean;
   //defaultTagsIds?: string[];
@@ -52,6 +53,7 @@ const AddEditPhotoFormWidget = ({
   title,
   photoFileRules,
   descRules,
+  dateRules,
   onSubmit,
   uploadLoading,
   //defaultTagsIds,
@@ -90,7 +92,7 @@ const AddEditPhotoFormWidget = ({
           id="date-picker-id1234"
           name="date"
           type="date"
-          inputRef={register(photoFileRules)}
+          inputRef={register(dateRules)}
           error={formErrors.date ? true : false}
           helperText={formErrors.date && formErrors.date.message}
           disabled={uploadLoading}

@@ -53,7 +53,7 @@ interface EditPhotoFormProps {
 
 const registerInfo = [
   { name: "tags", rules: tagsRules },
-  { name: "date", rules: { validate: dateRules.validate } },
+  //{ name: "date", rules: { validate: dateRules.validate } },
 ];
 
 export const EditPhotoForm: FC<EditPhotoFormProps> = ({
@@ -108,6 +108,7 @@ export const EditPhotoForm: FC<EditPhotoFormProps> = ({
         title={editPhotoFormTitle}
         photoFileRules={undefined}
         descRules={descRules}
+        dateRules={dateRules}
         uploadLoading={uploadLoading}
         onSubmit={uploadPhotoFormData.handleSubmit(submit)}
         uploadPhotoFormData={uploadPhotoFormData}

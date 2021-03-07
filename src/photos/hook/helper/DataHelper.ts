@@ -125,6 +125,7 @@ export const makeAddPhotoData = (
     googleDriveId: "",
     addedByUserUID: "",
     isActive: false,
+    imageExtention: "jpeg",
   };
 };
 

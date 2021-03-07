@@ -12,8 +12,10 @@ const photosInitialState: IPhotosState = {
   error: false,
   addLoading: false,
   addError: false,
+  addAnotherForm: false,
   editLoading: false,
   editError: false,
+  editAnotherForm: false,
 };
 
 const reducer: Reducer<IPhotosState, IPhotosAction> = (
@@ -58,7 +60,15 @@ const reducer: Reducer<IPhotosState, IPhotosAction> = (
       return {
         ...state,
         addLoading: true,
+        addAnotherForm: false,
         addError: false,
+      };
+
+    case "ADD_PHOTO_ANOTHER_FORM":
+      return {
+        ...state,
+        addLoading: false,
+        addAnotherForm: true,
       };
     case "ADD_PHOTO_REQUEST_SUCCESS":
       return {
@@ -77,7 +87,14 @@ const reducer: Reducer<IPhotosState, IPhotosAction> = (
       return {
         ...state,
         editLoading: true,
+        editAnotherForm: false,
         editError: false,
+      };
+    case "EDIT_PHOTO_ANOTHER_FORM":
+      return {
+        ...state,
+        editLoading: false,
+        editAnotherForm: true,
       };
     case "EDIT_PHOTO_REQUEST_SUCCESS":
       if (action.photoId) {

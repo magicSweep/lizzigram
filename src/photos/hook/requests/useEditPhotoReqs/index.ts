@@ -22,7 +22,14 @@ export const useEditPhotoReqs = () => {
 
   const { start: getEditedPhotoReq } = useGetEditedPhotoReq();
 
-  const { loading, error, prevPhoto, userUid, searchState } = useSelector<
+  const {
+    loading,
+    error,
+    prevPhoto,
+    userUid,
+    searchState,
+    anotherForm,
+  } = useSelector<
     IGlobalState,
     {
       loading: boolean;
@@ -30,6 +37,7 @@ export const useEditPhotoReqs = () => {
       prevPhoto: TPhotoData | undefined;
       userUid: string;
       searchState: ISearchState;
+      anotherForm: boolean;
     }
   >(
     (state) => ({
@@ -38,6 +46,7 @@ export const useEditPhotoReqs = () => {
       prevPhoto: state.modal.photo,
       userUid: state.auth.user ? state.auth.user.uid : "",
       searchState: state.search,
+      anotherForm: state.photos.editAnotherForm,
     }),
     shallowEqual
   );
@@ -46,6 +55,8 @@ export const useEditPhotoReqs = () => {
     const isNeedWorkerReq = getIsNeedWorkerReq(photoFormData);
 
     if (!prevPhoto) throw new Error("No prev photo info");
+
+    //console.log("START EDIT PHOTO", anotherForm);
 
     editPhoto(
       firestoreReq,
@@ -59,7 +70,8 @@ export const useEditPhotoReqs = () => {
       prevPhoto.id,
       userUid,
       photoFormData,
-      searchState
+      searchState,
+      anotherForm
     );
   }, []);
 

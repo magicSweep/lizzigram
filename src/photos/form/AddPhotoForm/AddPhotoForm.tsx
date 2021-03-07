@@ -25,7 +25,11 @@ interface IAddPhotoFormProps {
 
 export const registerInfo = [
   { name: "tags", rules: tagsRules },
-  { name: "date", rules: dateRules },
+  //rules: { validate: dateRules.validate }
+  /* {
+    name: "date",
+    rules: dateRules,
+  }, */
 ];
 
 export const AddPhotoForm = ({
@@ -50,6 +54,7 @@ export const AddPhotoForm = ({
       title={addPhotoFormTitle}
       photoFileRules={photoFileRules}
       descRules={descRules}
+      dateRules={dateRules}
       onSubmit={uploadPhotoFormData.handleSubmit(submit)}
       uploadLoading={uploadLoading}
       uploadPhotoFormData={uploadPhotoFormData}

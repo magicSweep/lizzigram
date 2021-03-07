@@ -41,6 +41,7 @@ type TPhotosActionTypes =
   | "EDIT_PHOTO"
   | "DELETE_PHOTO"
   | "ADD_PHOTO_START_REQUEST"
+  | "ADD_PHOTO_ANOTHER_FORM"
   | "ADD_PHOTO_REQUEST_SUCCESS"
   | "ADD_PHOTO_REQUEST_ERROR"
   | "ALL_PHOTOS_START_NEW_REQUEST"
@@ -48,6 +49,7 @@ type TPhotosActionTypes =
   | "ALL_PHOTOS_REQUEST_SUCCESS"
   | "ALL_PHOTOS_REQUEST_ERROR"
   | "EDIT_PHOTO_START_REQUEST"
+  | "EDIT_PHOTO_ANOTHER_FORM"
   | "EDIT_PHOTO_REQUEST_SUCCESS"
   | "EDIT_PHOTO_REQUEST_ERROR"
   | "FETCH_MORE_PHOTO_START_REQUEST"
@@ -72,8 +74,10 @@ interface IPhotosState {
   photos: TPhotosData | undefined;
   loading: boolean;
   error: boolean;
+  addAnotherForm: boolean;
   addLoading: boolean;
   addError: boolean;
+  editAnotherForm: boolean;
   editLoading: boolean;
   editError: boolean;
 }

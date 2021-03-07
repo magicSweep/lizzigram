@@ -22,7 +22,8 @@ export const addPhoto = async (
   isLastWorkerReq: () => boolean,
   dispatch: any,
   photoFormData: IAddPhotoFormData,
-  userUid: string
+  userUid: string,
+  anotherForm: boolean
   //searchState: ISearchState
 ) => {
   try {
@@ -45,7 +46,8 @@ export const addPhoto = async (
               isLastWorkerReq,
               dispatch,
               photoId,
-              getAddedPhotoReq
+              getAddedPhotoReq,
+              anotherForm
             ),
           (err) => onReqError(isLastFirestoreReq, isLastWorkerReq, dispatch)
         );
@@ -63,12 +65,13 @@ export const onWorkerReqSuccess = (
   isLastWorkerReq: () => boolean,
   dispatch: any,
   photoId: string,
-  getAddedPhotoReq: (photoId: string) => void
+  getAddedPhotoReq: (photoId: string) => void,
+  anotherForm: boolean
 ) => {
   batch(() => {
     if (isLastFirestoreReq() && isLastWorkerReq()) {
       dispatch(addPhotoRequestSuccessAC(true));
-      dispatch(hideAddFormAC());
+      if (!anotherForm) dispatch(hideAddFormAC());
     }
 
     dispatch(showAlertAC("Фото успешно добавлено.", "success"));
