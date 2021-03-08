@@ -37,7 +37,10 @@ export const loadPhotos = async (searchState: ISearchState) => {
 
   if (isInitSearchState) query = query.orderBy("_timestamp", "desc");
 
-  const querySnapshot = await query.limit(limitPhotosPerQuery + 1).get();
+  const querySnapshot = await query
+    .where("isActive", "==", true)
+    .limit(limitPhotosPerQuery + 1)
+    .get();
 
   return makeNewPhotoStateItems(querySnapshot, limitPhotosPerQuery);
 
@@ -67,6 +70,7 @@ export const loadMore = async (nextPageDocRef: any) => {
   if (isInitSearchState) query = query.orderBy("_timestamp", "desc");
 
   const querySnapshot = await query
+    .where("isActive", "==", true)
     .startAt(nextPageDocRef)
     .limit(limitPhotosPerQuery + 1)
     .get();
