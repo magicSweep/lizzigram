@@ -89,7 +89,7 @@ interface IPhotosAction extends Action<TPhotosActionTypes> {
   photoId?: string;
   hasNextPage?: boolean;
   nextPageDocRef?: any;
-  isLast?: boolean;
+  isLastEditPhotoReq?: boolean;
 }
 
 type TAllPhotosFetchFunc = (searchTerms: any) => (dispatch: any) => void;

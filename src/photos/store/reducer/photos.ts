@@ -73,14 +73,14 @@ const reducer: Reducer<IPhotosState, IPhotosAction> = (
     case "ADD_PHOTO_REQUEST_SUCCESS":
       return {
         ...state,
-        addLoading: action.isLast ? false : true,
+        addLoading: false,
         addError: false,
       };
     case "ADD_PHOTO_REQUEST_ERROR":
       return {
         ...state,
-        addLoading: action.isLast ? false : true,
-        addError: action.isLast ? false : true,
+        addLoading: false,
+        addError: true,
       };
 
     case "EDIT_PHOTO_START_REQUEST":
@@ -106,21 +106,21 @@ const reducer: Reducer<IPhotosState, IPhotosAction> = (
         return {
           ...state,
           photos: newPhotos2,
-          editLoading: action.isLast ? false : true,
+          editLoading: action.isLastEditPhotoReq === true ? false : true,
           editError: false,
         };
       } else {
         return {
           ...state,
-          editLoading: action.isLast ? false : true,
+          editLoading: action.isLastEditPhotoReq === true ? false : true,
           editError: false,
         };
       }
     case "EDIT_PHOTO_REQUEST_ERROR":
       return {
         ...state,
-        editLoading: action.isLast ? false : true,
-        editError: action.isLast ? false : true,
+        editLoading: false,
+        editError: true,
       };
 
     case "ADD_PHOTO":

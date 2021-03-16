@@ -1,8 +1,17 @@
 import { useEffect } from "react";
-import { usePhotosReq } from "../requests/usePhotosReq";
-import { isNeedNewRequest } from "./controller";
+import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { isNeedNewRequest } from "../../request/PhotosRequest/helper";
+import PhotosReqManager from "../../request/PhotosRequest/PhotosReqManager";
+
+let reqManager: PhotosReqManager | undefined = undefined;
 
 export const usePhotos = () => {
+  const dispatch = useDispatch();
+
+  if (reqManager === undefined) reqManager = new PhotosReqManager();
+
+  reqManager.dispatch = dispatch;
+
   const {
     loading,
     error,
@@ -10,10 +19,52 @@ export const usePhotos = () => {
     photos,
     hasNextPage,
     nextPageDocRef,
-    loadPhotos,
-    loadMore,
-    cancel,
-  } = usePhotosReq();
+  } = useSelector<
+    IGlobalState,
+    {
+      loading: boolean;
+      error: boolean;
+      searchState: ISearchState;
+      photos: TPhotosData | undefined;
+      hasNextPage: boolean;
+      nextPageDocRef: any;
+    }
+  >(
+    (state) => ({
+      loading: state.photos.loading,
+      error: state.photos.error,
+      searchState: state.search,
+      photos: state.photos.photos,
+      hasNextPage: state.photos.hasNextPage,
+      nextPageDocRef: state.photos.nextPageDocRef,
+    }),
+    shallowEqual
+  );
+
+  const loadPhotos = () => {
+    if (!reqManager) throw new Error("No reqManager on usePhotos");
+
+    reqManager.startNew({
+      isLoadMore: false,
+      searchState,
+    });
+  };
+
+  const loadMore = () => {
+    if (!reqManager) throw new Error("No reqManager on usePhotos");
+
+    reqManager.startNew({
+      isLoadMore: true,
+      searchState,
+      nextPageDocRef,
+    });
+  };
+
+  const cancel = () => {
+    if (!reqManager) throw new Error("No reqManager on usePhotos");
+
+    reqManager.cancel();
+  };
 
   useEffect(() => {
     if (isNeedNewRequest(searchState, loading)) loadPhotos();

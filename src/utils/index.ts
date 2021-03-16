@@ -1,4 +1,17 @@
 export { regex } from "./formValidators";
+import intersection from "lodash.intersection";
+
+export const isSameArrayValues = (arr1: string[], arr2: string[]) => {
+  const resIntersection = intersection(arr1, arr2);
+  if (
+    resIntersection.length !== arr1.length ||
+    resIntersection.length !== arr2.length
+  ) {
+    return false;
+  }
+
+  return true;
+};
 
 export const millisecondsToYears = (mSeconds: number) => {
   return Math.floor(mSeconds / 31536000000);

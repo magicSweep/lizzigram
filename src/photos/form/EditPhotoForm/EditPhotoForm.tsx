@@ -21,6 +21,7 @@ import { getDefaultTagsIds, getDefaultPhotoDate } from "./helper";
 //import { useEditPhoto } from "../../store/hook";
 import { editPhotoFormTitle } from "../../../config";
 import classes from "./EditPhotoForm.module.scss";
+import { getDate } from "../../helper/date";
 
 /* export interface IEditPhotoFormData {
   desc?: string;
@@ -79,9 +80,11 @@ export const EditPhotoForm: FC<EditPhotoFormProps> = ({
     editPhoto(formData);
   };
 
-  const defaultPhotoDate = getDefaultPhotoDate(
+  /* const defaultPhotoDate = getDefaultPhotoDate(
     (prevPhoto.photo.date as any).toDate()
-  );
+  ); */
+
+  const defaultPhotoDate = getDefaultPhotoDate(getDate(prevPhoto.photo.date));
 
   const uploadPhotoFormData = useUploadPhotoForm<IEditPhotoFormData>(
     tagsData,

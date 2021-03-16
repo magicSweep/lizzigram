@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useAddPhotoReqs } from "../../hook/requests/useAddPhotoReqs";
+import { useAddPhoto } from "../../hook/useAddPhoto";
 import AddPhotoFormWidget from "./AddPhotoForm";
 //import { useAddPhotoForm } from "./hook";
 
@@ -9,7 +9,7 @@ export const AddPhotoForm = () => {
     (state) => state.tags.tags
   );
 
-  const { start: startReq, loading } = useAddPhotoReqs();
+  const { start: startReq, loading } = useAddPhoto();
 
   console.log("[RENDER ADD FORM]");
 

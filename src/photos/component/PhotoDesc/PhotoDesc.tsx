@@ -1,13 +1,14 @@
 import React from "react";
 import classes from "./PhotoDesc.module.scss";
 //import { ITagsState } from "../../../store/types";
-import { getDate, getFormatDate, getYearsOldFormated } from "./helper";
+import { getFormatDate, getYearsOldFormated } from "./helper";
 //import TagsSkeletons from "../../../fcomponent/TagsSkeletons";
 import Button from "../../../component/Button";
 import styles from "./../../../styles/classes.module.scss";
 //import TagWidget from "../../../fcomponent/TagWidget";
 //import { numberOfTagsByPhoto } from "../../../config";
 import TagsNotInput from "../../../component/Tags/TagsNotInput";
+import { getDate } from "../../helper/date";
 
 interface PhotoDescProps {
   tags: TTagsData | undefined;

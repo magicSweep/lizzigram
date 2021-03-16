@@ -53,17 +53,15 @@ export const addPhotoAnotherFormAC = (): IPhotosAction => {
   };
 };
 
-export const addPhotoRequestSuccessAC = (isLast: boolean): IPhotosAction => {
+export const addPhotoRequestSuccessAC = (): IPhotosAction => {
   return {
     type: "ADD_PHOTO_REQUEST_SUCCESS",
-    isLast,
   };
 };
 
-export const addPhotoRequestErrorAC = (isLast: boolean): IPhotosAction => {
+export const addPhotoRequestErrorAC = (): IPhotosAction => {
   return {
     type: "ADD_PHOTO_REQUEST_ERROR",
-    isLast,
   };
 };
 
@@ -80,20 +78,19 @@ export const editPhotoAnotherFormAC = (): IPhotosAction => {
 };
 
 export const editPhotoRequestSuccessAC = (
-  isLast: boolean,
-  photoId?: string
+  photoId?: string,
+  isLastEditPhotoReq?: boolean
 ): IPhotosAction => {
   return {
     type: "EDIT_PHOTO_REQUEST_SUCCESS",
     photoId,
-    isLast,
+    isLastEditPhotoReq,
   };
 };
 
-export const editPhotoRequestErrorAC = (isLast: boolean): IPhotosAction => {
+export const editPhotoRequestErrorAC = (): IPhotosAction => {
   return {
     type: "EDIT_PHOTO_REQUEST_ERROR",
-    isLast,
   };
 };
 

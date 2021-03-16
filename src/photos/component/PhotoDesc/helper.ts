@@ -47,7 +47,7 @@ export const getFormatDate = (date: Date) => {
   return `${day} ${month} ${year}`;
 };
 
-export const getDate = (date: Date | number | string): Date => {
+/* export const getDate = (date: Date | number | string): Date => {
   let resultDate = undefined;
 
   console.log(
@@ -75,3 +75,4 @@ export const getDate = (date: Date | number | string): Date => {
 
   return resultDate;
 };
+ */

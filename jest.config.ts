@@ -26,5 +26,7 @@ const config: Config.InitialOptions = {
     "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
     "^.+\\.module\\.(css|sass|scss)$",
   ],
+
+  setupFiles: ["<rootDir>/jest/globalMock.js"],
 };
 export default config;

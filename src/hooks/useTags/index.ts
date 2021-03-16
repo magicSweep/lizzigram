@@ -1,10 +1,18 @@
 import { useEffect } from "react";
-import { shallowEqual, useSelector } from "react-redux";
-import { useTagsReq } from "../useTagsReq";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import TagsReqManager from "../../requests/Tags/TagsReqManager";
 
 let isInitReq = true;
 
+let reqManager: TagsReqManager | undefined = undefined;
+
 export const useTags = () => {
+  const dispatch = useDispatch();
+
+  if (reqManager === undefined) reqManager = new TagsReqManager();
+
+  reqManager.dispatch = dispatch;
+
   const { loading, error, tags } = useSelector<
     IGlobalState,
     {
@@ -21,13 +29,16 @@ export const useTags = () => {
     shallowEqual
   );
 
-  const { start, cancel } = useTagsReq();
+  //const { start, cancel } = useTagsReq();
 
   useEffect(() => {
     if (isInitReq) {
       //console.log("useTags useEffect start request");
-      start();
+      if (!reqManager) throw new Error("No reqManager on useTags");
+
       isInitReq = false;
+
+      reqManager.startNew();
     }
   }, []);
 
@@ -35,7 +46,7 @@ export const useTags = () => {
     loading,
     error,
     tags,
-    reLoad: start,
-    cancel,
+    reLoad: reqManager.startNew,
+    cancel: reqManager.cancel,
   };
 };

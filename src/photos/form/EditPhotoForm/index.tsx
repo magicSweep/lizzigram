@@ -1,12 +1,12 @@
 import React from "react";
 import EditPhotoFormWidget from "./EditPhotoForm";
 import { useEditPhotoForm } from "./hook";
-import { useEditPhotoReqs } from "../../hook/requests/useEditPhotoReqs";
+import { useEditPhoto } from "../../hook/useEditPhoto";
 
 export const EditPhotoForm = () => {
   const { prevPhoto, tagsData } = useEditPhotoForm();
 
-  const { start: startReq, loading } = useEditPhotoReqs();
+  const { start: startReq, loading } = useEditPhoto();
 
   console.log("[RENDER EDIT FORM]");
 
