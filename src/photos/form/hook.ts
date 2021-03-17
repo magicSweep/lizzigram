@@ -14,6 +14,7 @@ export interface IUseUploadPhotoFormReturn {
   handleSubmit: any;
   register: any;
   formErrors: any;
+  fileInputValue: FileList | undefined;
   //tags dependencies
   tagsProps: {
     onTagsCheckboxChange: any;
@@ -74,6 +75,8 @@ export const useUploadPhotoForm = <T>(
 
   const tagsProps = makeTagsFormProps(setValue, clearErrors, watch);
 
+  const fileInputValue: FileList | undefined = watch("photoFile") as any;
+
   //const onSubmit = handleSubmit(submit);
 
   return {
@@ -82,6 +85,7 @@ export const useUploadPhotoForm = <T>(
     formErrors,
     dateProps,
     tagsProps,
+    fileInputValue,
     //onSubmit,
   };
 };

@@ -56,11 +56,24 @@ const baseArgs = {
 export const Default = Template.bind({});
 (Default as any).args = {
   ...baseArgs,
-  photo: photo as any,
+  photo: { photo: photo as any },
 };
 
 export const OnlyBase64 = Template.bind({});
 (OnlyBase64 as any).args = {
   ...baseArgs,
-  photo: { ...photo, src: "", srcSet: "" } as any,
+  photo: { photo: { ...photo, src: "", srcSet: "" } as any },
+};
+
+export const ShowImgFromOurComputer = () => {
+  return (
+    <div>
+      <img
+        width="320"
+        height="180"
+        src="/home/nikki/Downloads/michael-dam-mEZ3PoFGs_k-unsplash.jpg"
+        alt=""
+      />
+    </div>
+  );
 };

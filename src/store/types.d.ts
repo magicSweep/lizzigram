@@ -57,7 +57,8 @@ interface IModalState {
   openSearch: boolean;
   // openForgetPassForm: boolean;
   initActiveIndex: number;
-  photo: TPhotoData | undefined;
+  photoId: string;
+  //photo: TPhotoData | undefined;
 }
 
 type TTagType = "where" | "withWho" | "feeling";
@@ -93,7 +94,8 @@ interface IAlertAction extends Action<TAlertActionTypes> {
 
 interface IModalAction extends Action<TModalActionTypes> {
   type: TModalActionTypes;
-  photo?: TPhotoData;
+  //photo?: TPhotoData;
+  photoId?: string;
   initActiveIndex?: number;
 }
 

@@ -4,7 +4,10 @@ import React, { FC, MouseEvent } from "react";
 import classes from "./WallOfPhotos.module.scss";
 import { limitPhotosPerQuery as limit } from "../../config";
 import PhotoCard from "./../../photos/component/PhotoCard";
-import PhotoSkeletons from "../../fcomponent/PhotoSkeletons";
+import PhotoSkeletons, {
+  getPhotoCardSkeleton,
+} from "../../fcomponent/PhotoSkeletons";
+
 //import styles from "./../../../styles/classes.module.scss";
 import Button from "../../component/Button";
 
@@ -14,6 +17,7 @@ export interface IWallOfPhotosProps {
   reLoadPhotos: () => void;
   hasNextPage: boolean;
   loading: boolean;
+  addPhotoLoading: boolean;
   error: boolean;
   isSearch: boolean;
   showPhotoSlider: (event: any) => void;
@@ -77,6 +81,7 @@ export const WallOfPhotos: FC<IWallOfPhotosProps> = ({
   reLoadPhotos,
   hasNextPage,
   loading,
+  addPhotoLoading,
   error,
   isSearch,
   showEditPhotoForm,
@@ -164,6 +169,11 @@ export const WallOfPhotos: FC<IWallOfPhotosProps> = ({
   );
 
   //const photoElements = getPhotos(photos, loading, error, onImgClick, limit);
+
+  if (addPhotoLoading && Array.isArray(content)) {
+    const skel = getPhotoCardSkeleton();
+    content.unshift(skel);
+  }
 
   return (
     <>

@@ -38,10 +38,10 @@ interface PhotoSliderProps {
   loadMorePhotos: () => void;
 }
 
-interface IDescState {
+/* interface IDescState {
   show: boolean;
   photo: TPhotoData | undefined;
-}
+} */
 
 const PhotoSlider = ({
   initActiveIndex = 0,

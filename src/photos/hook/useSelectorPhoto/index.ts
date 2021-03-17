@@ -1,9 +1,6 @@
 import { useSelector } from "react-redux";
-import { useTags } from "../../../hooks/useTags";
 
-export const useTagsElements = () => {
-  const { tags, error, loading } = useTags();
-
+export const useSelectorPhoto = () => {
   const photo = useSelector<IGlobalState, TPhotoData | undefined>((state) => {
     const photoId = state.modal.photoId;
     const photos = state.photos.photos;
@@ -16,12 +13,5 @@ export const useTagsElements = () => {
     return undefined;
   });
 
-  if (photo === undefined) throw new Error("No photo ");
-
-  return {
-    photoTags: photo.photo.tags,
-    tags,
-    error,
-    loading,
-  };
+  return photo;
 };

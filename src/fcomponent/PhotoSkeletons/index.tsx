@@ -3,20 +3,22 @@ import React, { FC } from "react";
 import Skeleton from "../../component/Skeleton";
 import classes from "./PhotoSkeletons.module.scss";
 
-const getSkeletons = (numberOfSkeletons: number) => {
+export const getPhotoCardSkeleton = (key?: string) => {
+  return (
+    <div key={key} className={classes.container}>
+      <div className={classes.item}>
+        <Skeleton variant="rect" />
+      </div>
+    </div>
+  );
+};
+
+export const getSkeletons = (numberOfSkeletons: number) => {
   const elements = [];
 
   for (let i = 0; i < numberOfSkeletons; i++) {
-    elements.push(
-      <div
-        key={classes.container + "_skeleton_" + i}
-        className={classes.container}
-      >
-        <div className={classes.item}>
-          <Skeleton variant="rect" />
-        </div>
-      </div>
-    );
+    let skel = getPhotoCardSkeleton(`${classes.container}_skeleton_${i}`);
+    elements.push(skel);
   }
   return elements;
 };

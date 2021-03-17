@@ -120,24 +120,4 @@ export const EditPhotoForm: FC<EditPhotoFormProps> = ({
   );
 };
 
-/* const mapStateToProps = (state: IGlobalState) => {
-  return {
-    prevPhoto: state.modal.photo,
-    tagsData: state.tags.tags,
-    //editPhotoLoading: state.photos.editLoading,
-    userUid: state.auth.user.uid,
-    //searchState: state.search,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    showAlert: (message: string, type: Color) =>
-      dispatch(showAlertAC(message, type)),
-  
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditPhotoForm); */
-
 export default EditPhotoForm;

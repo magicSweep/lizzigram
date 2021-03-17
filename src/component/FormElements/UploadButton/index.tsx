@@ -1,15 +1,18 @@
-import React, { FC } from "react";
+import React, { FC, MutableRefObject, useEffect, useRef } from "react";
 import classes from "./UploadButton.module.scss";
 import styles from "./../../../styles/classes.module.scss";
 import HelperText from "./../HelperText";
 import { IInputProps } from "./../BaseInput";
 
-export interface IUploadButtonProps extends IInputProps {}
+export interface IUploadButtonProps extends IInputProps {
+  fileList?: FileList;
+}
 
 const UploadButton: FC<IUploadButtonProps> = ({
   id,
   label,
   placeholder,
+  fileList,
   name,
   inputRef,
   error,
@@ -19,6 +22,8 @@ const UploadButton: FC<IUploadButtonProps> = ({
   let labelClasses = `${styles.labelFont} ${classes.label}`;
   let svgClasses = classes.svg;
   let buttonClasses = classes.button;
+
+  let fHelperText = helperText;
 
   if (disabled) {
     //labelClasses += ` ${classes["label--disabled"]}`;
@@ -31,7 +36,14 @@ const UploadButton: FC<IUploadButtonProps> = ({
     svgClasses += ` ${classes["svg--error"]}`;
   }
 
-  console.log("[RENDER UPLOAD BUTTON]", error, disabled);
+  console.log("[RENDER UPLOAD BUTTON]", fileList, error, disabled);
+
+  if (!error && fileList && fileList.length > 0) {
+    if (fileList.length > 1) {
+      throw new Error(`Multiple files not implemented`);
+    }
+    fHelperText = `Вы добавили файл - ${fileList[0].name}`;
+  }
 
   return (
     <>
@@ -52,7 +64,7 @@ const UploadButton: FC<IUploadButtonProps> = ({
         <span className={labelClasses}>{label}</span>
       </label>
 
-      <HelperText error={error} disabled={disabled} text={helperText} />
+      <HelperText error={error} disabled={disabled} text={fHelperText} />
     </>
   );
 };

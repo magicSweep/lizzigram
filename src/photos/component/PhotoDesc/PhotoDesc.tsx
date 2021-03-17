@@ -91,25 +91,4 @@ export const PhotoDesc = ({
   );
 };
 
-/* const mapStateToProps = (state: IGlobalState) => {
-  return {
-    //photo: state.modal.photo,
-    tags: state.tags.tags,
-    tagsError: state.tags.error,
-    tagsLoading: state.tags.loading,
-  };
-};
-
-const mapDispatchToProps = dispatch => {
-  return {
-    showEditPhotoForm: (photo: TPhotoData) => dispatch(showEditFormAC(photo)),
-    /*  fetchData: () => {
-      //console.log("onClick");
-      dispatch(fetchTagsAC());
-    }, /
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(PhotoDesc); */
-
 export default PhotoDesc;

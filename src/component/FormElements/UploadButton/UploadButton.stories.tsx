@@ -1,5 +1,6 @@
-import React from "react";
+import React, { MutableRefObject, useRef } from "react";
 //import { action } from "@storybook/addon-actions";
+import image3 from "./../../../static/ladki.jpg";
 import UploadButton from ".";
 
 export default {
@@ -23,6 +24,12 @@ export default {
   excludeStories: /.*Data$/,
 };
 
+const dataTransfer = new DataTransfer();
+const file = new File(["h", "e", "l"], "text.txt");
+dataTransfer.items.add(file);
+
+const fileList = dataTransfer.files;
+
 const Template = (args: any) => <UploadButton {...args} />;
 
 export const Default = Template.bind({});
@@ -36,7 +43,34 @@ export const Default = Template.bind({});
   disabled: false,
 };
 
+export const WithFileList = Template.bind({});
+
+(WithFileList as any).args = {
+  id: "uploadid123",
+  label: "Добавить фото",
+  name: "super-upload",
+  fileList,
+  error: false,
+  helperText: "",
+  disabled: false,
+};
+
+export const Error = Template.bind({});
+
+(Error as any).args = {
+  id: "uploadid123",
+  label: "Добавить фото",
+  name: "super-upload",
+  error: true,
+  helperText: "Big fat error",
+  disabled: false,
+};
+
 export const Test = () => {
+  const inputRef: MutableRefObject<any> = useRef();
+
+  console.log("[RENDER TEST UPLOAD BTN]", inputRef);
+
   return (
     <div style={{ position: "relative" }}>
       <button
@@ -68,7 +102,14 @@ export const Test = () => {
         Label
       </button>
 
-      <input style={{ display: "none" }} type="file" id="input-file" />
+      <input
+        ref={(ref) => {
+          inputRef.current = ref;
+        }}
+        style={{ display: "none" }}
+        type="file"
+        id="input-file"
+      />
     </div>
   );
 };

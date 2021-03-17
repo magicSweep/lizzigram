@@ -14,6 +14,7 @@ export const usePhotos = () => {
 
   const {
     loading,
+    addPhotoLoading,
     error,
     searchState,
     photos,
@@ -23,6 +24,7 @@ export const usePhotos = () => {
     IGlobalState,
     {
       loading: boolean;
+      addPhotoLoading: boolean;
       error: boolean;
       searchState: ISearchState;
       photos: TPhotosData | undefined;
@@ -32,6 +34,7 @@ export const usePhotos = () => {
   >(
     (state) => ({
       loading: state.photos.loading,
+      addPhotoLoading: state.photos.addLoading,
       error: state.photos.error,
       searchState: state.search,
       photos: state.photos.photos,
@@ -72,6 +75,7 @@ export const usePhotos = () => {
 
   return {
     loading,
+    addPhotoLoading,
     error,
     searchState,
     photos,

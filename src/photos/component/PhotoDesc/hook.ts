@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { showEditFormAC } from "../../../store";
+import { useSelectorPhoto } from "../../hook/useSelectorPhoto";
 //import { useTags } from "../../../hooks/useTags";
 
 export const usePhotoDesc = () => {
@@ -7,15 +8,16 @@ export const usePhotoDesc = () => {
 
   //const { tags, error, loading } = useTags();
 
-  const { photo, userUID } = useSelector<
-    IGlobalState,
-    { photo: TPhotoData | undefined; userUID: string }
-  >((state) => ({
-    photo: state.modal.photo,
-    userUID: state.auth.user ? state.auth.user.uid : "",
-  }));
+  const photo = useSelectorPhoto();
 
-  const showEditPhotoForm = () => dispatch(showEditFormAC(photo));
+  const userUID = useSelector<IGlobalState, string>((state) =>
+    state.auth.user ? state.auth.user.uid : ""
+  );
+
+  const showEditPhotoForm = () => {
+    if (!photo) throw new Error("No photo in showEditPhotoForm");
+    dispatch(showEditFormAC(photo.id));
+  };
 
   return {
     photo,

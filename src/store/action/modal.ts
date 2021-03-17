@@ -14,19 +14,17 @@ export const showAddFormAC = (): IModalAction => {
   };
 };
 
-export const showPhotoDescAC = (
-  photo: TPhotoData | undefined
-): IModalAction => {
+export const showPhotoDescAC = (photoId: string): IModalAction => {
   return {
     type: "SHOW_PHOTO_DESC",
-    photo,
+    photoId,
   };
 };
 
-export const showEditFormAC = (photo: TPhotoData | undefined): IModalAction => {
+export const showEditFormAC = (photoId: string): IModalAction => {
   return {
     type: "SHOW_EDIT_FORM",
-    photo,
+    photoId,
   };
 };
 
@@ -37,12 +35,12 @@ export const showSearchFormAC = (): IModalAction => {
 };
 
 export const showPhotoSliderAC = (
-  photo: TPhotoData,
+  //photo: TPhotoData,
   initActiveIndex: number
 ): IModalAction => {
   return {
     type: "SHOW_PHOTO_SLIDER",
-    photo,
+    //photo,
     initActiveIndex,
   };
 };

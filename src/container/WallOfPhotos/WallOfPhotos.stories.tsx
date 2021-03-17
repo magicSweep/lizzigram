@@ -28,6 +28,23 @@ export const Default: D<IWallOfPhotosProps> = Template.bind({}) as any;
 Default.args = {
   photos: photosData,
   loading: false,
+  addPhotoLoading: false,
+  hasNextPage: false,
+  isSearch: false,
+  loadMorePhotos: () => {},
+  reLoadPhotos: () => {},
+  error: false,
+  showPhotoSlider: () => console.log("showPhotoSlider"),
+  showEditPhotoForm: () => console.log("showEditPhotoForm"),
+  showPhotoDesc: () => console.log("showPhotoDesc"),
+  userUID: "user13",
+};
+
+export const AddPhotoLoading: D<IWallOfPhotosProps> = Template.bind({}) as any;
+AddPhotoLoading.args = {
+  photos: photosData,
+  loading: false,
+  addPhotoLoading: true,
   hasNextPage: false,
   isSearch: false,
   loadMorePhotos: () => {},
@@ -43,6 +60,7 @@ export const Loading: D<IWallOfPhotosProps> = Template.bind({}) as any;
 Loading.args = {
   photos: undefined,
   loading: true,
+  addPhotoLoading: false,
   isSearch: false,
   hasNextPage: false,
   loadMorePhotos: () => {},
@@ -58,6 +76,7 @@ export const Error: D<IWallOfPhotosProps> = Template.bind({}) as any;
 Error.args = {
   photos: undefined,
   loading: true,
+  addPhotoLoading: true,
   isSearch: false,
   hasNextPage: true,
   loadMorePhotos: () => {},
@@ -73,6 +92,7 @@ export const NoPhoto: D<IWallOfPhotosProps> = Template.bind({}) as any;
 NoPhoto.args = {
   photos: new Map(),
   loading: false,
+  addPhotoLoading: true,
   hasNextPage: false,
   isSearch: false,
   loadMorePhotos: () => {},
@@ -88,6 +108,7 @@ export const NoPhotoOnSearch: D<IWallOfPhotosProps> = Template.bind({}) as any;
 NoPhotoOnSearch.args = {
   photos: new Map(),
   loading: false,
+  addPhotoLoading: true,
   hasNextPage: false,
   isSearch: true,
   loadMorePhotos: () => {},

@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { useSelectorPhoto } from "../../hook/useSelectorPhoto";
 //import { showAlertAC } from "../../../store";
 //import { IGlobalState, TTagsData } from "../../../store/types";
 //import { Color } from "@material-ui/lab/Alert";
@@ -11,9 +12,11 @@ export const useEditPhotoForm = () => {
     (state) => state.tags.tags
   );
 
-  const prevPhoto = useSelector<IGlobalState, TPhotoData | undefined>(
+  /* const prevPhoto = useSelector<IGlobalState, TPhotoData | undefined>(
     (state) => state.modal.photo
-  );
+  ); */
+
+  const prevPhoto = useSelectorPhoto();
 
   //const hideEditPhotoForm = () => dispatch(hideEditFormAC());
 

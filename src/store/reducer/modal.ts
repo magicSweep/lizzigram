@@ -10,7 +10,8 @@ const modalInitialState: IModalState = {
   openSearch: false,
   //openForgetPassForm: false,
   initActiveIndex: 0,
-  photo: undefined,
+  photoId: "",
+  //photo: undefined,
 };
 
 const reducer: Reducer<IModalState, IModalAction> = (
@@ -19,11 +20,14 @@ const reducer: Reducer<IModalState, IModalAction> = (
 ) => {
   switch (action.type) {
     case "SHOW_PHOTO_SLIDER":
+      if (action.initActiveIndex === undefined)
+        throw new Error("No initActiveIndex on SHOW_PHOTO_SLIDER");
       return {
         ...state,
         openSlider: true,
-        photo: action.photo,
-        initActiveIndex: action.initActiveIndex as number,
+        //photo: action.photo,
+        //photoId: action.photoId,
+        initActiveIndex: action.initActiveIndex,
       };
 
     case "HIDE_PHOTO_SLIDER":
@@ -33,10 +37,12 @@ const reducer: Reducer<IModalState, IModalAction> = (
       };
 
     case "SHOW_PHOTO_DESC":
+      if (!action.photoId) throw new Error("No photoId on SHOW_PHOTO_DESC");
       return {
         ...state,
         openDescPhoto: true,
-        photo: action.photo,
+        //photo: action.photo,
+        photoId: action.photoId,
       };
 
     case "HIDE_PHOTO_DESC":
@@ -70,9 +76,12 @@ const reducer: Reducer<IModalState, IModalAction> = (
       };
 
     case "SHOW_EDIT_FORM":
+      if (!action.photoId) throw new Error("No photoId on SHOW_PHOTO_DESC");
+
       return {
         ...state,
-        photo: action.photo,
+        //photo: action.photo,
+        photoId: action.photoId,
         openEditForm: true,
       };
 
@@ -93,18 +102,6 @@ const reducer: Reducer<IModalState, IModalAction> = (
         ...state,
         openSearch: false,
       };
-
-    /*   case "SHOW_FORGET_PASS_FORM":
-      return {
-        ...state,
-        openForgetPassForm: true,
-      };
-
-    case "HIDE_FORGET_PASS_FORM":
-      return {
-        ...state,
-        openForgetPassForm: false,
-      }; */
 
     default:
       return state;

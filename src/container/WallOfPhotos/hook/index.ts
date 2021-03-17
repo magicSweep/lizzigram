@@ -23,6 +23,7 @@ export const useWallOfPhotos = () => {
     photos,
     hasNextPage,
     loading,
+    addPhotoLoading,
     error,
     loadMore: loadMorePhotos,
     loadPhotos: reLoadPhotos,
@@ -34,9 +35,9 @@ export const useWallOfPhotos = () => {
       // show photo slider
       const index = getPhotoIndex(event.target);
 
-      const photo = getPhotoByIndex(photos, index);
+      //const photo = getPhotoByIndex(photos, index);
 
-      dispatch(showPhotoSliderAC(photo, index));
+      dispatch(showPhotoSliderAC(index));
     },
     [photos]
   );
@@ -53,13 +54,13 @@ export const useWallOfPhotos = () => {
   const showEditPhotoForm = useCallback((photo: TPhotoData) => {
     //const photo = getPhotoByIndex(photos, index);
 
-    dispatch(showEditFormAC(photo));
+    dispatch(showEditFormAC(photo.id));
   }, []);
 
   const showPhotoDesc = useCallback((photo: TPhotoData) => {
     //const photo = getPhotoByIndex(photos, index);
 
-    dispatch(showPhotoDescAC(photo));
+    dispatch(showPhotoDescAC(photo.id));
   }, []);
 
   return {
@@ -68,6 +69,7 @@ export const useWallOfPhotos = () => {
     reLoadPhotos,
     hasNextPage,
     loading,
+    addPhotoLoading,
     error,
     isSearch,
     showEditPhotoForm,

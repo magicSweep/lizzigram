@@ -6,7 +6,7 @@ import PSHelperPanelWidget, { IPSHelperPanelProps } from "./PSHelperPanel";
 const PSHelperPanel: FC<IPSHelperPanelProps> = (props) => {
   const dispatch = useDispatch();
 
-  const showDesc = () => dispatch(showPhotoDescAC(props.activePhoto));
+  const showDesc = () => dispatch(showPhotoDescAC(props.activePhoto.id));
 
   return <PSHelperPanelWidget showDesc={showDesc} {...props} />;
 };

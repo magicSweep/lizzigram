@@ -62,7 +62,13 @@ const AddEditPhotoFormWidget = ({
   //const classes = useStyles();
   const titleElement = getTitle(title);
 
-  const { formErrors, register, tagsProps, dateProps } = uploadPhotoFormData;
+  const {
+    formErrors,
+    register,
+    tagsProps,
+    fileInputValue,
+    dateProps,
+  } = uploadPhotoFormData;
   /* const {
     onTagsCheckboxChange,
     tagsData,
@@ -80,6 +86,7 @@ const AddEditPhotoFormWidget = ({
           name="photoFile"
           label="Добавить фоту"
           inputRef={register(photoFileRules)}
+          fileList={fileInputValue}
           error={formErrors.photoFile ? true : false}
           helperText={formErrors.photoFile && formErrors.photoFile.message}
           disabled={uploadLoading}
