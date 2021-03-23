@@ -22,7 +22,7 @@ class PhotoWorkerReq<T> extends ARequest<IPhotoFirestoreData<T>, void> {
       },
     });
 
-    console.log("ADD RESPONSE", res);
+    //console.log("ADD RESPONSE", res);
 
     const resData = await res.json();
 

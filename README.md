@@ -7,6 +7,5 @@
 
 # For production build
 
-- In config.ts change expressUrl to heroku
+- In config.ts change expressUrl to heroku and limit photos per query
 - In initFirestore comment test func
-- Check limit photos per query

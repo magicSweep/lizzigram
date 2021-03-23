@@ -30,7 +30,7 @@ export const getCheckboxes = (
   error: boolean,
   disabled: boolean
 ) => {
-  console.log("[getCheckboxes]");
+  //console.log("[getCheckboxes]");
 
   if (tagsState.error) {
     return <TagsError />;

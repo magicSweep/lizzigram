@@ -19,6 +19,7 @@ import IconButton from "../../../component/IconButton";
 import SearchIcon from "../../../component/Icons/SearchIcon";
 import DeleteIcon from "../../../component/Icons/DeleteIcon";
 import ModalElementsFallback from "../../../component/ModalElementsFallback";
+import { getPhotosCollection } from "../../../firebase/initFirestore";
 //import Spinner from "../../../component/Spinner";
 //import ModalElements from "../ModalElements";
 //import PhotoDesc from "../../component/PhotoDesc";

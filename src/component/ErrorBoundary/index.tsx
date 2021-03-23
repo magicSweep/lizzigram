@@ -1,5 +1,5 @@
 import React from "react";
-import Alert from "../Alert/Alert";
+//import Alert from "../Alert/Alert";
 import Portal from "../Portal";
 import classes from "./ErrorBoundary.module.scss";
 //import { Typography } from "@material-ui/core";

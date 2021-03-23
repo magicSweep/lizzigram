@@ -48,7 +48,7 @@ abstract class AQuery {
   docId: string = "";
 
   doc = (docId?: string) => {
-    if(docId) this.docId = docId;
+    if (docId) this.docId = docId;
     return this;
   };
 
@@ -94,10 +94,18 @@ class TagssQuery extends AQuery {
 
 class PhotosQuery extends AQuery {
   set = async () => {
-    if (this.docId)  this.docId = "";
+    if (this.docId) this.docId = "";
 
     await wait(3000);
-    
+
+    return null;
+  };
+
+  update = async () => {
+    if (this.docId) this.docId = "";
+
+    await wait(3000);
+
     return null;
   };
 
@@ -108,8 +116,7 @@ class PhotosQuery extends AQuery {
       await wait(3000);
 
       return new FirestoreData(`${random(2000000)}`, addedPhoto);
-    }
-    else if (this.iStartAt) {
+    } else if (this.iStartAt) {
       this.iStartAt = "";
 
       const photos = photosData.slice(3);

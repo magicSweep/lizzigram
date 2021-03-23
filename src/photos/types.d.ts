@@ -37,8 +37,12 @@ interface ISearchAction extends Action<TSearchActionTypes> {
 // PHOTOS
 
 type TPhotosActionTypes =
-  | "ADD_PHOTO"
-  | "EDIT_PHOTO"
+  //| "ADD_PHOTO"
+  | "GET_ADDED_PHOTO_SUCCESS"
+  | "GET_ADDED_PHOTO_ERROR"
+  //| "EDIT_PHOTO"
+  | "GET_EDITED_PHOTO_SUCCESS"
+  | "GET_EDITED_PHOTO_ERROR"
   | "DELETE_PHOTO"
   | "ADD_PHOTO_START_REQUEST"
   | "ADD_PHOTO_ANOTHER_FORM"
@@ -55,6 +59,30 @@ type TPhotosActionTypes =
   | "FETCH_MORE_PHOTO_START_REQUEST"
   | "FETCH_MORE_PHOTO_REQUEST_SUCCESS"
   | "FETCH_MORE_PHOTO_REQUEST_ERROR";
+//| "REMOVE_PHOTO_REQUEST_INFO";
+
+type ID = string;
+
+type TPhotoReqs = Map<ID, IPhotoReq>;
+type TPhotoReqStage = "firestore|worker" | "get_photo" | "done";
+type TPhotoReqStatus = "error" | "success" | "loading";
+
+interface IPhotoReq {
+  type: "add" | "edit";
+  isEditFile?: boolean;
+  info: IPhotoReqInfo<IEditPhotoFormData>;
+  status: {
+    stage: TPhotoReqStage;
+    type: TPhotoReqStatus;
+    // error or result message
+    data?: any;
+  };
+}
+
+interface IPhotoReqInfo<T> {
+  photoId?: string;
+  photoFormData: T;
+}
 
 type TPhotoFirestoreResponse = {
   data: () => IPhoto;
@@ -69,6 +97,7 @@ type TPhotoData = {
 };
 
 interface IPhotosState {
+  requests: Map<ID, IPhotoReq>;
   hasNextPage: boolean;
   nextPageDocRef: any;
   photos: TPhotosData | undefined;
@@ -84,12 +113,15 @@ interface IPhotosState {
 
 interface IPhotosAction extends Action<TPhotosActionTypes> {
   type: TPhotosActionTypes;
+  reqId?: ID;
+  photoReq?: IPhotoReq;
   photos?: TPhotosData;
   photo?: TPhotoData;
   photoId?: string;
   hasNextPage?: boolean;
   nextPageDocRef?: any;
   isLastEditPhotoReq?: boolean;
+  isLastAddPhotoReq?: boolean;
 }
 
 type TAllPhotosFetchFunc = (searchTerms: any) => (dispatch: any) => void;

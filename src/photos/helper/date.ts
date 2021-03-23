@@ -1,12 +1,12 @@
 export const getDate = (date: Date | number | string): Date => {
   let resultDate = undefined;
 
-  console.log(
+  /* console.log(
     "GET DATE",
     date.hasOwnProperty("toDate"),
     (date as any).toDate ? true : false
   );
-
+ */
   if (date instanceof Date) return date;
 
   if ((date as any).toDate) {

@@ -5,7 +5,9 @@ import {
   addPhotoStartRequestAC,
   addPhotoRequestErrorAC,
   addPhotoRequestSuccessAC,
-  addPhotoAC,
+  getAddedPhotoSuccessAC,
+  getAddedPhotoErrorAC,
+  //removePhotoReqAC,
 } from "../../store/action/photos";
 import { batch } from "react-redux";
 import { hideAddFormAC, showAlertAC } from "../../../store";
@@ -34,7 +36,11 @@ class AddPhotoReqManager {
         true
       );
 
-      this.beforeAddPhotoFirestoreReq(addPhotoFirestoreReq, photoId);
+      this.beforeAddPhotoFirestoreReq(
+        addPhotoFirestoreReq,
+        photoId,
+        iData.photoFormData
+      );
 
       await addPhotoFirestoreReq.fetchSync(data);
 
@@ -53,7 +59,7 @@ class AddPhotoReqManager {
       ////////////////////////////
 
       // make state changes
-      this.stateChangesOnSuccess();
+      this.stateChangesOnSuccess(photoId);
     } catch (err) {
       this.onError(photoId);
     }
@@ -62,27 +68,41 @@ class AddPhotoReqManager {
   sendGetAddedPhotoReq = (photoId: string) => {
     let getAddedPhotoReq: GetAddedPhotoReq = new GetAddedPhotoReq(true);
 
-    getAddedPhotoReq.addOnSuccess((photoData) =>
-      this.dispatch(addPhotoAC(photoData))
-    );
+    getAddedPhotoReq.addOnSuccess((photoData) => {
+      this.dispatch(getAddedPhotoSuccessAC(photoData, photoId));
+      //this.removeReqFromState(photoId);
+    });
+
+    //getAddedPhotoErrorAC
+    getAddedPhotoReq.addOnError(() => {
+      this.dispatch(getAddedPhotoErrorAC(photoId));
+      //this.removeReqFromState(photoId);
+    });
 
     getAddedPhotoReq.fetch(photoId);
   };
 
-  stateChangesOnSuccess = () => {
+  stateChangesOnSuccess = (photoId: string) => {
     batch(() => {
-      if (this.requests.size === 0) {
-        this.dispatch(addPhotoRequestSuccessAC());
-        if (!this.anotherForm) this.dispatch(hideAddFormAC());
-      }
+      const isLastReq = this.requests.size === 0;
+      this.dispatch(addPhotoRequestSuccessAC(isLastReq, photoId));
+
+      if (isLastReq && !this.anotherForm) this.dispatch(hideAddFormAC());
 
       this.dispatch(showAlertAC("Фото успешно добавлено.", "success"));
     });
   };
 
+  /* removeReqFromState = (photoId: string) => {
+    setTimeout(() => {
+      this.dispatch(removePhotoReqAC(photoId));
+    }, 3000);
+  }; */
+
   beforeAddPhotoFirestoreReq = (
     addPhotoFirestoreReq: AddPhotoFirestoreReq,
-    photoId: string
+    photoId: string,
+    photoFormData: IAddPhotoFormData
   ) => {
     //let id = random(9999);
 
@@ -90,23 +110,48 @@ class AddPhotoReqManager {
 
     if (!this.dispatch) throw new Error("No dispatch in AddPhotoReqManager");
 
-    this.dispatch(addPhotoStartRequestAC());
+    const reqInfo = this.makeReqInfoForState(photoId, photoFormData);
+
+    this.dispatch(addPhotoStartRequestAC(reqInfo.reqId, reqInfo.photoReq));
 
     //return id;
   };
 
-  onError = (id: string) => {
+  makeReqInfoForState = (photoId: string, photoFormData: any) => {
+    const photoReq: IPhotoReq = {
+      type: "add",
+      info: {
+        photoId: photoId,
+        photoFormData,
+      },
+      status: {
+        stage: "firestore|worker",
+        type: "loading",
+        // error or result message
+        data: undefined,
+      },
+    };
+
+    return {
+      reqId: photoId,
+      photoReq,
+    };
+  };
+
+  onError = (photoId: string) => {
     if (!this.dispatch) throw new Error("No dispatch in AddPhotoReqManager");
 
-    this.requests.delete(id);
+    this.requests.delete(photoId);
 
     batch(() => {
-      if (this.requests.size === 0) this.dispatch(addPhotoRequestErrorAC());
+      this.dispatch(addPhotoRequestErrorAC(this.requests.size === 0, photoId));
 
       this.dispatch(
         showAlertAC("К сожалению, мы не смогли сохранить фото", "error")
       );
     });
+
+    //this.removeReqFromState(photoId);
   };
 
   cancel(id: string) {
@@ -115,109 +160,3 @@ class AddPhotoReqManager {
 }
 
 export default AddPhotoReqManager;
-
-/* import random from "lodash.random";
-import AddPhotoFirestoreReq from "./AddPhotoFirestoreReq";
-import AddPhotoWorkerReq from "./AddPhotoWorkerReq";
-import {
-  addPhotoStartRequestAC,
-  addPhotoRequestErrorAC,
-  addPhotoRequestSuccessAC,
-  addPhotoAC,
-} from "../../photos/store/action/photos";
-import { batch } from "react-redux";
-import { hideAddFormAC, showAlertAC } from "../../store";
-import GetAddedPhotoReq from "./GetAddedPhotoReq";
-
-class AddPhotoReqManager {
-  dispatch: any;
-  anotherForm: boolean = false;
-  requests: Map<number, any> = new Map();
-
-  // FIRST - SEND REQUEST TO FIRESTORE
-  // SECOND - ON SUCCESS SEND REQUEST TO WORKER SERVER
-  // THIRD - ON SUCCESS SEND REQUEST TO FIRESTORE FOR NEW PHOTO
-  startNew = (data: TCreatePhotoFirestoreData) => {
-    let id = random(9999);
-
-    let addPhotoFirestoreReq: AddPhotoFirestoreReq = new AddPhotoFirestoreReq(
-      true
-    );
-
-    this.requests.set(id, addPhotoFirestoreReq);
-
-    addPhotoFirestoreReq.addOnStart(() => {
-      if (!this.dispatch) throw new Error("No dispatch in AddPhotoReqManager");
-
-      this.dispatch(addPhotoStartRequestAC());
-    });
-
-    addPhotoFirestoreReq.addOnSuccess(() => {
-      // SEND REQUEST TO EXPRESS WORKER
-      let addPhotoWorkerReq: AddPhotoWorkerReq = new AddPhotoWorkerReq(true);
-
-      this.requests.set(id, addPhotoWorkerReq);
-
-      addPhotoWorkerReq.addOnSuccess(() => {
-        this.onSuccessWorkerReq(data.photoId, id);
-      });
-
-      addPhotoWorkerReq.addOnError((err) => {
-        this.onError(id);
-      });
-
-      addPhotoWorkerReq.fetch(data);
-    });
-
-    addPhotoFirestoreReq.addOnError((err) => {
-      this.onError(id);
-    });
-
-    addPhotoFirestoreReq.fetch(data);
-  };
-
-  onError = (id: number) => {
-    if (!this.dispatch) throw new Error("No dispatch in AddPhotoReqManager");
-
-    this.requests.delete(id);
-
-    batch(() => {
-      if (this.requests.size === 0) this.dispatch(addPhotoRequestErrorAC());
-
-      this.dispatch(
-        showAlertAC("К сожалению, мы не смогли сохранить фото", "error")
-      );
-    });
-  };
-
-  onSuccessWorkerReq = (photoId: string, id: number) => {
-    // REMOVE REQUEST FROM LIST
-    this.requests.delete(id);
-
-    // MAKE STATE CHANGES
-    batch(() => {
-      if (this.requests.size === 0) {
-        this.dispatch(addPhotoRequestSuccessAC());
-        if (!this.anotherForm) this.dispatch(hideAddFormAC());
-      }
-
-      this.dispatch(showAlertAC("Фото успешно добавлено.", "success"));
-    });
-
-    // SEND REQUEST FOR NEW ADDED PHOTO INFO
-    let getAddedPhotoReq: GetAddedPhotoReq = new GetAddedPhotoReq(true);
-
-    getAddedPhotoReq.addOnSuccess((photoData) =>
-      this.dispatch(addPhotoAC(photoData))
-    );
-
-    getAddedPhotoReq.fetch(photoId);
-  };
-
-  cancel(id: number) {
-    this.requests.get(id).cancel();
-  }
-}
-
-export default AddPhotoReqManager;
- */

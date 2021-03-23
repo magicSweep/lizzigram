@@ -92,11 +92,11 @@ const BtnWithMenu: FC<IBtnWithMenuProps> = ({
         );
     }
 
-    console.log(
+    /* console.log(
       "OPEN MENU",
       containerRef.current.getBoundingClientRect(),
       position
-    );
+    ); */
 
     document.addEventListener("scroll", onScrollOrResizeRef.current);
     window.addEventListener("resize", onScrollOrResizeRef.current);
@@ -114,7 +114,7 @@ const BtnWithMenu: FC<IBtnWithMenuProps> = ({
   };
 
   const onCloseMenu = () => {
-    console.log("onCloseMenu");
+    //console.log("onCloseMenu");
     document.removeEventListener("scroll", onScrollOrResizeRef.current);
     window.removeEventListener("resize", onScrollOrResizeRef.current);
 

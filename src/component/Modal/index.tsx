@@ -1,7 +1,5 @@
-import React, { FC, useEffect, useState } from "react";
-import ReactDOM from "react-dom";
+import React, { FC } from "react";
 import Portal from "../Portal";
-import styles from "./../../styles/classes.module.scss";
 import ModalWidget, { IModalProps } from "./Modal";
 
 const Modal: FC<IModalProps> = ({ onClose, type, children }) => {

@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
+import ErrorBoundary from "../ErrorBoundary";
 import styles from "./../../styles/classes.module.scss";
 import classes from "./Portal.module.scss";
 
@@ -83,7 +84,10 @@ const Portal: FC<IPortalProps> = ({ children, type }) => {
 
   if (!element) return null;
 
-  return ReactDOM.createPortal(children, element);
+  return ReactDOM.createPortal(
+    <ErrorBoundary>{children}</ErrorBoundary>,
+    element
+  );
 };
 
 export default Portal;

@@ -6,7 +6,7 @@ import {
   showEditFormAC,
   showPhotoDescAC,
 } from "../../../store";
-import { getPhotoIndex, getPhotoByIndex } from "./helper";
+import { getPhotoIndex, makeAddEditPhotoReqInfo } from "./helper";
 
 export const useWallOfPhotos = () => {
   const isSearch = useSelector<IGlobalState, boolean>(
@@ -21,13 +21,18 @@ export const useWallOfPhotos = () => {
 
   const {
     photos,
+    requests,
     hasNextPage,
     loading,
-    addPhotoLoading,
+    //addPhotoLoading,
     error,
     loadMore: loadMorePhotos,
     loadPhotos: reLoadPhotos,
   } = usePhotos();
+
+  const { editedPhotoIds, numberOfAddedPhotos } = makeAddEditPhotoReqInfo(
+    requests
+  );
 
   const showPhotoSlider = useCallback(
     (event: any) => {
@@ -41,15 +46,6 @@ export const useWallOfPhotos = () => {
     },
     [photos]
   );
-
-  /* const showEditPhotoForm = useCallback(
-    (index: number) => {
-      const photo = getPhotoByIndex(photos, index);
-
-      dispatch(showEditFormAC(photo));
-    },
-    [photos]
-  ); */
 
   const showEditPhotoForm = useCallback((photo: TPhotoData) => {
     //const photo = getPhotoByIndex(photos, index);
@@ -65,11 +61,13 @@ export const useWallOfPhotos = () => {
 
   return {
     photos,
+    editedPhotoIds,
+    numberOfAddedPhotos,
     loadMorePhotos,
     reLoadPhotos,
     hasNextPage,
     loading,
-    addPhotoLoading,
+    //addPhotoLoading,
     error,
     isSearch,
     showEditPhotoForm,

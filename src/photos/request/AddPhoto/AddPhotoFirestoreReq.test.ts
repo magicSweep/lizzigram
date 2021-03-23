@@ -1,5 +1,5 @@
 import AddPhotoFirestoreReq from "./AddPhotoFirestoreReq";
-import { getPhotosCollection } from "../../firebase/initFirestore";
+import { getPhotosCollection } from "../../../firebase/initFirestore";
 import { makeAddPhotoData } from "../helper/DataHelper";
 import { createPhotoFirestoreData, iphoto } from "./data/data";
 
@@ -26,7 +26,7 @@ jest.mock("../helper/DataHelper", () => {
   };
 });
 
-jest.mock("../../firebase/initFirestore", () => {
+jest.mock("../../../firebase/initFirestore", () => {
   return {
     __esModule: true,
     getPhotosCollection: jest.fn(),

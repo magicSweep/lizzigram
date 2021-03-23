@@ -56,6 +56,8 @@ abstract class ARequest<TReqData, TResData>
   };
 
   fetchSync = async (data: TReqData): Promise<TResData> => {
+    //console.log("----------START FETCH SYNC", this.type);
+
     this.reqData = data;
 
     try {

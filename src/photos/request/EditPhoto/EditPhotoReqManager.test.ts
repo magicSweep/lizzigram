@@ -4,10 +4,10 @@ import {
   editPhotoStartRequestAC,
   editPhotoRequestErrorAC,
   editPhotoRequestSuccessAC,
-  editPhotoAC,
-} from "../../photos/store/action/photos";
+  getEditedPhotoSuccessAC,
+} from "../../store/action/photos";
 import { batch } from "react-redux";
-import { hideEditFormAC, showAlertAC } from "../../store";
+import { hideEditFormAC, showAlertAC } from "../../../store";
 import GetEditedPhotoReq from "./GetEditedPhotoReq";
 import { makeEditPhotoData, isInSearchTerms } from "../helper/DataHelper";
 
@@ -46,7 +46,7 @@ jest.mock("./EditPhotoWorkerReq", () => {
   };
 });
 
-jest.mock("../../photos/store/action/photos", () => {
+jest.mock("../../store/action/photos", () => {
   return {
     __esModule: true,
     editPhotoStartRequestAC: jest
@@ -58,11 +58,11 @@ jest.mock("../../photos/store/action/photos", () => {
     editPhotoRequestSuccessAC: jest
       .fn()
       .mockReturnValue("EDIT_PHOTO_REQUEST_SUCCESS_AC"),
-    editPhotoAC: jest.fn().mockReturnValue("EDIT_PHOTO_AC"),
+    getEditedPhotoSuccessAC: jest.fn().mockReturnValue("EDIT_PHOTO_AC"),
   };
 });
 
-jest.mock("../../store", () => {
+jest.mock("../../../store", () => {
   return {
     __esModule: true,
     hideEditFormAC: jest.fn().mockReturnValue("HIDE_EDIT_FORM_AC"),
@@ -72,7 +72,7 @@ jest.mock("../../store", () => {
 
 let manager = new EditPhotoReqManager();
 
-describe("AddPhotoReqManager", () => {
+describe("EditPhotoReqManager", () => {
   beforeEach(() => {
     manager = new EditPhotoReqManager();
     manager.dispatch = jest.fn();
@@ -92,7 +92,7 @@ describe("AddPhotoReqManager", () => {
     test(`Do:
             - it create new request: GetEditedPhotoReq
             - it set on success req func - call request.addOnSuccess 
-               - onSuccess it call this.dispatch(editPhotoAC(photoData))
+               - onSuccess it call this.dispatch(getEditedPhotoSuccessAC(photoData))
             - it send request - call request.fetch with photoId
     `, () => {
       const fetch = jest.fn();
@@ -104,6 +104,8 @@ describe("AddPhotoReqManager", () => {
         addOnSuccess,
       });
 
+      //manager.removeReqFromState = jest.fn();
+
       manager.sendGetEditedPhotoReq("photoId");
 
       expect(GetEditedPhotoReq).toHaveBeenCalledTimes(1);
@@ -111,8 +113,14 @@ describe("AddPhotoReqManager", () => {
 
       expect(addOnSuccess).toHaveBeenCalledTimes(1);
 
-      expect(editPhotoAC).toHaveBeenCalledTimes(1);
-      expect(editPhotoAC).toHaveBeenLastCalledWith("photoData");
+      expect(getEditedPhotoSuccessAC).toHaveBeenCalledTimes(1);
+      expect(getEditedPhotoSuccessAC).toHaveBeenLastCalledWith(
+        "photoData",
+        "photoId"
+      );
+
+      //expect(manager.removeReqFromState).toHaveBeenCalledTimes(1);
+      //expect(manager.removeReqFromState).toHaveBeenCalledWith("photoId");
 
       expect(manager.dispatch).toHaveBeenCalledTimes(1);
       expect(manager.dispatch).toHaveBeenLastCalledWith("EDIT_PHOTO_AC");
@@ -127,8 +135,8 @@ describe("AddPhotoReqManager", () => {
             - it call react-redux batch, that call callback with logic
             - we check if edited photo in current search terms
               - if yes - we dispatch editPhotoRequestSuccessAC with no photoId and isLastReq
-              - if no - we dispatch editPhotoRequestSuccessAC with photoId( it removes this photo from global state) and isLastReq
                 - and send request for edited photo - call this.sendGetEditedPhotoReq(photoId)
+              - if no - we dispatch editPhotoRequestSuccessAC with isLastReq, reqId(same as photoId) and photoId( it removes this photo from global state)
             - if we still use same form and it is the last request - we close form by dispatched hideAddFormAC
             - it shows success alert - showAlertAC("Фото успешно добавлено.", "success")
     `, () => {
@@ -158,7 +166,7 @@ describe("AddPhotoReqManager", () => {
 
       // WE DISPATCH editPhotoRequestSuccessAC WITH UNDEFINED PHOTO ID - IT DO NOTHING WITH PHOTO IN STATE
       expect(editPhotoRequestSuccessAC).toHaveBeenCalledTimes(1);
-      expect(editPhotoRequestSuccessAC).toHaveBeenCalledWith(undefined, true);
+      expect(editPhotoRequestSuccessAC).toHaveBeenCalledWith(true, "photoId");
       expect(manager.dispatch).toHaveBeenNthCalledWith(
         1,
         "EDIT_PHOTO_REQUEST_SUCCESS_AC"
@@ -209,7 +217,11 @@ describe("AddPhotoReqManager", () => {
 
       // WE DISPATCH editPhotoRequestSuccessAC WITH UNDEFINED PHOTO ID - IT DO NOTHING WITH PHOTO IN STATE
       expect(editPhotoRequestSuccessAC).toHaveBeenCalledTimes(1);
-      expect(editPhotoRequestSuccessAC).toHaveBeenCalledWith("photoId", true);
+      expect(editPhotoRequestSuccessAC).toHaveBeenCalledWith(
+        true,
+        "photoId",
+        "photoId"
+      );
       expect(manager.dispatch).toHaveBeenNthCalledWith(
         1,
         "EDIT_PHOTO_REQUEST_SUCCESS_AC"

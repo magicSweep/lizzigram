@@ -6,7 +6,7 @@ export const alertId = "alert";
 
 /* FIRESTORE */
 // [ feeling, withWho, where]
-export const numberOfTagsByType = [3, 4, 3];
+export const numberOfTagsByType = [3, 5, 4];
 export const numberOfTags = 11;
 export const numberOfTagsByPhoto = 4;
 
@@ -33,8 +33,8 @@ export const authLocalStorageKey = "lg_super_puper_user";
 
 /* EXPRESS SERVER */
 
-//export const expressUrl = "https://lizzygram.herokuapp.com";
-export const expressUrl = "http://localhost:3009";
+export const expressUrl = "https://lizzygram.herokuapp.com";
+//export const expressUrl = "http://localhost:3009";
 
 export const herokuPingUrl = `${expressUrl}/sleep_q23we4rt5`;
 
@@ -44,7 +44,7 @@ export const editPhotoUrl = `${expressUrl}/edit-photo`;
 export const downloadPhotoUrl = `${expressUrl}/download`;
 
 /* PHOTOS */
-export const limitPhotosPerQuery = 3;
+export const limitPhotosPerQuery = 9;
 
 export const addPhotoFormTitle = "Загрузить новое фото:";
 export const editPhotoFormTitle = "Изменить фото:";

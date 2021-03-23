@@ -14,30 +14,33 @@ export const usePhotos = () => {
 
   const {
     loading,
-    addPhotoLoading,
+    //addPhotoLoading,
     error,
     searchState,
     photos,
+    requests,
     hasNextPage,
     nextPageDocRef,
   } = useSelector<
     IGlobalState,
     {
       loading: boolean;
-      addPhotoLoading: boolean;
+      //addPhotoLoading: boolean;
       error: boolean;
       searchState: ISearchState;
       photos: TPhotosData | undefined;
+      requests: TPhotoReqs;
       hasNextPage: boolean;
       nextPageDocRef: any;
     }
   >(
     (state) => ({
       loading: state.photos.loading,
-      addPhotoLoading: state.photos.addLoading,
+      //addPhotoLoading: state.photos.addLoading,
       error: state.photos.error,
       searchState: state.search,
       photos: state.photos.photos,
+      requests: state.photos.requests,
       hasNextPage: state.photos.hasNextPage,
       nextPageDocRef: state.photos.nextPageDocRef,
     }),
@@ -75,10 +78,11 @@ export const usePhotos = () => {
 
   return {
     loading,
-    addPhotoLoading,
+    //addPhotoLoading,
     error,
     searchState,
     photos,
+    requests,
     hasNextPage,
     nextPageDocRef,
     loadPhotos,

@@ -129,6 +129,33 @@ export const makeAddPhotoData = (
   };
 };
 
+export const getFieldsNeededToUpdate = (
+  formData: IEditPhotoFormData,
+  originalPhoto: IPhoto
+  //operationType: "edit" | "add"
+): IEditPhotoData => {
+  const fieldsToUpdate: IEditPhotoData = {};
+
+  if (formData.date) {
+    const photoDate = fromStrToDate(formData.date);
+
+    fieldsToUpdate.date = photoDate;
+
+    //console.log("!!! MAKE EDIT PHOTO DATA | DATE", photoDate, formData.date);
+
+    fieldsToUpdate.yearsOld = getYearsOld(photoDate);
+
+    //console.log("!!! MAKE EDIT PHOTO DATA | yearsOld", fieldsToUpdate.yearsOld);
+  }
+  if (formData.tags) fieldsToUpdate.tags = getOnlyTrueTags(formData.tags);
+  if (formData.desc) fieldsToUpdate.description = formData.desc;
+
+  /* if (formData.photoFile && formData.photoFile.length > 0)
+    fieldsToUpdate.isActive = false; */
+
+  return fieldsToUpdate;
+};
+
 export const makeEditPhotoData = (
   formData: IEditPhotoFormData
   //operationType: "edit" | "add"

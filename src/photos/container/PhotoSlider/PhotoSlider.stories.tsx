@@ -2,11 +2,14 @@ import React, { useEffect, useMemo, useState } from "react";
 import { action } from "@storybook/addon-actions";
 //import { withKnobs, object } from "@storybook/addon-knobs/react";
 import { photoData } from "./data";
+
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import PhotoSlider from "./PhotoSlider";
 import { modalReducer, tagsReducer } from "../../../store";
+//import { photosData as photoData } from "../../__mock/data";
+import { WindowResizeProvider } from "../../../provider/WindowResizer";
 
 export default {
   component: PhotoSlider,
@@ -103,14 +106,17 @@ export const Default = () => {
 
   return (
     <Provider store={store}>
-      <PhotoSlider
-        //photoState: IPhotosState;
-        photos={photoState.photos}
-        loading={photoState.loading}
-        hasNextPage={photoState.hasNextPage}
-        error={photoState.error}
-        loadMorePhotos={fetchMore}
-      />
+      <WindowResizeProvider>
+        <PhotoSlider
+          //photoState: IPhotosState;
+          editedPhotoIds={["1601774491858"]}
+          photos={photoState.photos}
+          loading={photoState.loading}
+          hasNextPage={photoState.hasNextPage}
+          error={photoState.error}
+          loadMorePhotos={fetchMore}
+        />
+      </WindowResizeProvider>
     </Provider>
   );
 };

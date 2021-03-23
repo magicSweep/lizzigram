@@ -1,34 +1,20 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
-//import { makeStyles } from "@material-ui/core/styles";
 import CarouselOpacity from "../../../component/ICarousel/CarouselOpacity";
 import { useCarouselOpacity } from "../../../component/ICarousel/CarouselOpacity/hook";
-//import DescriptionIcon from "@material-ui/icons/Description";
-//import IconButton from "@material-ui/core/IconButton";
-//import PhotoDesc from "../../component/PhotoDesc";
-//import FullScreenImage from "../../../component/ImageSharp/FullScreenImage";
-//import Backdrop from "@material-ui/core/Backdrop";
-//import CircularProgress from "@material-ui/core/CircularProgress";
-//import { IPhoto } from "../../../types";
-//import { TPhotoData } from "../../types";
-//import Modal from "../../../component/Modal";
-//import ModalCloseButton from "../../../component/UI/ModalCloseButton";
-//import { TPhotosData, IPhotosState } from "./../../types";
 import classes from "./PhotoSlider.module.scss";
-import Spinner from "../../../component/Spinner";
-//import IconButton from "../../../component/IconButton";
-//import DescIcon from "../../../component/Icons/DescIcon";
-//import ModalCloseButton from "../../../component/ModalCloseButton";
+//import Spinner from "../../../component/Spinner";
 import { getCarouselItems, getActivePhotoAndId } from "./helper";
 import { useImgZoom } from "../../../hooks/useImgZoom";
 import PSHelperPanel from "../../component/PSHelperPanel";
 
 /* FINAL COMPONENTS */
 
-const _refSpinner = <Spinner />;
+//const _refSpinner = <Spinner />;
 
-const ISpinner = () => _refSpinner;
+//const ISpinner = () => _refSpinner;
 
 interface PhotoSliderProps {
+  editedPhotoIds: string[];
   initActiveIndex?: number;
   //photoState: IPhotosState;
   photos: TPhotosData | undefined;
@@ -38,12 +24,8 @@ interface PhotoSliderProps {
   loadMorePhotos: () => void;
 }
 
-/* interface IDescState {
-  show: boolean;
-  photo: TPhotoData | undefined;
-} */
-
 const PhotoSlider = ({
+  editedPhotoIds,
   initActiveIndex = 0,
   //photoState,
   photos,
@@ -57,11 +39,6 @@ const PhotoSlider = ({
   const { zoomIn, zoomOut, cancel, maxZoom, minZoom, zoom } = useImgZoom();
 
   const [showControlPanel, setShowControlPanel] = useState(true);
-
-  /* const [descState, setDescState] = useState<IDescState>({
-    show: false,
-    photo: undefined,
-  }); */
 
   //TODO: on error show alert
   const length = photos ? photos.size : 1;
@@ -111,24 +88,6 @@ const PhotoSlider = ({
     };
   }, [loading]);
 
-  /* const onShowDesc = (event: any) => {
-    event.stopPropagation();
-
-    setDescState({
-      photo: { id, photo: activePhoto },
-      show: true,
-    });
-  }; */
-
-  /* const onHideDesc = (event: any) => {
-    event.stopPropagation();
-
-    setDescState({
-      photo: undefined,
-      show: false,
-    });
-  }; */
-
   const onFetchMore =
     photos && hasNextPage
       ? () => {
@@ -137,10 +96,9 @@ const PhotoSlider = ({
         }
       : undefined;
 
-  //const onFetchMore = photoState.photos && photoState.hasNextPage ? fetchMore : undefined;
-
   console.log(
     "[PHOTO SLIDER WIDGET] RENDER",
+    photos,
     initActiveIndex,
     controller.activeIndex,
     loading
@@ -150,33 +108,22 @@ const PhotoSlider = ({
       className={classes.root}
       onClick={() => setShowControlPanel((prevShow) => !prevShow)}
     >
-      {/* <div className={classes.showDescButton}>
-        <IconButton
-          type="circle"
-          icon={<DescIcon color="secondary" width={30} height={38} />}
-          onClick={onShowDesc}
-          ariaLabel="Показать описание фото..."
-        />
-      </div> */}
-
       <CarouselOpacity controller={controller} onFetchMore={onFetchMore}>
         {useMemo(
           () =>
             getCarouselItems(
-              ISpinner,
+              //ISpinner,
               zoom,
               photos as TPhotosData,
               loading,
               error,
               controller.activeIndex,
-              classes
+              classes,
+              editedPhotoIds
             ),
-          [photos, zoom, loading, error]
+          [photos, editedPhotoIds, zoom, loading, error]
         )}
       </CarouselOpacity>
-      {/* <Backdrop className={classes.backdrop} open={photoState.loading}>
-        <Spinner />
-      </Backdrop> */}
 
       {showControlPanel && (
         <PSHelperPanel
@@ -195,16 +142,3 @@ const PhotoSlider = ({
 };
 
 export default PhotoSlider;
-
-/*   {descState.show && (
-        <Modal onClose={onHideDesc} type="form">
-          <div className={classes.desc}>
-            <PhotoDesc photo={descState.photo as TPhotoData} />
-          </div>
-          <ModalCloseButton
-            ariaLabel="закрыть описание фото"
-            color="secondary"
-            onClick={onHideDesc}
-          />
-        </Modal>
-      )} */

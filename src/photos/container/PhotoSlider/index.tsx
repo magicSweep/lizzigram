@@ -10,6 +10,7 @@ export const PhotoSlider = () => {
     error,
     loadMore,
     initActiveIndex,
+    editedPhotoIds,
   } = usePhotoSlider();
 
   console.log("[PHOTO SLIDER] RENDER", initActiveIndex, loading);
@@ -21,6 +22,7 @@ export const PhotoSlider = () => {
       error={error}
       loadMorePhotos={loadMore}
       initActiveIndex={initActiveIndex}
+      editedPhotoIds={editedPhotoIds}
     />
   );
 };

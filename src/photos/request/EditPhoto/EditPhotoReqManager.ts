@@ -5,7 +5,9 @@ import {
   editPhotoStartRequestAC,
   editPhotoRequestErrorAC,
   editPhotoRequestSuccessAC,
-  editPhotoAC,
+  getEditedPhotoSuccessAC,
+  getEditedPhotoErrorAC,
+  //removePhotoReqAC,
 } from "../../store/action/photos";
 import { batch } from "react-redux";
 import { hideEditFormAC, showAlertAC } from "../../../store";
@@ -61,7 +63,12 @@ class EditPhotoReqManager {
         this.dispatch(showAlertAC("Вы ничего не изменили.", "error"));
         return;
       } else {
-        this.dispatch(editPhotoStartRequestAC());
+        const reqInfo = this.makeReqInfoForState(
+          data.photoId,
+          data.photoFormData
+        );
+
+        this.dispatch(editPhotoStartRequestAC(reqInfo.reqId, reqInfo.photoReq));
 
         // PREPARE FIRESTORE REQUEST IF NEEDED
         if (isNeedFirestoreReq) {
@@ -94,10 +101,35 @@ class EditPhotoReqManager {
         this.stateChangesOnSuccess(photoFirestoreData, data.photoId, isLastReq);
       }
     } catch (err) {
-      this.onError(data.photoId);
+      this.onError(this.requests.size === 1, data.photoId);
     } finally {
       if (this.requests.has(data.photoId)) this.requests.delete(data.photoId);
     }
+  };
+
+  makeReqInfoForState = (photoId: string, photoFormData: any) => {
+    const photoReq: IPhotoReq = {
+      type: "edit",
+      isEditFile:
+        photoFormData.photoFile && photoFormData.photoFile.length > 0
+          ? true
+          : false,
+      info: {
+        photoId: photoId,
+        photoFormData,
+      },
+      status: {
+        stage: "firestore|worker",
+        type: "loading",
+        // error or result message
+        data: undefined,
+      },
+    };
+
+    return {
+      reqId: photoId,
+      photoReq,
+    };
   };
 
   stateChangesOnSuccess = (
@@ -112,13 +144,13 @@ class EditPhotoReqManager {
         //isNeedFirestoreReq &&
         isInSearchTerms(this.searchState, photoFirestoreData)
       ) {
-        this.dispatch(editPhotoRequestSuccessAC(undefined, isLastReq));
+        this.dispatch(editPhotoRequestSuccessAC(isLastReq, photoId));
         // GET EDITED PHOTO FROM FIRESTORE
         this.sendGetEditedPhotoReq(photoId);
       } else {
         // If edited photo not in search term we send its id
         // to remove it from state
-        this.dispatch(editPhotoRequestSuccessAC(photoId, isLastReq));
+        this.dispatch(editPhotoRequestSuccessAC(isLastReq, photoId, photoId));
       }
 
       //console.log("Hide edit form", anotherForm);
@@ -131,25 +163,42 @@ class EditPhotoReqManager {
   sendGetEditedPhotoReq = (photoId: string) => {
     let getEditedPhotoReq: GetEditedPhotoReq = new GetEditedPhotoReq(true);
 
-    getEditedPhotoReq.addOnSuccess((photoData) =>
-      this.dispatch(editPhotoAC(photoData))
-    );
+    getEditedPhotoReq.addOnSuccess((photoData) => {
+      //this.removeReqFromState(photoId);
+
+      this.dispatch(getEditedPhotoSuccessAC(photoData, photoId));
+    });
+
+    //getAddedPhotoErrorAC
+    getEditedPhotoReq.addOnError(() => {
+      this.dispatch(getEditedPhotoErrorAC(photoId));
+      //this.removeReqFromState(photoId);
+    });
 
     getEditedPhotoReq.fetch(photoId);
   };
 
-  onError = (id: string) => {
+  /* removeReqFromState = (photoId: string) => {
+    setTimeout(() => {
+      this.dispatch(removePhotoReqAC(photoId));
+    }, 3000);
+  }; */
+
+  onError = (isLastReq: boolean, photoId: string) => {
     if (!this.dispatch) throw new Error("No dispatch in EditPhotoReqManager");
 
     //this.requests.delete(id);
 
     batch(() => {
-      if (this.requests.size === 1) this.dispatch(editPhotoRequestErrorAC());
+      if (this.requests.size === 1)
+        this.dispatch(editPhotoRequestErrorAC(isLastReq, photoId));
 
       this.dispatch(
         showAlertAC("К сожалению, мы не смогли сохранить изменения", "error")
       );
     });
+
+    //this.removeReqFromState(photoId);
   };
 
   cancel(id: string) {

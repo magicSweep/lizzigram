@@ -9,9 +9,19 @@ class EditPhotoFirestoreReq extends ARequest<IEditPhotoFirestoreData, void> {
     const photo = this.prepareDataToFirestoreReq(data);
     //photo.addedByUserUID = data.userUid;
 
+    //console.log("----------EDIT FIRESTORE DATA", photo, data);
+
     //SAVE PHOTO DATA TO FIRESTORE
     //const id = (data.photoFormData.date.getTime() + random(69999)).toString();
-    return getPhotosCollection().doc(data.photoId).set(photo);
+
+    //return getPhotosCollection().doc(data.photoId).update(photo);
+
+    return getPhotosCollection().doc(data.photoId).update(photo.photo);
+
+    /* return getFirestoreDb()
+      .collection(photosCollectionName)
+      .doc(data.photoId)
+      .update(photo); */
   };
 
   prepareDataToFirestoreReq = (

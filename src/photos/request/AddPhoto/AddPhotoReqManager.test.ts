@@ -5,7 +5,7 @@ import {
   addPhotoStartRequestAC,
   addPhotoRequestErrorAC,
   addPhotoRequestSuccessAC,
-  addPhotoAC,
+  getAddedPhotoSuccessAC,
 } from "../../store/action/photos";
 import { batch } from "react-redux";
 import { hideAddFormAC, showAlertAC } from "../../../store";
@@ -40,7 +40,7 @@ jest.mock("./AddPhotoWorkerReq", () => {
   };
 });
 
-jest.mock("../../photos/store/action/photos", () => {
+jest.mock("../../store/action/photos", () => {
   return {
     __esModule: true,
     addPhotoStartRequestAC: jest
@@ -52,11 +52,11 @@ jest.mock("../../photos/store/action/photos", () => {
     addPhotoRequestSuccessAC: jest
       .fn()
       .mockReturnValue("ADD_PHOTO_REQUEST_SUCCESS_AC"),
-    addPhotoAC: jest.fn().mockReturnValue("ADD_PHOTO_AC"),
+    getAddedPhotoSuccessAC: jest.fn().mockReturnValue("ADD_PHOTO_AC"),
   };
 });
 
-jest.mock("../../store", () => {
+jest.mock("../../../store", () => {
   return {
     __esModule: true,
     hideAddFormAC: jest.fn().mockReturnValue("HIDE_ADD_FORM_AC"),
@@ -84,7 +84,7 @@ describe("AddPhotoReqManager", () => {
     test(`Do:
             - it create new request: GetAddedPhotoReq
             - it set on success req func - call request.addOnSuccess 
-               - onSuccess it call this.dispatch(addPhotoAC(photoData))
+               - onSuccess it call this.dispatch(getAddedPhotoSuccessAC(photoData))
             - it send request - call request.fetch with photoId
     `, () => {
       const fetch = jest.fn();
@@ -96,6 +96,8 @@ describe("AddPhotoReqManager", () => {
         addOnSuccess,
       });
 
+      //manager.removeReqFromState = jest.fn();
+
       manager.sendGetAddedPhotoReq("photoId");
 
       expect(GetAddedPhotoReq).toHaveBeenCalledTimes(1);
@@ -103,8 +105,14 @@ describe("AddPhotoReqManager", () => {
 
       expect(addOnSuccess).toHaveBeenCalledTimes(1);
 
-      expect(addPhotoAC).toHaveBeenCalledTimes(1);
-      expect(addPhotoAC).toHaveBeenLastCalledWith("photoData");
+      expect(getAddedPhotoSuccessAC).toHaveBeenCalledTimes(1);
+      expect(getAddedPhotoSuccessAC).toHaveBeenLastCalledWith(
+        "photoData",
+        "photoId"
+      );
+
+      //expect(manager.removeReqFromState).toHaveBeenCalledTimes(1);
+      //expect(manager.removeReqFromState).toHaveBeenCalledWith("photoId");
 
       expect(manager.dispatch).toHaveBeenCalledTimes(1);
       expect(manager.dispatch).toHaveBeenLastCalledWith("ADD_PHOTO_AC");
@@ -121,9 +129,16 @@ describe("AddPhotoReqManager", () => {
                 - if we still use same form it dispatched hideAddFormAC
             - it dispatched showAlertAC("Фото успешно добавлено.", "success")
     `, () => {
-      manager.stateChangesOnSuccess();
+      manager.stateChangesOnSuccess("photoId");
+
+      // We on same form and it's last request - we call hide form
+      manager.anotherForm = false;
+      manager.requests = new Map();
 
       expect(batch).toHaveBeenCalledTimes(1);
+
+      expect(addPhotoRequestSuccessAC).toHaveBeenCalledTimes(1);
+      expect(addPhotoRequestSuccessAC).toHaveBeenCalledWith(true, "photoId");
 
       expect(manager.dispatch).toHaveBeenNthCalledWith(
         1,

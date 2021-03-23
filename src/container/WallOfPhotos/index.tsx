@@ -15,7 +15,9 @@ export const WallOfPhotos = () => {
     reLoadPhotos,
     hasNextPage,
     loading,
-    addPhotoLoading,
+    //ddPhotoLoading,
+    editedPhotoIds,
+    numberOfAddedPhotos,
     error,
     isSearch,
     showEditPhotoForm,
@@ -33,7 +35,9 @@ export const WallOfPhotos = () => {
       reLoadPhotos={reLoadPhotos}
       hasNextPage={hasNextPage}
       loading={loading}
-      addPhotoLoading={addPhotoLoading}
+      //addPhotoLoading={addPhotoLoading}
+      editedPhotoIds={editedPhotoIds}
+      numberOfAddedPhotos={numberOfAddedPhotos}
       error={error}
       isSearch={isSearch}
       showPhotoSlider={showPhotoSlider}

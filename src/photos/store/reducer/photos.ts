@@ -3,11 +3,26 @@ import { Reducer } from "redux";
 //import { IPhoto } from "../../../types";
 
 import { onFetchMorePhotosRequestSuccess } from "./helper";
+import {
+  onAddPhotoStartRequest,
+  onAddPhotoRequestSuccess,
+  onAddPhotoRequestError,
+  onGetAddedPhotoSuccess,
+  onGetAddedPhotoError,
+  //onRemovePhotoRequestInfo,
+  onEditPhotoStartRequest,
+  onEditPhotoRequestSuccess,
+  onEditPhotoRequestError,
+  onDeletePhoto,
+  onGetEditedPhotoSuccess,
+  onGetEditedPhotoError,
+} from "./photos.helper";
 
 const photosInitialState: IPhotosState = {
   nextPageDocRef: undefined,
   hasNextPage: false,
   photos: undefined,
+  requests: new Map(),
   loading: false,
   error: false,
   addLoading: false,
@@ -57,12 +72,7 @@ const reducer: Reducer<IPhotosState, IPhotosAction> = (
       };
 
     case "ADD_PHOTO_START_REQUEST":
-      return {
-        ...state,
-        addLoading: true,
-        addAnotherForm: false,
-        addError: false,
-      };
+      return onAddPhotoStartRequest(state, action);
 
     case "ADD_PHOTO_ANOTHER_FORM":
       return {
@@ -71,25 +81,14 @@ const reducer: Reducer<IPhotosState, IPhotosAction> = (
         addAnotherForm: true,
       };
     case "ADD_PHOTO_REQUEST_SUCCESS":
-      return {
-        ...state,
-        addLoading: false,
-        addError: false,
-      };
+      return onAddPhotoRequestSuccess(state, action);
+
     case "ADD_PHOTO_REQUEST_ERROR":
-      return {
-        ...state,
-        addLoading: false,
-        addError: true,
-      };
+      return onAddPhotoRequestError(state, action);
 
     case "EDIT_PHOTO_START_REQUEST":
-      return {
-        ...state,
-        editLoading: true,
-        editAnotherForm: false,
-        editError: false,
-      };
+      return onEditPhotoStartRequest(state, action);
+
     case "EDIT_PHOTO_ANOTHER_FORM":
       return {
         ...state,
@@ -97,74 +96,28 @@ const reducer: Reducer<IPhotosState, IPhotosAction> = (
         editAnotherForm: true,
       };
     case "EDIT_PHOTO_REQUEST_SUCCESS":
-      if (action.photoId) {
-        if (state.photos === undefined) throw new Error("No photo state");
+      return onEditPhotoRequestSuccess(state, action);
 
-        const photos2 = state.photos;
-        photos2.delete(action.photoId);
-        const newPhotos2 = new Map(photos2);
-        return {
-          ...state,
-          photos: newPhotos2,
-          editLoading: action.isLastEditPhotoReq === true ? false : true,
-          editError: false,
-        };
-      } else {
-        return {
-          ...state,
-          editLoading: action.isLastEditPhotoReq === true ? false : true,
-          editError: false,
-        };
-      }
     case "EDIT_PHOTO_REQUEST_ERROR":
-      return {
-        ...state,
-        editLoading: false,
-        editError: true,
-      };
+      return onEditPhotoRequestError(state, action);
 
-    case "ADD_PHOTO":
-      //const photos = state.photos;
-      //photos.set(action.photo.id, action.photo.photo);
-      if (action.photo === undefined)
-        throw new Error("No photo in add photo action");
+    case "GET_ADDED_PHOTO_SUCCESS":
+      return onGetAddedPhotoSuccess(state, action);
 
-      return {
-        ...state,
-        photos: new Map([
-          [action.photo.id, action.photo.photo],
-          //@ts-ignore
-          ...state.photos,
-        ]),
-      };
+    case "GET_ADDED_PHOTO_ERROR":
+      return onGetAddedPhotoError(state, action);
 
-    case "EDIT_PHOTO":
-      if (state.photos === undefined || action.photo === undefined)
-        throw new Error("No photo state or photo on action");
-      //const photos1 = state.photos;
-      //photos1.set(action.photo.id, action.photo.photo);
-      //const newPhotos1 = new Map([...state.photos, ...action.photos]);
-      state.photos.set(action.photo.id, action.photo.photo);
+    case "GET_EDITED_PHOTO_SUCCESS":
+      return onGetEditedPhotoSuccess(state, action);
 
-      //console.log("EDIT_PHOTO", newPhotos1);
-      return {
-        ...state,
-        photos: new Map(state.photos),
-      };
+    case "GET_EDITED_PHOTO_ERROR":
+      return onGetEditedPhotoError(state, action);
 
     case "DELETE_PHOTO":
-      if (state.photos === undefined || action.photoId === undefined)
-        throw new Error("No photo state or photoId on action");
-      const allPhotos = state.photos;
-      allPhotos.delete(action.photoId);
+      return onDeletePhoto(state, action);
 
-      const newPhotos3 = new Map(allPhotos);
-
-      console.log("DELETE_PHOTO", newPhotos3);
-      return {
-        ...state,
-        photos: newPhotos3,
-      };
+    /*  case "REMOVE_PHOTO_REQUEST_INFO":
+      return onRemovePhotoRequestInfo(state, action); */
 
     default:
       return state;

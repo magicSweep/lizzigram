@@ -1,8 +1,11 @@
 // TESTING
-export {getFirestoreDb, getPhotosCollection, getTagsCollection} from "./initTestFirestore";
+/* export {
+  getFirestoreDb,
+  getPhotosCollection,
+  getTagsCollection,
+} from "./initTestFirestore"; */
 
-
-/*  PRODUCTION
+//  PRODUCTION
 
 import firebase from "firebase/app";
 import "firebase/firebase-firestore";
@@ -16,9 +19,9 @@ export let photosCollection: firebase.firestore.CollectionReference;
 export let tagsCollection: firebase.firestore.CollectionReference;
 
 export const getFirestoreDb = () => {
-  /* if (typeof window !== "undefined") {
-    db = firebase.firestore();
-  } /
+  // if (typeof window !== "undefined") {
+  //  db = firebase.firestore();
+  //}
 
   if (!db) {
     db = firebase.firestore();
@@ -57,7 +60,7 @@ export const getTagsCollection = () => {
 
   return tagsCollection;
 };
- */
+
 //--------------------------------------------------//
 
 //if (apps && !apps.length) initializeApp(firebaseConfig);

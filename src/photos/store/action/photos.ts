@@ -41,9 +41,14 @@ export const allPhotosRequestErrorAC = (): IPhotosAction => {
   };
 };
 
-export const addPhotoStartRequestAC = (): IPhotosAction => {
+export const addPhotoStartRequestAC = (
+  reqId: ID,
+  photoReq: IPhotoReq
+): IPhotosAction => {
   return {
     type: "ADD_PHOTO_START_REQUEST",
+    reqId,
+    photoReq,
   };
 };
 
@@ -53,21 +58,36 @@ export const addPhotoAnotherFormAC = (): IPhotosAction => {
   };
 };
 
-export const addPhotoRequestSuccessAC = (): IPhotosAction => {
+export const addPhotoRequestSuccessAC = (
+  isLastAddPhotoReq: boolean,
+  reqId: ID
+): IPhotosAction => {
   return {
     type: "ADD_PHOTO_REQUEST_SUCCESS",
+    isLastAddPhotoReq,
+    reqId,
   };
 };
 
-export const addPhotoRequestErrorAC = (): IPhotosAction => {
+export const addPhotoRequestErrorAC = (
+  isLastAddPhotoReq: boolean,
+  reqId: ID
+): IPhotosAction => {
   return {
     type: "ADD_PHOTO_REQUEST_ERROR",
+    isLastAddPhotoReq,
+    reqId,
   };
 };
 
-export const editPhotoStartRequestAC = (): IPhotosAction => {
+export const editPhotoStartRequestAC = (
+  reqId: ID,
+  photoReq: IPhotoReq
+): IPhotosAction => {
   return {
     type: "EDIT_PHOTO_START_REQUEST",
+    reqId,
+    photoReq,
   };
 };
 
@@ -78,35 +98,74 @@ export const editPhotoAnotherFormAC = (): IPhotosAction => {
 };
 
 export const editPhotoRequestSuccessAC = (
-  photoId?: string,
-  isLastEditPhotoReq?: boolean
+  isLastEditPhotoReq: boolean,
+  reqId: ID,
+  photoId?: string
 ): IPhotosAction => {
   return {
     type: "EDIT_PHOTO_REQUEST_SUCCESS",
     photoId,
     isLastEditPhotoReq,
+    reqId,
   };
 };
 
-export const editPhotoRequestErrorAC = (): IPhotosAction => {
+export const editPhotoRequestErrorAC = (
+  isLastEditPhotoReq: boolean,
+  reqId: ID
+): IPhotosAction => {
   return {
     type: "EDIT_PHOTO_REQUEST_ERROR",
+    isLastEditPhotoReq,
+    reqId,
   };
 };
 
-export const editPhotoAC = (photo: TPhotoData): IPhotosAction => {
+//editPhotoAC
+export const getEditedPhotoSuccessAC = (
+  photo: TPhotoData,
+  reqId: ID
+): IPhotosAction => {
   return {
-    type: "EDIT_PHOTO",
+    type: "GET_EDITED_PHOTO_SUCCESS",
     photo,
+    reqId,
   };
 };
 
-export const addPhotoAC = (photo: TPhotoData): IPhotosAction => {
+export const getEditedPhotoErrorAC = (reqId: ID): IPhotosAction => {
   return {
-    type: "ADD_PHOTO",
-    photo,
+    type: "GET_EDITED_PHOTO_ERROR",
+    reqId,
   };
 };
+
+//addPhotoAC
+export const getAddedPhotoSuccessAC = (
+  photo: TPhotoData,
+  reqId: ID
+): IPhotosAction => {
+  return {
+    type: "GET_ADDED_PHOTO_SUCCESS",
+    photo,
+    reqId,
+  };
+};
+
+export const getAddedPhotoErrorAC = (reqId: ID): IPhotosAction => {
+  return {
+    type: "GET_ADDED_PHOTO_ERROR",
+    reqId,
+  };
+};
+
+//REMOVE_PHOTO_REQUEST_INFO
+/* export const removePhotoReqAC = (photoId: string): IPhotosAction => {
+  return {
+    type: "REMOVE_PHOTO_REQUEST_INFO",
+    reqId: photoId,
+  };
+}; */
 
 export const deletePhotoAC = (photoId: string): IPhotosAction => {
   return {

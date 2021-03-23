@@ -1,7 +1,7 @@
-import { getPhotosCollection } from "../../firebase/initFirestore";
+import { getPhotosCollection } from "../../../firebase/initFirestore";
 import GetAddedPhotoReq from "./GetAddedPhotoReq";
 
-jest.mock("../../firebase/initFirestore", () => {
+jest.mock("../../../firebase/initFirestore", () => {
   return {
     __esModule: true,
     getPhotosCollection: jest.fn(),

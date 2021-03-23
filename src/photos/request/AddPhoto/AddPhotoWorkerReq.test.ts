@@ -4,8 +4,8 @@ import {
   createPhotoFirestoreData,
   returnDataByMakePhotoFormData,
 } from "./data/data";
-import { post } from "../../utils/Fetch";
-import { addPhotoUrl } from "../../config";
+import { post } from "../../../utils/Fetch";
+import { addPhotoUrl } from "../../../config";
 
 jest.mock("../helper/DataHelper", () => {
   return {
@@ -14,7 +14,7 @@ jest.mock("../helper/DataHelper", () => {
   };
 });
 
-jest.mock("../../utils/Fetch", () => {
+jest.mock("../../../utils/Fetch", () => {
   return {
     __esModule: true,
     post: jest.fn(),

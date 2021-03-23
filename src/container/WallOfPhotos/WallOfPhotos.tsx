@@ -17,7 +17,11 @@ export interface IWallOfPhotosProps {
   reLoadPhotos: () => void;
   hasNextPage: boolean;
   loading: boolean;
-  addPhotoLoading: boolean;
+  //addPhotoLoading: boolean;
+  // requests - photos that is changing at this time
+  editedPhotoIds: string[];
+  // requests - photos that been added at this time
+  numberOfAddedPhotos: number;
   error: boolean;
   isSearch: boolean;
   showPhotoSlider: (event: any) => void;
@@ -31,24 +35,31 @@ const getPhotosElements = (
   showPhotoSlider: (event: MouseEvent<any>) => void,
   showEditPhotoForm: (photo: TPhotoData) => void,
   showPhotoDesc: (photo: TPhotoData) => void,
-  userUID: string
+  userUID: string,
+  editedPhotoIds: string[]
 ) => {
   const elements: any[] = [];
   let index = 0;
 
   photos.forEach((photo, id) => {
-    elements.push(
-      <PhotoCard
-        key={id}
-        isEditable={userUID === photo.addedByUserUID}
-        photo={{ id, photo }}
-        onImageClick={showPhotoSlider}
-        showEditPhotoForm={showEditPhotoForm}
-        showPhotoDesc={showPhotoDesc}
-        index={index}
-        alt="Лиза что-то делает"
-      />
-    );
+    if (editedPhotoIds.length > 0 && editedPhotoIds.includes(id)) {
+      let skel = getPhotoCardSkeleton();
+      elements.push(skel);
+    } else {
+      elements.push(
+        <PhotoCard
+          key={id}
+          isEditable={userUID === photo.addedByUserUID}
+          photo={{ id, photo }}
+          onImageClick={showPhotoSlider}
+          showEditPhotoForm={showEditPhotoForm}
+          showPhotoDesc={showPhotoDesc}
+          index={index}
+          alt="Лиза что-то делает"
+        />
+      );
+    }
+
     index++;
   });
 
@@ -81,7 +92,9 @@ export const WallOfPhotos: FC<IWallOfPhotosProps> = ({
   reLoadPhotos,
   hasNextPage,
   loading,
-  addPhotoLoading,
+  //addPhotoLoading,
+  editedPhotoIds,
+  numberOfAddedPhotos,
   error,
   isSearch,
   showEditPhotoForm,
@@ -116,7 +129,8 @@ export const WallOfPhotos: FC<IWallOfPhotosProps> = ({
         showPhotoSlider,
         showEditPhotoForm,
         showPhotoDesc,
-        userUID
+        userUID,
+        editedPhotoIds
       );
 
       //content = photosElements.concat(skeletons);
@@ -139,7 +153,8 @@ export const WallOfPhotos: FC<IWallOfPhotosProps> = ({
         showPhotoSlider,
         showEditPhotoForm,
         showPhotoDesc,
-        userUID
+        userUID,
+        editedPhotoIds
       );
     } else {
       if (isSearch) {
@@ -170,9 +185,9 @@ export const WallOfPhotos: FC<IWallOfPhotosProps> = ({
 
   //const photoElements = getPhotos(photos, loading, error, onImgClick, limit);
 
-  if (addPhotoLoading && Array.isArray(content)) {
+  if (numberOfAddedPhotos > 0 && Array.isArray(content)) {
     const skel = getPhotoCardSkeleton();
-    content.unshift(skel);
+    for (let i = 0; i < numberOfAddedPhotos; i++) content.unshift(skel);
   }
 
   return (

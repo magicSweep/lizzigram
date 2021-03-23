@@ -1,3 +1,44 @@
+import { isEditedReq } from "../../../photos/container/PhotoSlider/helper";
+
+export const makeAddEditPhotoReqInfo = (requests: TPhotoReqs) => {
+  const res: any = {
+    editedPhotoIds: [],
+    numberOfAddedPhotos: 0,
+  };
+
+  if (requests.size === 0) return res;
+
+  requests.forEach((photoReq, reqId) => {
+    if (isEditedReq(photoReq)) {
+      res.editedPhotoIds.push(reqId);
+    }
+
+    if (photoReq.type === "add" && photoReq.status.stage !== "done") {
+      res.numberOfAddedPhotos++;
+    }
+  });
+
+  //console.log("MAKE EDITED PHOTO IDS", editedPhotoIds);
+
+  return res;
+};
+
+export const calcNumberOfAddedPhotos = (requests: TPhotoReqs) => {
+  let numberOfAddedPhotos: number = 0;
+
+  if (requests.size === 0) return [];
+
+  requests.forEach((photoReq, reqId) => {
+    if (photoReq.type === "add" && photoReq.status.stage !== "done") {
+      numberOfAddedPhotos++;
+    }
+  });
+
+  //console.log("MAKE EDITED PHOTO IDS", editedPhotoIds);
+
+  return numberOfAddedPhotos;
+};
+
 export const getPhotoIndex = (eventTarget: EventTarget) => {
   //console.log("getPhotoIndex", eventTarget);
   const indexValue = (eventTarget as HTMLElement).dataset.index;
