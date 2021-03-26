@@ -15,6 +15,7 @@ import { limitPhotosPerQuery } from "../../config";
 import PhotoSkeletons from "../../fcomponent/PhotoSkeletons";
 import { WindowResizeProvider } from "../../provider/WindowResizer";
 import { useApp } from "./hook";
+import { WindowScrollProvider } from "../../provider/WindowScroller";
 //import { useHerokuPing } from "./hook";
 //import { useAuth } from "../../auth/hook/useAuth";
 
@@ -43,17 +44,19 @@ const App = () => {
   const isAuth = user !== undefined;
 
   return (
-    <WindowResizeProvider>
-      <Layout>
-        {!isAuth && <NotAuthWidget isAuth={isAuth} loading={loading} />}
+    <WindowScrollProvider>
+      <WindowResizeProvider>
+        <Layout>
+          {!isAuth && <NotAuthWidget isAuth={isAuth} loading={loading} />}
 
-        {isAuth && (
-          <Suspense fallback={PhotosSkeleton}>
-            <LoadablePhotos />
-          </Suspense>
-        )}
-      </Layout>
-    </WindowResizeProvider>
+          {isAuth && (
+            <Suspense fallback={PhotosSkeleton}>
+              <LoadablePhotos />
+            </Suspense>
+          )}
+        </Layout>
+      </WindowResizeProvider>
+    </WindowScrollProvider>
   );
 };
 

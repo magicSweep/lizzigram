@@ -1,39 +1,13 @@
-import React from "react";
-import classes from "./Header.module.scss";
-import Logo from "./../../../component/Logo";
-//import loadable from "@loadable/component";
-//import { AuthSkeleton } from "../../../auth/component/AuthFragment/AuthFragment";
-//import { useShowOnDidMount } from "../../../hooks/useShowOnDidMount";
-import AuthFragment from "../../../auth/component/AuthFragment";
-
-/* const LoadableAuthFragment = loadable(
-  () => import("../../../auth/component/AuthFragment"),
-  { fallback: <AuthSkeleton /> }
-); */
-
-/* const LoadableAuthFragment = lazy(() =>
-  import("../../../auth/component/AuthFragment")
-); */
+import React, { useContext } from "react";
+import { WindowScrollContext } from "../../../provider/WindowScroller";
+import HeaderWidget from "./Header";
 
 const Header = () => {
-  //const classes = useStyles();
-  //const isShow = useShowOnDidMount();
+  const isShow = useContext(WindowScrollContext);
 
-  console.log("[RENDER HEADER WIDGET]");
+  console.log("[RENDER HEADER]");
 
-  return (
-    <header className={classes.appBar}>
-      <div className={classes.toolbar}>
-        <Logo />
-
-        {/*  <AuthFragment /> */}
-
-        {/*  {!isShow && <AuthSkeleton />} */}
-
-        <AuthFragment />
-      </div>
-    </header>
-  );
+  return <HeaderWidget isShow={isShow} />;
 };
 
 export default Header;

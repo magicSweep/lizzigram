@@ -1,5 +1,5 @@
-import React from "react";
-import Header from ".";
+import React, { useState } from "react";
+import Header from "./Header";
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 //import thunk from "redux-thunk";
@@ -25,15 +25,18 @@ const reducer = combineReducers({
 const store = createStore(reducer);
 
 const Template = (args: any) => {
+  const [show, setShow] = useState(true);
+
   return (
     <Provider store={store}>
-      <Header {...args} />
+      <Header isShow={show} />
       <div
         style={{
           height: "120vh",
           padding: "60px 40px 0",
           maxWidth: "1200px",
           margin: "auto",
+          textAlign: "center",
         }}
       >
         <h4>Hello, my friends.</h4>
@@ -43,6 +46,10 @@ const Template = (args: any) => {
           ducimus natus beatae. Culpa, deserunt. Adipisci saepe ab praesentium
           cum neque.
         </p>
+        <br />
+        <button onClick={() => setShow((prevShow) => !prevShow)}>
+          Switch view
+        </button>
       </div>
     </Provider>
   );

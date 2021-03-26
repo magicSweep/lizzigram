@@ -1,4 +1,4 @@
-.appBar {
+.root {
   position: fixed;
   top: 0;
   background-color: white; //#55c57a
@@ -6,6 +6,9 @@
   justify-content: center;
   width: 100%;
   z-index: 200;
+  transition-property: transform;
+  //transition-property: opacity;
+  transition-duration: 0.7s;
 
   .toolbar {
     display: flex;
@@ -18,8 +21,19 @@
   }
 }
 
+.show {
+  //opacity: 1;
+  transform: translate(0, 0);
+  //transform: translate(0, -63px);
+}
+
+.hide {
+  //opacity: 0;
+  transform: translate(0, -63px);
+}
+
 @media (max-width: 550px) {
-  .appBar {
+  .root {
     .toolbar {
       padding: 4px 15px 0;
     }

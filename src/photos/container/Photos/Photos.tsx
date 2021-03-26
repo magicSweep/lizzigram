@@ -13,13 +13,14 @@ import { usePhotoContainer } from "./hook";
 //import SearchButton from "../../../component/UI/SearchButton";
 //import PhotoSlider from "./../PhotoSlider";
 import classes from "./Photos.module.scss";
-import BtnWithIcon from "../../../component/BtnWithIcon";
+/* import BtnWithIcon from "../../../component/BtnWithIcon";
 import PlusIcon from "../../../component/Icons/PlusIcon";
 import IconButton from "../../../component/IconButton";
 import SearchIcon from "../../../component/Icons/SearchIcon";
-import DeleteIcon from "../../../component/Icons/DeleteIcon";
+import DeleteIcon from "../../../component/Icons/DeleteIcon"; */
 import ModalElementsFallback from "../../../component/ModalElementsFallback";
-import { getPhotosCollection } from "../../../firebase/initFirestore";
+import PhotosToolBtns from "../../component/PhotosToolBtns";
+//import { getPhotosCollection } from "../../../firebase/initFirestore";
 //import Spinner from "../../../component/Spinner";
 //import ModalElements from "../ModalElements";
 //import PhotoDesc from "../../component/PhotoDesc";
@@ -162,7 +163,15 @@ export const Photos: FC<IPhotosProps> = ({
       )} */}
       {!isLoading && isAuth && (
         <>
-          <>
+          <PhotosToolBtns
+            isEditor={isEditor}
+            isSearch={isSearch}
+            showAddPhotoForm={showAddPhotoForm}
+            showSearchPhotoForm={showSearchPhotoForm}
+            resetSearchState={resetSearchState}
+          />
+
+          {/*  <>
             {isEditor && (
               <div className={classes.addPhotoButton}>
                 <BtnWithIcon
@@ -195,8 +204,7 @@ export const Photos: FC<IPhotosProps> = ({
                 />
               )}
             </div>
-            {/* if searchState not equal init search state -> show cancel search button */}
-          </>
+          </> */}
 
           <IWallOfPhotos />
 
@@ -218,54 +226,6 @@ export const Photos: FC<IPhotosProps> = ({
               />
             </Suspense>
           )}
-
-          {/*   {isShowPhotoSlider && (
-            <Modal onClose={hidePhotoSlider} type="slider">
-              <ModalLoadable>
-                <LoadablePhotoSlider />
-              </ModalLoadable>
-            </Modal>
-          )}
-
-          {isShowAddPhotoForm && (
-            <Modal onClose={hideAddPhotoForm} type="form">
-              <div className={classes.form}>
-                <ModalLoadable>
-                  <LoadableAddPhotoForm />
-                </ModalLoadable>
-              </div>
-            </Modal>
-          )}
-
-          {isShowEditPhotoForm && (
-            <Modal onClose={hideEditPhotoForm} type="form">
-              <div className={classes.form}>
-                <ModalLoadable>
-                  <LoadableEditPhotoForm />
-                </ModalLoadable>
-              </div>
-            </Modal>
-          )}
-
-          {isShowSearchPhotoForm && (
-            <Modal onClose={hideSearchPhotoForm} type="form">
-              <div className={classes.form}>
-                <ModalLoadable>
-                  <LoadableSearchPhotoForm />
-                </ModalLoadable>
-              </div>
-            </Modal>
-          )}
-
-          {isShowPhotoDesc && (
-            <Modal onClose={hidePhotoDesc} type="form">
-              <div className={classes.form}>
-                <ModalLoadable>
-                  <LoadablePhotoDesc />
-                </ModalLoadable>
-              </div>
-            </Modal>
-          )} */}
         </>
       )}
     </div>

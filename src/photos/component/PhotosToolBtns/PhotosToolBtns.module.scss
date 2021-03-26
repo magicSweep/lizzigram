@@ -1,0 +1,63 @@
+.root {
+  //transition-property: opacity;
+  //transition-duration: 1s;
+
+  .addPhotoButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 500;
+
+    transition-property: transform;
+    transition-duration: 0.7s;
+  }
+}
+
+.searchBtns {
+  position: fixed;
+  left: 0;
+  top: 50px;
+  width: 100%;
+  height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 500;
+
+  transition-property: transform;
+  transition-duration: 0.8s;
+
+  .searchBtn {
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    z-index: 500;
+  }
+}
+
+@media (max-width: 500px) {
+  .searchBtns {
+    position: fixed;
+    left: 20px;
+    top: initial;
+    bottom: 35px;
+    width: 100%;
+    height: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    z-index: 300;
+  }
+}
+
+.show {
+  transform: translate(0, 0);
+}
+
+.hideAddPhotoBtn {
+  transform: translate(175px, 0);
+}
+
+.hideSearchBtn {
+  transform: translate(0, -63px);
+}

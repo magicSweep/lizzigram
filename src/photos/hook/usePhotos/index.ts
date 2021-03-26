@@ -72,6 +72,11 @@ export const usePhotos = () => {
     reqManager.cancel();
   };
 
+  // calc and set limit
+  /* useEffect(() => {
+
+  }, []); */
+
   useEffect(() => {
     if (isNeedNewRequest(searchState, loading)) loadPhotos();
   }, [searchState]);

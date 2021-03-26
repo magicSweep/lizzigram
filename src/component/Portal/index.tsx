@@ -15,6 +15,8 @@ export interface IPortalProps {
 let modalRoot: any = undefined;
 let alertRoot: any = undefined;
 
+let numberOfModals = 0;
+
 const Portal: FC<IPortalProps> = ({ children, type }) => {
   /* const [element, setElement] = useState<HTMLDivElement>(() => {
     const elem = document.createElement("div");
@@ -29,9 +31,9 @@ const Portal: FC<IPortalProps> = ({ children, type }) => {
 
   useEffect(() => {
     const elem = document.createElement("div");
-    if (type === "modal" || type === "context-menu")
+    if (type === "modal" || type === "context-menu") {
       elem.classList.add(classes.modal);
-    else if (type === "alert") elem.classList.add(classes.alert);
+    } else if (type === "alert") elem.classList.add(classes.alert);
 
     setElement(elem);
   }, []);
@@ -70,11 +72,17 @@ const Portal: FC<IPortalProps> = ({ children, type }) => {
   }, [element]);
 
   useEffect(() => {
-    if (type === "modal") document.body.classList.add(styles.stopScrolling);
+    if (type === "modal") {
+      document.body.classList.add(styles.stopScrolling);
+      numberOfModals++;
+    }
 
     return () => {
-      if (type === "modal")
-        document.body.classList.remove(styles.stopScrolling);
+      if (type === "modal") {
+        numberOfModals--;
+        if (numberOfModals === 0)
+          document.body.classList.remove(styles.stopScrolling);
+      }
     };
   }, []);
 
