@@ -20,7 +20,11 @@ class IsEditorReqManager {
     try {
       const prevUser = this.getSavedUser();
 
-      if (prevUser && this.isSameUser(prevUser, user)) {
+      if (
+        prevUser &&
+        prevUser.isEditor !== undefined &&
+        this.isSameUser(prevUser, user)
+      ) {
         ///console.log("USE EDITOR | USE EFFECT | DISPATCH", user, prevUser);
 
         this.dispatch(
@@ -36,7 +40,7 @@ class IsEditorReqManager {
 
         const newUser = await this.request.fetchSync(user);
 
-        localStorage.setItem(authLocalStorageKey, JSON.stringify(user));
+        localStorage.setItem(authLocalStorageKey, JSON.stringify(newUser));
 
         this.dispatch(authAC(newUser));
       }

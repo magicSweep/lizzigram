@@ -17,7 +17,7 @@ export const useEditor = () => {
   useEffect(() => {
     if (!reqManager) throw new Error("No reqManager at useEditor");
 
-    reqManager.startNew(user);
+    if (user && user.isEditor === undefined) reqManager.startNew(user);
   }, [user]);
 
   return {

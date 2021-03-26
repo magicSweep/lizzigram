@@ -5,6 +5,7 @@ import {
   logoutRequestErrorAC,
   logoutRequestAC,
 } from "../../store/action";
+import { authLocalStorageKey } from "../../../config";
 
 class LogoutReqManager {
   dispatch: any;
@@ -23,7 +24,7 @@ class LogoutReqManager {
 
       await this.request.fetchSync();
 
-      //localStorage.setItem(authLocalStorageKey, JSON.stringify(user));
+      localStorage.removeItem(authLocalStorageKey);
 
       this.dispatch(logoutRequestSuccessAC());
     } catch (err) {
