@@ -1,0 +1,5 @@
+- Change auth state by useSubscribe
+- login and logout only requests and do not change auth state
+- useSubscribe - make subscribe
+- useAuth - get data form auth state
+- useEditor - we send additional request to firestore user table

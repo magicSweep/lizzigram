@@ -11,10 +11,12 @@ import Layout from "../partial/Layout";
 import NotAuthWidget from "../../component/NotAuth/NotAuth";
 //import firebase from "firebase/app";
 import { limitPhotosPerQuery } from "../../config";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 import PhotoSkeletons from "../../fcomponent/PhotoSkeletons";
 import { WindowResizeProvider } from "../../provider/WindowResizer";
-import { useHerokuPing } from "./hook";
+import { useApp } from "./hook";
+//import { useHerokuPing } from "./hook";
+//import { useAuth } from "../../auth/hook/useAuth";
 
 //const LoadableNotAuth = lazy(() => import("../../component/NotAuth"));
 
@@ -26,16 +28,18 @@ const PhotosSkeleton = () => (
 
 const App = () => {
   // AWAKE HEROKU
-  useHerokuPing();
+  //useHerokuPing();
 
-  const { user, loading } = useSelector<
+  const { user, loading } = useApp();
+
+  /* const { user, loading } = useSelector<
     IGlobalState,
     { user: IAuthUser | undefined; loading: boolean }
   >((state) => ({
     user: state.auth.user,
     loading: state.auth.loading,
   }));
-
+ */
   const isAuth = user !== undefined;
 
   return (

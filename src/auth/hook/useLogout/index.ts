@@ -1,28 +1,18 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import IsEditorReqManager from "../../requests/IsEditorFirestore/IsEditorReqManger";
-import { useAuth } from "../useAuth";
+import LogoutReqManager from "../../requests/LogoutFirestore/LogoutReqManger";
 
-let reqManager: IsEditorReqManager | undefined = undefined;
+let reqManager: LogoutReqManager | undefined = undefined;
 
-export const useEditor = () => {
+export const useLogout = () => {
   const dispatch = useDispatch();
 
-  if (reqManager === undefined) reqManager = new IsEditorReqManager();
+  if (reqManager === undefined) reqManager = new LogoutReqManager();
 
   reqManager.dispatch = dispatch;
 
-  const { user, loading } = useAuth();
-
-  useEffect(() => {
-    if (!reqManager) throw new Error("No reqManager at useEditor");
-
-    reqManager.startNew(user);
-  }, [user]);
-
   return {
-    user,
-    loading,
+    logout: reqManager.startNew,
   };
 };
 

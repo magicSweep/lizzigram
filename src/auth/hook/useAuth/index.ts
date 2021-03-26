@@ -1,36 +1,36 @@
-import { useEffect } from "react";
+//import { useEffect } from "react";
 //import { IAuthUser } from "../../types";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
-import { makeSubscribe } from "./controller";
+import { useSelector, shallowEqual } from "react-redux";
+//import { makeSubscribe } from "./controller";
 //import { IGlobalState } from "../../store/types";
-import { initApp } from "./../../../firebase/initApp";
+//import { initApp } from "./../../../firebase/initApp";
 
-initApp();
+//initApp();
 
-let unsubscribe: any = undefined;
+//let unsubscribe: any = undefined;
 
-export const useAuth = (
+export const useAuth = () =>
   //auth: (user: IAuthUser) => void,
-  onError?: Function,
-  onSuccess?: Function
-) => {
-  const dispatch = useDispatch();
+  //onError?: Function,
+  //onSuccess?: Function
+  {
+    //const dispatch = useDispatch();
 
-  const { user, loading } = useSelector<
-    IGlobalState,
-    {
-      user: IAuthUser | undefined;
-      loading: boolean;
-    }
-  >(
-    (state) => ({
-      user: state.auth.user,
-      loading: state.auth.loading,
-    }),
-    shallowEqual
-  );
+    const { user, loading } = useSelector<
+      IGlobalState,
+      {
+        user: IAuthUser | undefined;
+        loading: boolean;
+      }
+    >(
+      (state) => ({
+        user: state.auth.user,
+        loading: state.auth.loading,
+      }),
+      shallowEqual
+    );
 
-  useEffect(() => {
+    /* useEffect(() => {
     console.log("USE AUTH SUBSCRIBE");
 
     if (unsubscribe === undefined) {
@@ -39,12 +39,13 @@ export const useAuth = (
     }
 
     return () => {
+      console.log("MAKE AUTH UNSUBSCRIBE");
       unsubscribe();
     };
-  }, []);
+  }, []); */
 
-  return {
-    user,
-    loading,
+    return {
+      user,
+      loading,
+    };
   };
-};

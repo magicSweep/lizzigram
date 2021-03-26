@@ -1,19 +1,19 @@
 //import { useEditor } from "../../../auth/hook/useEditor";
-import { useLoginReq } from "../../hook/requests/useLoginReq";
-import { useLogoutReq } from "../../hook/requests/useLogoutReq";
+import { useLogin } from "../../hook/useLogin";
+import { useLogout } from "../../hook/useLogout";
 import { useAuth } from "../../hook/useAuth";
 
 export const useHeader = () => {
   const { user, loading } = useAuth();
 
-  const { start: startLoginReq } = useLoginReq();
+  const { login } = useLogin();
 
-  const { start: startLogoutReq } = useLogoutReq();
+  const { logout } = useLogout();
 
   return {
     user,
     loading,
-    logout: startLogoutReq,
-    login: startLoginReq,
+    logout,
+    login,
   };
 };
