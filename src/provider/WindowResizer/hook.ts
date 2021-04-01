@@ -8,11 +8,11 @@ export const useWindowResize = () => {
   const ref = useRef(i++);
 
   const onWindowResize = () => {
-    console.log("WINDOW RESIZE", ref.current);
+    //console.log("WINDOW RESIZE", ref.current);
     setResized((prevResize: number) => prevResize + 1);
   };
 
-  console.log("USE WINDOW RESIZE");
+  //console.log("USE WINDOW RESIZE");
 
   useEffect(() => {
     window.addEventListener("resize", onWindowResize, false);

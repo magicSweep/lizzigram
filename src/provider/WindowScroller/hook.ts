@@ -40,8 +40,6 @@ export const useShowLayoutOnScroll = () => {
 
   const { y, prevY } = useWindowScroll();
 
-  //console.log("USE SHOW LAYOUT ON SCROLL");
-
   //&& isShowRef.current === false
   if (y >= -40) {
     isShowRef.current = true;
@@ -58,6 +56,8 @@ export const useShowLayoutOnScroll = () => {
     /*  if (isShowRef.current === false) isShowRef.current = true;
     else isShowRef.current = false; */
   }
+
+  console.log("USE SHOW LAYOUT ON SCROLL", y, prevY, isShowRef.current);
 
   return isShowRef.current;
 };
