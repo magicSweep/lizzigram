@@ -10,12 +10,12 @@ import Layout from "../partial/Layout";
 //import NotAuth from "../../component/NotAuth";
 import NotAuthWidget from "../../component/NotAuth/NotAuth";
 //import firebase from "firebase/app";
-import { limitPhotosPerQuery } from "../../config";
+//import { limitPhotosPerQuery } from "../../config";
 //import { useSelector } from "react-redux";
 import PhotoSkeletons from "../../fcomponent/PhotoSkeletons";
-import { WindowResizeProvider } from "../../provider/WindowResizer";
+//import { WindowResizeProvider } from "../../provider/WindowResizer";
 import { useApp } from "./hook";
-import { WindowScrollProvider } from "../../provider/WindowScroller";
+//import { WindowScrollProvider } from "../../provider/WindowScroller";
 //import { useHerokuPing } from "./hook";
 //import { useAuth } from "../../auth/hook/useAuth";
 
@@ -23,15 +23,12 @@ import { WindowScrollProvider } from "../../provider/WindowScroller";
 
 const LoadablePhotos = lazy(() => import("../../photos/container/Photos"));
 
-const PhotosSkeleton = () => (
+/* const PhotosSkeleton = () => (
   <PhotoSkeletons numberOfSkeletons={limitPhotosPerQuery} />
-);
+); */
 
 const App = () => {
-  // AWAKE HEROKU
-  //useHerokuPing();
-
-  const { user, loading } = useApp();
+  const { user, loading, numberOfPhotosPerQuery } = useApp();
 
   /* const { user, loading } = useSelector<
     IGlobalState,
@@ -44,19 +41,25 @@ const App = () => {
   const isAuth = user !== undefined;
 
   return (
-    <WindowScrollProvider>
-      <WindowResizeProvider>
-        <Layout>
-          {!isAuth && <NotAuthWidget isAuth={isAuth} loading={loading} />}
+    <Layout>
+      {!isAuth && <NotAuthWidget isAuth={isAuth} loading={loading} />}
 
-          {isAuth && (
-            <Suspense fallback={PhotosSkeleton}>
-              <LoadablePhotos />
-            </Suspense>
+      {isAuth && (
+        <Suspense
+          fallback={() => (
+            <PhotoSkeletons
+              numberOfSkeletons={
+                numberOfPhotosPerQuery === undefined
+                  ? 0
+                  : numberOfPhotosPerQuery
+              }
+            />
           )}
-        </Layout>
-      </WindowResizeProvider>
-    </WindowScrollProvider>
+        >
+          <LoadablePhotos />
+        </Suspense>
+      )}
+    </Layout>
   );
 };
 

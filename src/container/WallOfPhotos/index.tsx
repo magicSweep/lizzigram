@@ -9,43 +9,11 @@ import WallOfPhotosWidget from "./WallOfPhotos";
 import { useWallOfPhotos } from "./hook";
 
 export const WallOfPhotos = () => {
-  const {
-    photos,
-    loadMorePhotos,
-    reLoadPhotos,
-    hasNextPage,
-    loading,
-    //ddPhotoLoading,
-    editedPhotoIds,
-    numberOfAddedPhotos,
-    error,
-    isSearch,
-    showEditPhotoForm,
-    showPhotoSlider,
-    showPhotoDesc,
-    userUID,
-  } = useWallOfPhotos();
+  const props = useWallOfPhotos();
 
-  console.log("[RENDER WALL_OF_PHOTS]", photos);
+  console.log("[RENDER WALL_OF_PHOTS]");
 
-  return (
-    <WallOfPhotosWidget
-      photos={photos}
-      loadMorePhotos={loadMorePhotos}
-      reLoadPhotos={reLoadPhotos}
-      hasNextPage={hasNextPage}
-      loading={loading}
-      //addPhotoLoading={addPhotoLoading}
-      editedPhotoIds={editedPhotoIds}
-      numberOfAddedPhotos={numberOfAddedPhotos}
-      error={error}
-      isSearch={isSearch}
-      showPhotoSlider={showPhotoSlider}
-      showEditPhotoForm={showEditPhotoForm}
-      showPhotoDesc={showPhotoDesc}
-      userUID={userUID}
-    />
-  );
+  return <WallOfPhotosWidget {...props} />;
 };
 
 export default WallOfPhotos;

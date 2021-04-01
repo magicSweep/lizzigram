@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { NumberOfPhotosPerQueryContext } from "../../../provider/NumberOfPhotosPerQuery";
 import { isNeedNewRequest } from "../../request/PhotosRequest/helper";
 import PhotosReqManager from "../../request/PhotosRequest/PhotosReqManager";
 
@@ -8,7 +9,11 @@ let reqManager: PhotosReqManager | undefined = undefined;
 export const usePhotos = () => {
   const dispatch = useDispatch();
 
+  const numberOfPhotosPerQuery = useContext(NumberOfPhotosPerQueryContext);
+
   if (reqManager === undefined) reqManager = new PhotosReqManager();
+
+  reqManager.numberOfPhotosPerQuery = numberOfPhotosPerQuery;
 
   reqManager.dispatch = dispatch;
 
@@ -71,11 +76,6 @@ export const usePhotos = () => {
 
     reqManager.cancel();
   };
-
-  // calc and set limit
-  /* useEffect(() => {
-
-  }, []); */
 
   useEffect(() => {
     if (isNeedNewRequest(searchState, loading)) loadPhotos();

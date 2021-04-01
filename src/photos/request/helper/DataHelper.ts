@@ -37,7 +37,7 @@ export const makeNewPhotoStateItems = (
 
   let count = 0;
 
-  const photoData: TPhotosData = new Map();
+  const photosData: TPhotosData = new Map();
 
   /* console.log("MAKE NEW PHOTO STATE ITEMS", limit);
 
@@ -59,7 +59,8 @@ export const makeNewPhotoStateItems = (
       hasNextPage = true;
       nextPageDocRef = photo;
     } else {
-      photoData.set(photo.id, photo.data() as IPhoto);
+      const photoData: IPhoto = photo.data() as IPhoto;
+      if (photoData.isActive === true) photosData.set(photo.id, photoData);
       count++;
     }
   });
@@ -69,7 +70,7 @@ export const makeNewPhotoStateItems = (
   return {
     hasNextPage,
     nextPageDocRef,
-    photos: photoData,
+    photos: photosData,
   };
 };
 
@@ -102,11 +103,11 @@ export const makeAddPhotoData = (
 
   const photoDate = fromStrToDate(formData.date);
 
-  console.log("!!! MAKE ADD PHOTO DATA | DATE", photoDate, formData.date);
+  //console.log("!!! MAKE ADD PHOTO DATA | DATE", photoDate, formData.date);
 
   const yearsOld = getYearsOld(photoDate);
 
-  console.log("!!! MAKE ADD PHOTO DATA | yearsOld", yearsOld);
+  //console.log("!!! MAKE ADD PHOTO DATA | yearsOld", yearsOld);
 
   const _timestamp = new Date();
 

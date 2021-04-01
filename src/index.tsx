@@ -10,9 +10,9 @@ import {
   compose,
   Middleware,
 } from "redux";
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
 import thunk from "redux-thunk";
-
+import Providers from "./provider/container/Providers";
 //import { initApp } from "./firebase/initApp";
 import { modalReducer, alertReducer, tagsReducer } from "./store";
 import { photoReducer, searchReducer } from "./photos";
@@ -67,9 +67,11 @@ const store = createStore(
 
 ReactDOM.hydrate(
   <ErrorBoundary>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ReduxProvider store={store}>
+      <Providers>
+        <App />
+      </Providers>
+    </ReduxProvider>
   </ErrorBoundary>,
   document.getElementById("root")
 );

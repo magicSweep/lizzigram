@@ -1,6 +1,7 @@
-import { useCallback } from "react";
+import { useCallback, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { usePhotos } from "../../../photos/hook/usePhotos";
+import { NumberOfPhotosPerQueryContext } from "../../../provider/NumberOfPhotosPerQuery";
 import {
   showPhotoSliderAC,
   showEditFormAC,
@@ -9,6 +10,8 @@ import {
 import { getPhotoIndex, makeAddEditPhotoReqInfo } from "./helper";
 
 export const useWallOfPhotos = () => {
+  const numberOfPhotosPerQuery = useContext(NumberOfPhotosPerQueryContext);
+
   const isSearch = useSelector<IGlobalState, boolean>(
     (state) => state.search.isSearch
   );
@@ -74,5 +77,6 @@ export const useWallOfPhotos = () => {
     showPhotoSlider,
     showPhotoDesc,
     userUID,
+    numberOfPhotosPerQuery,
   };
 };

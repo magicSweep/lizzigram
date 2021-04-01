@@ -24,6 +24,8 @@ type D<T> = {
   args: T;
 };
 
+const numberOfPhotosPerQuery = 3;
+
 export const Default: D<IWallOfPhotosProps> = Template.bind({}) as any;
 Default.args = {
   photos: photosData,
@@ -40,6 +42,7 @@ Default.args = {
   showEditPhotoForm: () => console.log("showEditPhotoForm"),
   showPhotoDesc: () => console.log("showPhotoDesc"),
   userUID: "user13",
+  numberOfPhotosPerQuery,
 };
 
 export const AddPhotoLoading: D<IWallOfPhotosProps> = Template.bind({}) as any;
@@ -58,6 +61,7 @@ AddPhotoLoading.args = {
   showEditPhotoForm: () => console.log("showEditPhotoForm"),
   showPhotoDesc: () => console.log("showPhotoDesc"),
   userUID: "user13",
+  numberOfPhotosPerQuery,
 };
 
 export const EditPhotoLoading: D<IWallOfPhotosProps> = Template.bind({}) as any;
@@ -76,6 +80,7 @@ EditPhotoLoading.args = {
   showEditPhotoForm: () => console.log("showEditPhotoForm"),
   showPhotoDesc: () => console.log("showPhotoDesc"),
   userUID: "user13",
+  numberOfPhotosPerQuery,
 };
 
 export const Loading: D<IWallOfPhotosProps> = Template.bind({}) as any;
@@ -94,6 +99,26 @@ Loading.args = {
   showEditPhotoForm: () => console.log("showEditPhotoForm"),
   showPhotoDesc: () => console.log("showPhotoDesc"),
   userUID: "",
+  numberOfPhotosPerQuery,
+};
+
+export const MoreLoading: D<IWallOfPhotosProps> = Template.bind({}) as any;
+MoreLoading.args = {
+  photos: photosData,
+  loading: true,
+  //addPhotoLoading: false,
+  numberOfAddedPhotos: 0,
+  editedPhotoIds: [],
+  isSearch: false,
+  hasNextPage: false,
+  loadMorePhotos: () => {},
+  reLoadPhotos: () => {},
+  error: false,
+  showPhotoSlider: () => console.log("showPhotoSlider"),
+  showEditPhotoForm: () => console.log("showEditPhotoForm"),
+  showPhotoDesc: () => console.log("showPhotoDesc"),
+  userUID: "",
+  numberOfPhotosPerQuery,
 };
 
 export const Error: D<IWallOfPhotosProps> = Template.bind({}) as any;
@@ -112,6 +137,7 @@ Error.args = {
   showEditPhotoForm: () => console.log("showEditPhotoForm"),
   showPhotoDesc: () => console.log("showPhotoDesc"),
   userUID: "",
+  numberOfPhotosPerQuery,
 };
 
 export const NoPhoto: D<IWallOfPhotosProps> = Template.bind({}) as any;
@@ -130,6 +156,7 @@ NoPhoto.args = {
   showEditPhotoForm: () => console.log("showEditPhotoForm"),
   showPhotoDesc: () => console.log("showPhotoDesc"),
   userUID: "",
+  numberOfPhotosPerQuery,
 };
 
 export const NoPhotoOnSearch: D<IWallOfPhotosProps> = Template.bind({}) as any;
@@ -148,4 +175,5 @@ NoPhotoOnSearch.args = {
   showEditPhotoForm: () => console.log("showEditPhotoForm"),
   showPhotoDesc: () => console.log("showPhotoDesc"),
   userUID: "",
+  numberOfPhotosPerQuery,
 };

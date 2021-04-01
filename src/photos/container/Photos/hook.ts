@@ -36,6 +36,7 @@ export const usePhotoContainer = () => {
   const {
     //authUser,
     //authLoading,
+    isShowSlider,
     isSearch,
     isShowAddPhotoForm,
     isShowEditPhotoForm,
@@ -47,6 +48,7 @@ export const usePhotoContainer = () => {
     {
       //authUser: IAuthUser;
       //authLoading: boolean;
+      isShowSlider: boolean;
       isSearch: boolean;
       isShowAddPhotoForm: boolean;
       isShowEditPhotoForm: boolean;
@@ -58,6 +60,7 @@ export const usePhotoContainer = () => {
     (state) => ({
       //authUser: state.auth.user,
       //authLoading: state.auth.loading,
+      isShowSlider: state.modal.openSlider,
       isSearch: state.search.isSearch,
       isShowAddPhotoForm: state.modal.openAddForm,
       isShowEditPhotoForm: state.modal.openEditForm,
@@ -114,6 +117,7 @@ export const usePhotoContainer = () => {
     isShowSearchPhotoForm,
     isShowPhotoSlider,
     isShowPhotoDesc,
+    isShowSlider,
 
     showAddPhotoForm,
     //showEditPhotoForm,

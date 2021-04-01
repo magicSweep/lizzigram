@@ -12,6 +12,8 @@ class PhotosReqManager {
 
   request: PhotosRequest | undefined;
 
+  numberOfPhotosPerQuery: number | undefined;
+
   prevSearchState: ISearchState | undefined;
 
   startNew = async (data: IPhotosReqData) => {
@@ -19,7 +21,10 @@ class PhotosReqManager {
 
     if (!this.dispatch) throw new Error("No dispatch in PhotosReqManager");
 
-    this.request = new PhotosRequest(true);
+    if (this.numberOfPhotosPerQuery === undefined)
+      throw new Error("Bad numberOfPhotosPerQuery");
+
+    this.request = new PhotosRequest(true, this.numberOfPhotosPerQuery);
 
     this.onStart(data);
 

@@ -106,6 +106,7 @@ export const Photos: FC<IPhotosProps> = ({
     isShowSearchPhotoForm,
     isShowPhotoSlider,
     isShowPhotoDesc,
+    isShowSlider,
 
     showAddPhotoForm,
     //showEditPhotoForm,
@@ -206,7 +207,7 @@ export const Photos: FC<IPhotosProps> = ({
             </div>
           </> */}
 
-          <IWallOfPhotos />
+          {!isShowSlider && <IWallOfPhotos />}
 
           {isShowModal && (
             <Suspense

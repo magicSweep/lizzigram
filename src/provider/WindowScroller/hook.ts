@@ -17,7 +17,7 @@ export const useWindowScroll = () => {
     });
   };
 
-  console.log("USE WINDOW SCROLL", yScroll, prevYRef.current);
+  //console.log("USE WINDOW SCROLL", yScroll, prevYRef.current);
 
   useEffect(() => {
     window.addEventListener("scroll", onWindowScroll, false);
@@ -40,7 +40,7 @@ export const useShowLayoutOnScroll = () => {
 
   const { y, prevY } = useWindowScroll();
 
-  console.log("USE SHOW LAYOUT ON SCROLL");
+  //console.log("USE SHOW LAYOUT ON SCROLL");
 
   //&& isShowRef.current === false
   if (y >= -40) {
