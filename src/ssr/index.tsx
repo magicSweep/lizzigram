@@ -5,7 +5,7 @@ import ErrorBoundary from "./../component/ErrorBoundary";
 import App from "./../container/App";
 
 import { createStore, combineReducers } from "redux";
-import { Provider } from "react-redux";
+import { Provider as ReduxProvider } from "react-redux";
 //import thunk from "redux-thunk";
 
 //import { initApp } from "./firebase/initApp";
@@ -15,6 +15,7 @@ import { authReducer } from "./../auth";
 import { resolve } from "path";
 import { writeFile, readFile } from "fs";
 import { promisify } from "util";
+import Providers from "../provider/container/Providers";
 
 // CONFIG
 
@@ -35,9 +36,11 @@ const store = createStore(reducer);
 
 const html = renderToString(
   <ErrorBoundary>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ReduxProvider store={store}>
+      <Providers>
+        <App />
+      </Providers>
+    </ReduxProvider>
   </ErrorBoundary>
 );
 

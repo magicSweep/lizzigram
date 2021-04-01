@@ -7,7 +7,7 @@ const port = 8080;
 
 const fs = require("fs");
 
-const staticFolder = path.join(__dirname, "..", "dist");
+const staticFolder = path.join(__dirname, "..", "..", "dist");
 
 //const indexHtml = path.join(__dirname, "..", "dist", "index.html");
 
@@ -33,7 +33,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("*.js", function (req, res, next) {
+/* app.get("*.js", function (req, res, next) {
   const pathToFile = `${staticFolder}${req.url}.gz`;
   if (fs.existsSync(pathToFile)) {
     req.url = req.url + ".gz";
@@ -42,7 +42,7 @@ app.get("*.js", function (req, res, next) {
   }
   //console.log("path", pathToFile);
   next();
-});
+}); */
 
 app.use(express.static(staticFolder));
 
