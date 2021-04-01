@@ -23,7 +23,13 @@ const Header: FC<{ isShow: boolean }> = ({ isShow }) => {
     ? `${classes.root} ${classes.show}`
     : `${classes.root} ${classes.hide}`;
 
-  console.log("[RENDER HEADER WIDGET]");
+  console.log(
+    "[RENDER HEADER WIDGET]",
+    isShow,
+    rootClasses,
+    classes.show,
+    classes.hide
+  );
 
   return (
     <header className={rootClasses}>
