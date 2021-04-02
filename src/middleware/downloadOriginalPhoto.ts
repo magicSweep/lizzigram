@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import { isValidPhotoId } from "../utils";
+import { isValidPhotoId } from "./helper";
 import { googleDrive } from "./../googleDrive";
-import { resolve } from "path";
-import { createReadStream } from "fs";
+//import { resolve } from "path";
+//import { createReadStream } from "fs";
+import { getPhotoIdAndExtension } from "./helper";
 
 /* export const downloadOriginalPhoto = async (
   req: Request,
@@ -49,9 +50,11 @@ export const downloadOriginalPhoto = async (
   res: Response,
   next: NextFunction
 ) => {
-  const photoId = req.params.photoId;
+  const photoName = req.params.photoId;
 
-  if (photoId.length > 62 || !isValidPhotoId(photoId)) res.end("Bad blood");
+  if (!isValidPhotoId(photoName)) res.end("Bad blood");
+
+  const { photoId, ext } = getPhotoIdAndExtension(photoName);
 
   const data = await googleDrive.downloadImageStream(photoId);
 
