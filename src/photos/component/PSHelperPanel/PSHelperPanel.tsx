@@ -32,11 +32,15 @@ const PSHelperPanel: FC<IPSHelperPanelWidgetProps> = ({
   minZoom,
   zoom,
 }) => {
-  const downloadImgName = `lizzy-image_${Date.now()}${
+  /* const downloadImgName = `lizzy-image_${Date.now()}${
     activePhoto.photo.imageExtention
       ? "." + activePhoto.photo.imageExtention
       : ""
-  }`;
+  }`; */
+
+  let downloadUrl = `${downloadPhotoUrl}/${activePhoto.photo.googleDriveId}`;
+  if (activePhoto.photo.imageExtention)
+    downloadUrl += `.${activePhoto.photo.imageExtention}`;
 
   return (
     <>
@@ -52,9 +56,12 @@ const PSHelperPanel: FC<IPSHelperPanelWidgetProps> = ({
       <div className={classes.downloadIcon}>
         <IconButton
           type="circle"
+          onClick={(event) => {
+            event.stopPropagation();
+          }}
           icon={<DownloadIcon color="secondary" width={28} height={28} />}
-          href={`${downloadPhotoUrl}/${activePhoto.photo.googleDriveId}`}
-          download={downloadImgName}
+          href={downloadUrl}
+          /* download={downloadImgName} */
           ariaLabel="Скачать оригинальный файл..."
         />
       </div>
