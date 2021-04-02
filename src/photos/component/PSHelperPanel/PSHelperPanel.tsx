@@ -7,7 +7,17 @@ import ImgZoomControlPanel, {
   IImgZoomControlPanelProps,
 } from "../../../component/ImgZoomControlPanel";
 import DownloadIcon from "../../../component/Icons/DownloadIcon";
-import { downloadPhotoUrl } from "../../../config";
+import { makeDownloadPhotoUrl } from "../../helper";
+
+/* import { downloadPhotoUrl } from "../../../config";
+
+export const makeDownloadPhotoUrl = (activePhoto: TPhotoData) => {
+  let downloadUrl = `${downloadPhotoUrl}/${activePhoto.photo.googleDriveId}`;
+  if (activePhoto.photo.imageExtention)
+    downloadUrl += `.${activePhoto.photo.imageExtention}`;
+
+  return downloadUrl;
+} */
 
 export interface IPSHelperPanelProps extends IImgZoomControlPanelProps {
   controller: ICarouselController<ICarouselState>;
@@ -38,9 +48,7 @@ const PSHelperPanel: FC<IPSHelperPanelWidgetProps> = ({
       : ""
   }`; */
 
-  let downloadUrl = `${downloadPhotoUrl}/${activePhoto.photo.googleDriveId}`;
-  if (activePhoto.photo.imageExtention)
-    downloadUrl += `.${activePhoto.photo.imageExtention}`;
+  let downloadUrl = makeDownloadPhotoUrl(activePhoto);
 
   return (
     <>

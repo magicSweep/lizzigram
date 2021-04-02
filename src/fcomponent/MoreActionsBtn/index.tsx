@@ -6,7 +6,8 @@ import DescIcon from "../../component/Icons/DescIcon";
 import DownloadIcon from "../../component/Icons/DownloadIcon";
 import EditIcon from "../../component/Icons/EditIcon";
 import MoreIcon from "../../component/Icons/MoreIcon";
-import { downloadPhotoUrl } from "../../config";
+import { makeDownloadPhotoUrl } from "../../photos/helper";
+//import { downloadPhotoUrl } from "../../config";
 
 export interface IMoreActionsBtnProps {
   index?: number;
@@ -30,6 +31,8 @@ const MoreActionsBtn: FC<IMoreActionsBtnProps> = ({
   const onShowPhotoDesc = (event: any) => {
     if (showPhotoDesc) showPhotoDesc(photo);
   };
+
+  let downloadUrl = makeDownloadPhotoUrl(photo);
 
   return (
     <BtnWithMenu
@@ -70,7 +73,7 @@ const MoreActionsBtn: FC<IMoreActionsBtnProps> = ({
         iconStart={<DownloadIcon width={20} height={20} />}
         label={"Скачать оригинальный файл"}
         ariaLabel={"Скачать оригинальный файл фото"}
-        href={`${downloadPhotoUrl}/${photo.photo.googleDriveId}`}
+        href={downloadUrl}
         disabled={false}
         fullWidth={true}
         color="primary"

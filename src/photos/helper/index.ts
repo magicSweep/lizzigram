@@ -1,5 +1,14 @@
 import { generatePhotos } from "./dataGenerator/photos";
 import { getTagsIds } from "./dataGenerator/tags";
+import { downloadPhotoUrl } from "../../config";
+
+export const makeDownloadPhotoUrl = (activePhoto: TPhotoData) => {
+  let downloadUrl = `${downloadPhotoUrl}/${activePhoto.photo.googleDriveId}`;
+  if (activePhoto.photo.imageExtention)
+    downloadUrl += `.${activePhoto.photo.imageExtention}`;
+
+  return downloadUrl;
+};
 
 export const getAll = async (collection: any): Promise<Map<string, any>> => {
   const result = await collection
@@ -11,7 +20,7 @@ export const getAll = async (collection: any): Promise<Map<string, any>> => {
   //console.log("SUCCESS GET");
   const res = new Map<string, any>();
 
-  result.docs.map(item => {
+  result.docs.map((item: any) => {
     res.set(item.id, item.data());
   });
 
@@ -21,7 +30,7 @@ export const getAll = async (collection: any): Promise<Map<string, any>> => {
 export const resFirestoreToMapObj = (result: any): Map<string, any> => {
   const res = new Map<string, any>();
 
-  result.docs.map(item => {
+  result.docs.map((item: any) => {
     res.set(item.id, item.data());
   });
 
@@ -54,7 +63,7 @@ export const updatePhotosWithTagsArrField = async (collection: any) => {
 
   const photosData = await collection.get();
 
-  photosData.docs.map(photo => {
+  photosData.docs.map((photo: any) => {
     let tags = photo.data().tags;
     let id = photo.id;
 
